@@ -55,8 +55,20 @@ seen="$(ssh -n "${HOST}" "lxc exec ${NAME} -- bash -lc 'cd /opt/app && docker co
     | grep 'POST /api/triage' | tail -1 | grep -oE '[0-9]{1,3}(\.[0-9]{1,3}){3}' | head -1 || true)"
 mine="$(curl -fsS --max-time 10 https://api.ipify.org 2>/dev/null || true)"
 echo "    IP que a api registrou: ${seen:-?} · seu IP público: ${mine:-?}"
-if [[ "${ENVIRONMENT}" == "prd" && -n "${seen}" && -n "${mine}" && "${seen}" != "${mine}" ]]; then
-    echo "    ATENÇÃO: a api não está vendo o IP do visitante — rate limit por IP não vale no prd." >&2
-    echo "    (se você está na tailnet, o split DNS leva ao IP Tailscale do host: teste de fora, ex. 4G)" >&2
+if [[ "${ENVIRONMENT}" == "prd" && -n "${seen}" ]]; then
+    case "${seen}" in
+        "${mine}")
+            echo "    rate limit por IP: OK (a api vê o IP público do visitante)" ;;
+        100.6[4-9].*|100.[7-9][0-9].*|100.1[01][0-9].*|100.12[0-7].*)
+            # 100.64.0.0/10 = Tailscale. Na tailnet o split DNS leva ao IP Tailscale do host, então o
+            # Nginx vê o SEU endereço de tailnet — é o cliente real desse caminho, não um proxy.
+            echo "    rate limit por IP: OK (você chegou pela tailnet; a api vê o seu IP Tailscale, não o de um proxy)" ;;
+        10.*|172.1[6-9].*|172.2[0-9].*|172.3[01].*|192.168.*|127.*)
+            echo "    ATENÇÃO: a api vê um IP de proxy interno (${seen}) — todos os visitantes contam como um só." >&2
+            echo "    Confira o X-Forwarded-For no vhost do Nginx e o trusted_proxies do Caddy." >&2
+            exit 1 ;;
+        *)
+            echo "    a api vê ${seen}, diferente do seu IP público — esperado se você sai por VPN/CGNAT; confira de outra rede" ;;
+    esac
 fi
 echo "OK"
