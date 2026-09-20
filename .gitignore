@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# O template Python ignora `lib/` (venvs antigos); o código do front mora em web/src/lib.
+!web/src/lib/

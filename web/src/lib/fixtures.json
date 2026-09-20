@@ -1,0 +1,500 @@
+{
+ "fast": {
+  "pr": {
+   "slug": "fastapi/fastapi#13000",
+   "title": "🌐 Add Korean translation for `docs/ko/docs/tutorial/cookie-param-models.md`",
+   "author": "hard-coders",
+   "author_association": "CONTRIBUTOR",
+   "state": "closed",
+   "draft": false,
+   "labels": [
+    "lang-all",
+    "lang-ko",
+    "approved-1"
+   ],
+   "additions": 76,
+   "deletions": 0,
+   "changed_files": 1,
+   "head_sha": "9bad893d876e5fd0cded1a04935fe8f9bbd1c238",
+   "html_url": "https://github.com/fastapi/fastapi/pull/13000"
+  },
+  "decisions": {
+   "change_type": {
+    "type": "choice",
+    "value": "docs",
+    "confidence": 1.0,
+    "probabilities": {
+     "config_infra": 0.0,
+     "bugfix": 0.0,
+     "docs": 1.0,
+     "refactor": 0.0,
+     "feature": 0.0,
+     "tests_only": 0.0,
+     "deps": 0.0
+    },
+    "source": "jev"
+   },
+   "risk": {
+    "type": "score",
+    "value": 0.0,
+    "confidence": 1.0,
+    "probabilities": {
+     "0": 1.0,
+     "1": 0.0,
+     "2": 0.0
+    },
+    "source": "jev"
+   },
+   "touches_auth_security": {
+    "type": "noul",
+    "value": 0.02,
+    "confidence": 0.96,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "touches_data_schema": {
+    "type": "noul",
+    "value": 0.02,
+    "confidence": 0.96,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "breaking_api": {
+    "type": "noul",
+    "value": 0.01,
+    "confidence": 0.98,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "touches_infra_ci": {
+    "type": "noul",
+    "value": 0.02,
+    "confidence": 0.96,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "has_tests": {
+    "type": "noul",
+    "value": 0.02,
+    "confidence": 0.96,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "description_explains_why": {
+    "type": "noul",
+    "value": 0.07,
+    "confidence": 0.86,
+    "probabilities": null,
+    "source": "jev"
+   }
+  },
+  "verdict": {
+   "lane": "fast",
+   "reasons": [
+    "type_docs",
+    "no_risk_flags",
+    "risk_none",
+    "small"
+   ],
+   "uncertain": [],
+   "t": 0.7
+  },
+  "sent": {
+   "tokens_est": 2119,
+   "budget_tokens": 20000,
+   "files_total": 1,
+   "files_included": [
+    "docs/ko/docs/tutorial/cookie-param-models.md"
+   ],
+   "files_truncated": [],
+   "files_omitted": [],
+   "body_truncated": false,
+   "file_list_truncated": false
+  },
+  "trace": [
+   {
+    "stage": "github",
+    "latency_ms": 671.5,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "jev",
+    "latency_ms": 705.5,
+    "cost": 0.000101514,
+    "input_tokens": 2417,
+    "output_tokens": 202,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "code",
+    "latency_ms": 0.034,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "llm",
+    "latency_ms": 0.0,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": true,
+    "note": null
+   }
+  ],
+  "versions": {
+   "questions": "pr-v1",
+   "jev_model": "typesafe/jev-1.13-20260917",
+   "api": "0.1.0"
+  },
+  "categories": {
+   "security": 0,
+   "schema": 0,
+   "api": 0,
+   "infra": 0,
+   "source": 0,
+   "tests": 0,
+   "docs": 1
+  },
+  "cached": false
+ },
+ "senior": {
+  "pr": {
+   "slug": "pydantic/pydantic#720",
+   "title": "Remove old, deprecated code",
+   "author": "samuelcolvin",
+   "author_association": "MEMBER",
+   "state": "closed",
+   "draft": false,
+   "labels": [],
+   "additions": 6,
+   "deletions": 125,
+   "changed_files": 6,
+   "head_sha": "72bada8ca8390727ba6f72ae922d267982469343",
+   "html_url": "https://github.com/pydantic/pydantic/pull/720"
+  },
+  "decisions": {
+   "change_type": {
+    "type": "choice",
+    "value": "refactor",
+    "confidence": 0.9,
+    "probabilities": {
+     "deps": 0.0,
+     "feature": 0.05,
+     "docs": 0.0,
+     "refactor": 0.92,
+     "config_infra": 0.0,
+     "bugfix": 0.03,
+     "tests_only": 0.0
+    },
+    "source": "jev"
+   },
+   "risk": {
+    "type": "score",
+    "value": 1.79,
+    "confidence": 0.68,
+    "probabilities": {
+     "0": 0.0,
+     "1": 0.2,
+     "2": 0.8
+    },
+    "source": "jev"
+   },
+   "touches_auth_security": {
+    "type": "noul",
+    "value": 0.04,
+    "confidence": 0.92,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "touches_data_schema": {
+    "type": "noul",
+    "value": 0.03,
+    "confidence": 0.94,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "breaking_api": {
+    "type": "noul",
+    "value": 0.92,
+    "confidence": 0.84,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "touches_infra_ci": {
+    "type": "noul",
+    "value": 0.04,
+    "confidence": 0.92,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "has_tests": {
+    "type": "noul",
+    "value": 0.24,
+    "confidence": 0.52,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "description_explains_why": {
+    "type": "noul",
+    "value": 0.58,
+    "confidence": 0.16,
+    "probabilities": null,
+    "source": "jev"
+   }
+  },
+  "verdict": {
+   "lane": "senior",
+   "reasons": [
+    "breaking_api"
+   ],
+   "uncertain": [],
+   "t": 0.7
+  },
+  "sent": {
+   "tokens_est": 4094,
+   "budget_tokens": 20000,
+   "files_total": 6,
+   "files_included": [
+    "pydantic/main.py",
+    "pydantic/fields.py",
+    "tests/test_edge_cases.py",
+    "changes/README.md",
+    ".github/PULL_REQUEST_TEMPLATE.md",
+    "changes/720-samuelcolvin.rst"
+   ],
+   "files_truncated": [],
+   "files_omitted": [],
+   "body_truncated": false,
+   "file_list_truncated": false
+  },
+  "trace": [
+   {
+    "stage": "github",
+    "latency_ms": 578.3,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "jev",
+    "latency_ms": 483.6,
+    "cost": 0.000141918,
+    "input_tokens": 3379,
+    "output_tokens": 203,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "code",
+    "latency_ms": 0.026,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "llm",
+    "latency_ms": 0.0,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": true,
+    "note": null
+   }
+  ],
+  "versions": {
+   "questions": "pr-v1",
+   "jev_model": "typesafe/jev-1.13-20260917",
+   "api": "0.1.0"
+  },
+  "categories": {
+   "security": 0,
+   "schema": 0,
+   "api": 0,
+   "infra": 0,
+   "source": 2,
+   "tests": 1,
+   "docs": 3
+  },
+  "cached": false
+ },
+ "uncertain": {
+  "pr": {
+   "slug": "pallets/werkzeug#3252",
+   "title": "add docs to address common invalid security reports",
+   "author": "davidism",
+   "author_association": "MEMBER",
+   "state": "closed",
+   "draft": false,
+   "labels": [],
+   "additions": 119,
+   "deletions": 39,
+   "changed_files": 8,
+   "head_sha": "5d39fd55ac5cefb996edce53d2b2e8b3677d8a8d",
+   "html_url": "https://github.com/pallets/werkzeug/pull/3252"
+  },
+  "decisions": {
+   "change_type": {
+    "type": "choice",
+    "value": "docs",
+    "confidence": 0.83,
+    "probabilities": {
+     "feature": 0.03,
+     "refactor": 0.09,
+     "tests_only": 0.0,
+     "config_infra": 0.0,
+     "bugfix": 0.03,
+     "docs": 0.85,
+     "deps": 0.0
+    },
+    "source": "jev"
+   },
+   "risk": {
+    "type": "score",
+    "value": 1.08,
+    "confidence": 0.66,
+    "probabilities": {
+     "0": 0.07,
+     "1": 0.77,
+     "2": 0.16
+    },
+    "source": "jev"
+   },
+   "touches_auth_security": {
+    "type": "noul",
+    "value": 0.75,
+    "confidence": 0.5,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "touches_data_schema": {
+    "type": "noul",
+    "value": 0.03,
+    "confidence": 0.94,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "breaking_api": {
+    "type": "noul",
+    "value": 0.08,
+    "confidence": 0.84,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "touches_infra_ci": {
+    "type": "noul",
+    "value": 0.02,
+    "confidence": 0.96,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "has_tests": {
+    "type": "noul",
+    "value": 0.03,
+    "confidence": 0.94,
+    "probabilities": null,
+    "source": "jev"
+   },
+   "description_explains_why": {
+    "type": "noul",
+    "value": 0.96,
+    "confidence": 0.92,
+    "probabilities": null,
+    "source": "jev"
+   }
+  },
+  "verdict": {
+   "lane": "normal",
+   "reasons": [
+    "uncertain_decisions"
+   ],
+   "uncertain": [
+    "touches_auth_security"
+   ],
+   "t": 0.7
+  },
+  "sent": {
+   "tokens_est": 7112,
+   "budget_tokens": 20000,
+   "files_total": 8,
+   "files_included": [
+    "src/werkzeug/security.py",
+    "src/werkzeug/utils.py",
+    "src/werkzeug/datastructures/headers.py",
+    "src/werkzeug/serving.py",
+    "src/werkzeug/sansio/multipart.py",
+    "src/werkzeug/http.py",
+    "src/werkzeug/test.py",
+    "docs/quickstart.rst"
+   ],
+   "files_truncated": [],
+   "files_omitted": [],
+   "body_truncated": false,
+   "file_list_truncated": false
+  },
+  "trace": [
+   {
+    "stage": "github",
+    "latency_ms": 617.0,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "jev",
+    "latency_ms": 473.5,
+    "cost": 0.000242802,
+    "input_tokens": 5781,
+    "output_tokens": 202,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "code",
+    "latency_ms": 0.022,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "llm",
+    "latency_ms": 0.0,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": true,
+    "note": null
+   }
+  ],
+  "versions": {
+   "questions": "pr-v1",
+   "jev_model": "typesafe/jev-1.13-20260917",
+   "api": "0.1.0"
+  },
+  "categories": {
+   "security": 1,
+   "schema": 0,
+   "api": 0,
+   "infra": 0,
+   "source": 6,
+   "tests": 0,
+   "docs": 1
+  },
+  "cached": false
+ }
+}
