@@ -41,6 +41,16 @@ export function runtimeFiles(categories: Record<string, number>): number {
   return RUNTIME_CATEGORIES.reduce((n, c) => n + (categories[c] ?? 0), 0);
 }
 
+/** Só o que ainda pode mudar a via: flag incerto sempre; risk e change_type só se importam. */
+function uncertainKeys(decisions: Record<string, AnswerLike>, t: number, fastReachable: boolean): string[] {
+  const unsure = (k: string) => decisions[k].confidence < t;
+  const out = FLAGS.filter(unsure);
+  const couldBeSevere = ((decisions.risk.probabilities ?? {})["2"] ?? 0) >= SEVERE_MIN_PROB;
+  if (unsure("risk") && (couldBeSevere || fastReachable)) out.push("risk");
+  if (unsure("change_type") && fastReachable) out.push("change_type");
+  return out;
+}
+
 export function verdict(
   decisions: Record<string, AnswerLike>,
   filesChanged: number,
@@ -69,12 +79,7 @@ export function verdict(
   const noRuntime = runtime === 0;
   const fastReachable = allCold && small && nearFast && noRuntime;
 
-  v.uncertain = FLAGS.filter((k) => !sure(k));
-  if (!sure("risk")) {
-    const couldBeSevere = ((risk.probabilities ?? {})["2"] ?? 0) >= SEVERE_MIN_PROB;
-    if (couldBeSevere || fastReachable) v.uncertain.push("risk");
-  }
-  if (!sure("change_type") && fastReachable) v.uncertain.push("change_type");
+  v.uncertain = uncertainKeys(decisions, t, fastReachable);
 
   if (sure("change_type") && isFastType && allCold && small && noRuntime && sure("risk") && riskLevel === 0) {
     v.lane = "fast";

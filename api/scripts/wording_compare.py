@@ -6,7 +6,7 @@ incerteza e mudança de via, não acerto — acerto é o lab 09.
 
 Autocontido: roda dentro do container da api (scripts/ops/compare-wording.sh faz tudo):
     docker compose exec -T api python - < api/scripts/wording_compare.py > novo.json
-    python3 api/scripts/wording_compare.py --analyze novo.json base_bakeoff.json
+    python3 api/scripts/wording_compare.py --analyze   # pega o mais recente de cada pasta em results/
 Progresso vai pra stderr; o JSON, pra stdout."""
 
 from __future__ import annotations
@@ -112,78 +112,92 @@ def _old_lane(jev: dict[str, Any], files: int) -> str:
     return "normal"
 
 
-def analyze(new_path: str, base_path: str) -> int:
-    new = json.loads(Path(new_path).read_text(encoding="utf-8"))
-    base = {r["url"]: r for r in json.loads(Path(base_path).read_text(encoding="utf-8"))["rows"]}
+def _slug(url: str) -> str:
+    return url.removeprefix("https://github.com/").replace("/pull/", "#")
+
+
+def _latest(folder: str) -> Path:
+    """Arquivo mais recente de results/<folder>. Sem caminho vindo de fora: os nomes são fixos."""
+    files = sorted((Path(__file__).resolve().parents[2] / "results" / folder).glob("*.json"))
+    if not files:
+        sys.exit(f"nada em results/{folder}/")
+    return files[-1]
+
+
+def _compare(rows: list[dict[str, Any]], base: dict[str, Any]) -> tuple[int, int]:
+    """Tabela antigo → novo nos PRs que têm base. Devolve o risk incerto nos 7 do smoke."""
     order = {"fast": 0, "normal": 1, "senior": 2}
-    print(f"wording novo: {new['questions']} · t={new['t']} · {len(new['rows'])} PRs\n")
     print(f"{'PR':<46} {'risk conf':>13} {'type conf':>13}  via (antigo → novo)")
-    unsure = {"old": {k: 0 for k in KEYS}, "new": {k: 0 for k in KEYS}}
-    smoke7 = {"old": 0, "new": 0}
+    unsure = {"old": dict.fromkeys(KEYS, 0), "new": dict.fromkeys(KEYS, 0)}
     changed = []
-    for i, r in enumerate(new["rows"]):
-        b = base.get(r["url"])
-        if not b:
-            continue
+    for r in rows:
+        o, n = base[r["url"]]["jev"], r["jev"]
         for k in KEYS:
-            unsure["old"][k] += b["jev"][k]["confidence"] < T
-            unsure["new"][k] += r["jev"][k]["confidence"] < T
-        if i < 7:
-            smoke7["old"] += b["jev"]["risk"]["confidence"] < T
-            smoke7["new"] += r["jev"]["risk"]["confidence"] < T
-        old_lane = _old_lane(b["jev"], b["files"])
-        slug = r["url"].removeprefix("https://github.com/").replace("/pull/", "#")
-        o, n = b["jev"], r["jev"]
-        mark = "" if old_lane == r["lane"] else "  ← mudou"
+            unsure["old"][k] += o[k]["confidence"] < T
+            unsure["new"][k] += n[k]["confidence"] < T
+        old_lane = _old_lane(o, base[r["url"]]["files"])
+        moved = old_lane != r["lane"]
         print(
-            f"{slug:<46} {o['risk']['confidence']:>5.2f} → {n['risk']['confidence']:<5.2f} "
+            f"{_slug(r['url']):<46} {o['risk']['confidence']:>5.2f} → {n['risk']['confidence']:<5.2f} "
             f"{o['change_type']['confidence']:>5.2f} → {n['change_type']['confidence']:<5.2f}  "
-            f"{old_lane} → {r['lane']} [{o['change_type']['value']} → {n['change_type']['value']}]{mark}"
+            f"{old_lane} → {r['lane']} [{o['change_type']['value']} → {n['change_type']['value']}]"
+            f"{'  ← mudou' if moved else ''}"
         )
-        if old_lane != r["lane"]:
-            changed.append((slug, old_lane, r["lane"], r["reasons"], r["title"]))
+        if moved:
+            way = "sobe" if order[r["lane"]] > order[old_lane] else "desce"
+            changed.append(
+                f"  {_slug(r['url'])}: {old_lane} → {r['lane']} ({way}) {r['reasons']}\n    {r['title'][:90]}"
+            )
     print("\ndecisões abaixo de t (antigo → novo):")
     for k in KEYS:
         print(f"  {k:<24} {unsure['old'][k]:>2} → {unsure['new'][k]}")
-    print(
-        f"\ncritério de aceite (#12): risk incerto nos 7 do smoke: {smoke7['old']} → {smoke7['new']} (meta ≤ 3)"
-    )
     if changed:
         print("\nvias que mudaram — LER O DIFF de cada uma antes de aceitar:")
-        for slug, a, b_, reasons, title in changed:
-            worse = "sobe" if order.get(b_, 1) > order.get(a, 1) else "desce"
-            print(f"  {slug}: {a} → {b_} ({worse}) {reasons}\n    {title[:90]}")
+        print("\n".join(changed))
+    smoke = [r for r in rows if r["url"] in PRS[:7]]
+    old7 = sum(base[r["url"]]["jev"]["risk"]["confidence"] < T for r in smoke)
+    new7 = sum(r["jev"]["risk"]["confidence"] < T for r in smoke)
+    return old7, new7
+
+
+def _banal(rows: list[dict[str, Any]]) -> int:
+    """Os banais não têm base antiga: só mostra se o nível 1 do risk existe."""
     print(
         f"\nbanais (sem base antiga) — o nível 1 do risk existe? meta ≥ {BANAL_MIN}/{len(BANAL)}:"
     )
     level1 = 0
-    for r in new["rows"]:
-        if r["url"] not in BANAL:
-            continue
+    for r in rows:
         n = r["jev"]
         hit = n["risk"]["confidence"] >= T and round(n["risk"]["value"]) == 1
         level1 += hit
         probs = {k: round(v, 2) for k, v in (n["risk"].get("probabilities") or {}).items()}
-        slug = r["url"].removeprefix("https://github.com/").replace("/pull/", "#")
         print(
-            f"  {slug:<28} risk {n['risk']['value']:.2f} ({n['risk']['confidence']:.2f}) {probs} · "
-            f"{n['change_type']['value']} ({n['change_type']['confidence']:.2f}) → {r['lane']} "
-            f"{r['uncertain']}{'  ✓' if hit else ''}"
+            f"  {_slug(r['url']):<28} risk {n['risk']['value']:.2f} ({n['risk']['confidence']:.2f}) "
+            f"{probs} · {n['change_type']['value']} ({n['change_type']['confidence']:.2f}) → "
+            f"{r['lane']} {r['uncertain']}{'  ✓' if hit else ''}"
         )
     print(f"  nível 1 confiante: {level1}/{len(BANAL)}")
-    ok = smoke7["new"] <= 3 and level1 >= BANAL_MIN
+    return level1
+
+
+def analyze() -> int:
+    new_path, base_path = _latest("v2_wording"), _latest("v2_llm_bakeoff")
+    new = json.loads(new_path.read_text(encoding="utf-8"))
+    base = {r["url"]: r for r in json.loads(base_path.read_text(encoding="utf-8"))["rows"]}
+    print(f"{new_path.name} × base {base_path.name}")
+    print(f"wording novo: {new['questions']} · t={new['t']} · {len(new['rows'])} PRs\n")
+    old7, new7 = _compare([r for r in new["rows"] if r["url"] in base], base)
+    print(f"\ncritério de aceite (#12): risk incerto nos 7 do smoke: {old7} → {new7} (meta ≤ 3)")
+    level1 = _banal([r for r in new["rows"] if r["url"] in BANAL])
+    ok = new7 <= 3 and level1 >= BANAL_MIN
     print(
         "\n"
-        + (
-            "ACEITE: meta do risk batida; confira as vias que mudaram."
-            if ok
-            else "NÃO bateu a meta do risk."
-        )
+        + ("ACEITE: metas batidas; confira as vias que mudaram." if ok else "NÃO bateu as metas.")
     )
     return 0 if ok else 1
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 4 and sys.argv[1] == "--analyze":
-        sys.exit(analyze(sys.argv[2], sys.argv[3]))
+    if sys.argv[1:] == ["--analyze"]:
+        sys.exit(analyze())
     asyncio.run(run())
