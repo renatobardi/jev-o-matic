@@ -20,7 +20,7 @@ PRS = [
     ("docs/tradução → fast", "https://github.com/fastapi/fastapi/pull/13000"),
     ("bump de dependência → fast/deps", "https://github.com/fastapi/fastapi/pull/16289"),
     (
-        "ARMADILHA: docs que FALAM de segurança → não é flag de security",
+        "docs + refactor de secure_filename (sanitização) → security sim; o LLM deu senior",
         "https://github.com/pallets/werkzeug/pull/3252",
     ),
     ("workflow de CI → infra, config_infra", "https://github.com/pallets/flask/pull/5945"),

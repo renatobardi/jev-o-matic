@@ -575,13 +575,8 @@
     "value": "docs",
     "confidence": 0.83,
     "probabilities": {
-     "feature": 0.03,
-     "refactor": 0.09,
-     "tests_only": 0.0,
-     "config_infra": 0.0,
-     "bugfix": 0.03,
-     "docs": 0.85,
-     "deps": 0.0
+     "docs": 0.86,
+     "refactor": 0.08
     },
     "source": "jev",
     "rationale": null,
@@ -589,31 +584,31 @@
    },
    "risk": {
     "type": "score",
-    "value": 0.0,
+    "value": 2.0,
     "confidence": 1.0,
     "probabilities": null,
     "source": "llm",
-    "rationale": "Mudança restrita a documentação: não altera comportamento em produção.",
+    "rationale": "A regression in filename sanitization could enable unsafe path or device-name handling in production, potentially creating a security vulnerability or breaking callers relying on this public API.",
     "original": {
-     "value": 1.08,
-     "confidence": 0.66,
+     "value": 1.11,
+     "confidence": 0.65,
      "probabilities": {
-      "0": 0.07,
+      "0": 0.06,
       "1": 0.77,
-      "2": 0.16
+      "2": 0.17
      }
     }
    },
    "touches_auth_security": {
     "type": "noul",
-    "value": 0.0,
+    "value": 1.0,
     "confidence": 1.0,
     "probabilities": null,
     "source": "llm",
-    "rationale": "O diff só acrescenta docstrings e notas de documentação nos módulos; nenhuma lógica de hash, comparação ou sessão muda.",
+    "rationale": "The production implementation of `secure_filename`, an input-sanitization function, is modified even though the refactor is intended to preserve behavior.",
     "original": {
-     "value": 0.75,
-     "confidence": 0.5,
+     "value": 0.76,
+     "confidence": 0.52,
      "probabilities": null
     }
    },
@@ -664,12 +659,10 @@
    }
   },
   "verdict": {
-   "lane": "fast",
+   "lane": "senior",
    "reasons": [
-    "type_docs",
-    "no_risk_flags",
-    "risk_none",
-    "small"
+    "touches_auth_security",
+    "risk_severe"
    ],
    "uncertain": [],
    "t": 0.7,
@@ -701,7 +694,7 @@
   "trace": [
    {
     "stage": "github",
-    "latency_ms": 617.0,
+    "latency_ms": 322.0,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -710,8 +703,8 @@
    },
    {
     "stage": "jev",
-    "latency_ms": 473.5,
-    "cost": 0.000242802,
+    "latency_ms": 373.0,
+    "cost": 0.000243,
     "input_tokens": 5781,
     "output_tokens": 202,
     "skipped": false,
@@ -719,7 +712,7 @@
    },
    {
     "stage": "code",
-    "latency_ms": 0.022,
+    "latency_ms": 0.03,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -728,10 +721,10 @@
    },
    {
     "stage": "llm",
-    "latency_ms": 1840.0,
-    "cost": 0.0131,
-    "input_tokens": 6100,
-    "output_tokens": 92,
+    "latency_ms": 5600.0,
+    "cost": 0.0152,
+    "input_tokens": 5088,
+    "output_tokens": null,
     "skipped": false,
     "note": null
    }

@@ -35,7 +35,7 @@ Reply with a single JSON object: {"answers": {"<question_key>": {"value": <v>, "
 - for type "noul": value is true or false
 - for type "choice": value is exactly one of the option keys
 - for type "score": value is the integer index (starting at 0) of the level that fits best
-Use only the question keys you were given. No text outside the JSON."""
+Write each "reason" in Brazilian Portuguese. Use only the question keys you were given. No text outside the JSON."""
 
 
 class LlmUnavailable(Exception):
