@@ -24,13 +24,14 @@
     "value": "docs",
     "confidence": 1.0,
     "probabilities": {
-     "config_infra": 0.0,
-     "bugfix": 0.0,
-     "docs": 1.0,
+     "mixed": 0.0,
      "refactor": 0.0,
-     "feature": 0.0,
+     "config_infra": 0.0,
      "tests_only": 0.0,
-     "deps": 0.0
+     "feature": 0.0,
+     "deps": 0.0,
+     "bugfix": 0.0,
+     "docs": 1.0
     },
     "source": "jev",
     "rationale": null,
@@ -110,7 +111,8 @@
     "type_docs",
     "no_risk_flags",
     "risk_none",
-    "small"
+    "small",
+    "no_runtime_files"
    ],
    "uncertain": [],
    "t": 0.7,
@@ -118,7 +120,7 @@
    "jev_lane": "fast"
   },
   "sent": {
-   "tokens_est": 2119,
+   "tokens_est": 2378,
    "budget_tokens": 20000,
    "files_total": 1,
    "files_included": [
@@ -132,7 +134,7 @@
   "trace": [
    {
     "stage": "github",
-    "latency_ms": 671.5,
+    "latency_ms": 713.4,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -141,16 +143,16 @@
    },
    {
     "stage": "jev",
-    "latency_ms": 705.5,
-    "cost": 0.000101514,
-    "input_tokens": 2417,
-    "output_tokens": 202,
+    "latency_ms": 720.5,
+    "cost": 0.00010836,
+    "input_tokens": 2580,
+    "output_tokens": 209,
     "skipped": false,
     "note": null
    },
    {
     "stage": "code",
-    "latency_ms": 0.034,
+    "latency_ms": 0.026,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -168,10 +170,10 @@
    }
   ],
   "versions": {
-   "questions": "pr-v1",
+   "questions": "pr-v2",
    "jev_model": "typesafe/jev-1.13-20260917",
-   "api": "0.1.0",
-   "llm_model": null
+   "llm_model": null,
+   "api": "0.1.0"
   },
   "categories": {
    "security": 0,
@@ -179,6 +181,7 @@
    "api": 0,
    "infra": 0,
    "source": 0,
+   "deps": 0,
    "tests": 0,
    "docs": 1
   },
@@ -203,15 +206,16 @@
    "change_type": {
     "type": "choice",
     "value": "refactor",
-    "confidence": 0.9,
+    "confidence": 0.82,
     "probabilities": {
-     "deps": 0.0,
-     "feature": 0.05,
-     "docs": 0.0,
-     "refactor": 0.92,
      "config_infra": 0.0,
-     "bugfix": 0.03,
-     "tests_only": 0.0
+     "tests_only": 0.0,
+     "deps": 0.0,
+     "feature": 0.06,
+     "refactor": 0.84,
+     "docs": 0.0,
+     "bugfix": 0.02,
+     "mixed": 0.08
     },
     "source": "jev",
     "rationale": null,
@@ -219,12 +223,12 @@
    },
    "risk": {
     "type": "score",
-    "value": 1.79,
-    "confidence": 0.68,
+    "value": 1.96,
+    "confidence": 0.95,
     "probabilities": {
      "0": 0.0,
-     "1": 0.2,
-     "2": 0.8
+     "1": 0.03,
+     "2": 0.97
     },
     "source": "jev",
     "rationale": null,
@@ -232,8 +236,8 @@
    },
    "touches_auth_security": {
     "type": "noul",
-    "value": 0.04,
-    "confidence": 0.92,
+    "value": 0.05,
+    "confidence": 0.9,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -250,8 +254,8 @@
    },
    "breaking_api": {
     "type": "noul",
-    "value": 0.92,
-    "confidence": 0.84,
+    "value": 0.81,
+    "confidence": 0.62,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -268,8 +272,8 @@
    },
    "has_tests": {
     "type": "noul",
-    "value": 0.24,
-    "confidence": 0.52,
+    "value": 0.26,
+    "confidence": 0.48,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -277,8 +281,8 @@
    },
    "description_explains_why": {
     "type": "noul",
-    "value": 0.58,
-    "confidence": 0.16,
+    "value": 0.62,
+    "confidence": 0.24,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -288,7 +292,7 @@
   "verdict": {
    "lane": "senior",
    "reasons": [
-    "breaking_api"
+    "risk_severe"
    ],
    "uncertain": [],
    "t": 0.7,
@@ -296,7 +300,7 @@
    "jev_lane": "senior"
   },
   "sent": {
-   "tokens_est": 4094,
+   "tokens_est": 4353,
    "budget_tokens": 20000,
    "files_total": 6,
    "files_included": [
@@ -315,7 +319,7 @@
   "trace": [
    {
     "stage": "github",
-    "latency_ms": 578.3,
+    "latency_ms": 483.4,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -324,16 +328,16 @@
    },
    {
     "stage": "jev",
-    "latency_ms": 483.6,
-    "cost": 0.000141918,
-    "input_tokens": 3379,
-    "output_tokens": 203,
+    "latency_ms": 407.0,
+    "cost": 0.000148764,
+    "input_tokens": 3542,
+    "output_tokens": 210,
     "skipped": false,
     "note": null
    },
    {
     "stage": "code",
-    "latency_ms": 0.026,
+    "latency_ms": 0.019,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -351,10 +355,10 @@
    }
   ],
   "versions": {
-   "questions": "pr-v1",
+   "questions": "pr-v2",
    "jev_model": "typesafe/jev-1.13-20260917",
-   "api": "0.1.0",
-   "llm_model": null
+   "llm_model": null,
+   "api": "0.1.0"
   },
   "categories": {
    "security": 0,
@@ -362,6 +366,7 @@
    "api": 0,
    "infra": 0,
    "source": 2,
+   "deps": 0,
    "tests": 1,
    "docs": 3
   },
@@ -386,15 +391,16 @@
    "change_type": {
     "type": "choice",
     "value": "docs",
-    "confidence": 0.83,
+    "confidence": 0.49,
     "probabilities": {
-     "feature": 0.03,
-     "refactor": 0.09,
-     "tests_only": 0.0,
+     "bugfix": 0.01,
+     "refactor": 0.02,
      "config_infra": 0.0,
-     "bugfix": 0.03,
-     "docs": 0.85,
-     "deps": 0.0
+     "mixed": 0.41,
+     "feature": 0.01,
+     "deps": 0.0,
+     "docs": 0.55,
+     "tests_only": 0.0
     },
     "source": "jev",
     "rationale": null,
@@ -402,12 +408,12 @@
    },
    "risk": {
     "type": "score",
-    "value": 1.08,
-    "confidence": 0.66,
+    "value": 1.71,
+    "confidence": 0.56,
     "probabilities": {
-     "0": 0.07,
-     "1": 0.77,
-     "2": 0.16
+     "0": 0.02,
+     "1": 0.25,
+     "2": 0.73
     },
     "source": "jev",
     "rationale": null,
@@ -415,8 +421,8 @@
    },
    "touches_auth_security": {
     "type": "noul",
-    "value": 0.75,
-    "confidence": 0.5,
+    "value": 0.72,
+    "confidence": 0.44,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -433,8 +439,8 @@
    },
    "breaking_api": {
     "type": "noul",
-    "value": 0.08,
-    "confidence": 0.84,
+    "value": 0.06,
+    "confidence": 0.88,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -474,14 +480,16 @@
     "uncertain_decisions"
    ],
    "uncertain": [
-    "touches_auth_security"
+    "touches_auth_security",
+    "risk",
+    "change_type"
    ],
    "t": 0.7,
    "escalated": [],
    "jev_lane": "normal"
   },
   "sent": {
-   "tokens_est": 7112,
+   "tokens_est": 7371,
    "budget_tokens": 20000,
    "files_total": 8,
    "files_included": [
@@ -502,7 +510,7 @@
   "trace": [
    {
     "stage": "github",
-    "latency_ms": 617.0,
+    "latency_ms": 482.8,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -511,16 +519,16 @@
    },
    {
     "stage": "jev",
-    "latency_ms": 473.5,
-    "cost": 0.000242802,
-    "input_tokens": 5781,
-    "output_tokens": 202,
+    "latency_ms": 435.6,
+    "cost": 0.000249648,
+    "input_tokens": 5944,
+    "output_tokens": 209,
     "skipped": false,
     "note": null
    },
    {
     "stage": "code",
-    "latency_ms": 0.022,
+    "latency_ms": 0.027,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -538,10 +546,10 @@
    }
   ],
   "versions": {
-   "questions": "pr-v1",
+   "questions": "pr-v2",
    "jev_model": "typesafe/jev-1.13-20260917",
-   "api": "0.1.0",
-   "llm_model": null
+   "llm_model": null,
+   "api": "0.1.0"
   },
   "categories": {
    "security": 1,
@@ -549,6 +557,7 @@
    "api": 0,
    "infra": 0,
    "source": 6,
+   "deps": 0,
    "tests": 0,
    "docs": 1
   },
@@ -572,30 +581,40 @@
   "decisions": {
    "change_type": {
     "type": "choice",
-    "value": "docs",
-    "confidence": 0.83,
-    "probabilities": {
-     "docs": 0.86,
-     "refactor": 0.08
-    },
-    "source": "jev",
-    "rationale": null,
-    "original": null
-   },
-   "risk": {
-    "type": "score",
-    "value": 2.0,
+    "value": "refactor",
     "confidence": 1.0,
     "probabilities": null,
     "source": "llm",
-    "rationale": "A regression in filename sanitization could enable unsafe path or device-name handling in production, potentially creating a security vulnerability or breaking callers relying on this public API.",
+    "rationale": "A maior parte da alteração reorganiza e esclarece implementações e docstrings existentes, preservando o comportamento geral, embora inclua pequenos ajustes defensivos.",
     "original": {
-     "value": 1.11,
-     "confidence": 0.65,
+     "value": "docs",
+     "confidence": 0.49,
      "probabilities": {
-      "0": 0.06,
-      "1": 0.77,
-      "2": 0.17
+      "bugfix": 0.01,
+      "refactor": 0.02,
+      "config_infra": 0.0,
+      "mixed": 0.41,
+      "feature": 0.01,
+      "deps": 0.0,
+      "docs": 0.55,
+      "tests_only": 0.0
+     }
+    }
+   },
+   "risk": {
+    "type": "score",
+    "value": 1.0,
+    "confidence": 1.0,
+    "probabilities": null,
+    "source": "llm",
+    "rationale": "O código alterado é lógica de produção comum, principalmente sanitização de nomes de arquivo e parsing do servidor de desenvolvimento, sem envolver autenticação, segredos ou dados persistidos.",
+    "original": {
+     "value": 1.71,
+     "confidence": 0.56,
+     "probabilities": {
+      "0": 0.02,
+      "1": 0.25,
+      "2": 0.73
      }
     }
    },
@@ -605,10 +624,10 @@
     "confidence": 1.0,
     "probabilities": null,
     "source": "llm",
-    "rationale": "The production implementation of `secure_filename`, an input-sanitization function, is modified even though the refactor is intended to preserve behavior.",
+    "rationale": "A alteração modifica lógica de sanitização de entradas em `secure_filename` e adiciona limites ao processamento de chunks, ambos relacionados à segurança de entradas.",
     "original": {
-     "value": 0.76,
-     "confidence": 0.52,
+     "value": 0.72,
+     "confidence": 0.44,
      "probabilities": null
     }
    },
@@ -623,8 +642,8 @@
    },
    "breaking_api": {
     "type": "noul",
-    "value": 0.08,
-    "confidence": 0.84,
+    "value": 0.06,
+    "confidence": 0.88,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -661,19 +680,19 @@
   "verdict": {
    "lane": "senior",
    "reasons": [
-    "touches_auth_security",
-    "risk_severe"
+    "touches_auth_security"
    ],
    "uncertain": [],
    "t": 0.7,
    "escalated": [
+    "change_type",
     "risk",
     "touches_auth_security"
    ],
    "jev_lane": "normal"
   },
   "sent": {
-   "tokens_est": 7112,
+   "tokens_est": 7371,
    "budget_tokens": 20000,
    "files_total": 8,
    "files_included": [
@@ -694,7 +713,7 @@
   "trace": [
    {
     "stage": "github",
-    "latency_ms": 322.0,
+    "latency_ms": 482.8,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -703,16 +722,16 @@
    },
    {
     "stage": "jev",
-    "latency_ms": 373.0,
-    "cost": 0.000243,
-    "input_tokens": 5781,
-    "output_tokens": 202,
+    "latency_ms": 435.6,
+    "cost": 0.000249648,
+    "input_tokens": 5944,
+    "output_tokens": 209,
     "skipped": false,
     "note": null
    },
    {
     "stage": "code",
-    "latency_ms": 0.03,
+    "latency_ms": 0.027,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -721,19 +740,19 @@
    },
    {
     "stage": "llm",
-    "latency_ms": 5600.0,
-    "cost": 0.0152,
-    "input_tokens": 5088,
-    "output_tokens": null,
+    "latency_ms": 6190.7,
+    "cost": 0.0020394,
+    "input_tokens": 5355,
+    "output_tokens": 584,
     "skipped": false,
     "note": null
    }
   ],
   "versions": {
-   "questions": "pr-v1",
+   "questions": "pr-v2",
    "jev_model": "typesafe/jev-1.13-20260917",
-   "api": "0.1.0",
-   "llm_model": "openai/gpt-5.6-sol"
+   "llm_model": "openai/gpt-5.6-luna",
+   "api": "0.1.0"
   },
   "categories": {
    "security": 1,
@@ -741,6 +760,7 @@
    "api": 0,
    "infra": 0,
    "source": 6,
+   "deps": 0,
    "tests": 0,
    "docs": 1
   },
