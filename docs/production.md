@@ -65,6 +65,21 @@ curl -fsS http://100.66.254.24:3770/api/health
 
 `git checkout <sha-anterior>` em `/opt/app` + `docker compose up -d --build`, ou restaurar o snapshot `deploy-<timestamp>` que o install cria.
 
-## Público (depois)
+## Produção pública — `https://jev-o-matic.oute.pro`
 
-Segundo install com `--name jev-o-matic-prd --public`; vhost Nginx `jev.oute.pro` → `<ip-do-container>:80`, Certbot, `X-Forwarded-Proto https`. Antes disso: rate limit e teto diário (M3).
+```bash
+scripts/ops/provision-prd.sh              # reaproveita o .env do -test (mesma key, mesmo limite de crédito)
+scripts/ops/provision-prd.sh --new-key    # pede uma key dedicada ao prd
+```
+
+Molde: `studio/scripts/ops/provision-studio-prd.sh`, sem Firebase, banco nem backup. Idempotente. Faz: `install-app --name jev-o-matic-prd --public` → `.env` → stack + health → vhost Nginx + Certbot → verificação (HTTPS, 301, página, triagem real) → vhost, cert e porta 80 no inventory do lab + `PORTS.md`.
+
+- Domínio pela convenção do install-app (`<app>.oute.pro`); `*.oute.pro` já é wildcard no DNS público e no split DNS.
+- O vhost **sobrescreve** `X-Forwarded-For` com `$remote_addr` (ver Guardas) e limita o corpo a 16k.
+- Pede a senha sudo do host (keychain `lab-oute-sudo` ou digitada) só no passo do Nginx.
+
+Atualizar o prd (o CD só cobre o `-test`):
+
+```bash
+CONTAINER_NAME=jev-o-matic-prd APP_URL=https://jev-o-matic.oute.pro scripts/ops/deploy-test.sh
+```
