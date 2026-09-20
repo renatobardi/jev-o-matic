@@ -52,8 +52,9 @@ O que o `provision-prd.sh` NÃO faz — convenções do `lab` e segredos que nas
 | 1 | `GITHUB_TOKEN` nos containers | `scripts/ops/set-github-token.sh` | sem token: 60 req/h por IP no GitHub, somando test + prd (mesmo IP de saída) → ~30 triagens novas/hora no total |
 | 2 | Key do OpenRouter dedicada, com limite de crédito | `CONTAINER_NAME=<c> scripts/ops/set-openrouter-key.sh` | é o teto duro de gasto |
 | 3 | Conferir drift do inventory | `cd ../lab && tools/sync-inventory.sh` | o `request-flow` do lab só fecha a instalação depois disso |
-| 4 | DNS de fallback | `cd ../lab && bash tools/deploy-dns.sh` | `docs/dns.md`: domínio novo → regenerar; é o que o Uptime Kuma e containers fora da tailnet usam pra resolver |
-| 5 | Monitor no Uptime Kuma | `gen-monitoring-configs.py` + `apply-monitoring-config.py` (pede credenciais do Kuma e do Telegram) | ADR-0001 do lab: app público sem monitor cai em silêncio |
+| 4 | Monitor no Uptime Kuma | **à mão, na UI** (`https://uptime-kuma.oute.pro`, só tailnet): HTTP(s) · nome `jev-o-matic.oute.pro` · URL `https://jev-o-matic.oute.pro/api/health` · intervalo 60 s · aceitar 200–299 · notificação Telegram | avisa quando cair. O nome igual ao `server_name` faz um futuro `apply-monitoring-config.py` pular este monitor em vez de duplicar |
+| — | ~~`deploy-dns.sh`~~ | não rodar por causa deste app | o wildcard `*.oute.pro` já resolve na tailnet e o DNS público já aponta pro host; o script só acrescentaria uma linha de `/etc/hosts` de fallback, ao custo de reiniciar o dnsmasq e mexer no systemd do nginx num host com outros apps em produção |
+| — | ~~`apply-monitoring-config.py`~~ | não usar pra acrescentar UM monitor | roda como root NO servidor: reescreve os alarmes do Netdata e a config do Telegram, reinicia o Netdata, cria todos os monitores que faltam (inclusive de vhost morto → alerta imediato) e dispara mensagem de teste |
 | 6 | Segredos no Vaultwarden | itens `jev-o-matic-<env> OPENROUTER_API_KEY` / `GITHUB_TOKEN` | convenção do lab; key do OpenRouter não é recuperável depois de criada (perdeu → gera outra) |
 
 Nunca use `push-env.sh` num ambiente que já tem key: ele reescreve o `.env` inteiro a partir do Mac (agora exige `--force`).
