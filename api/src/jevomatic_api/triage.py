@@ -20,8 +20,10 @@ from .schemas import (
     VerdictOut,
     VersionsOut,
 )
-from .state import build_state
+from .state import build_state, est_tokens
 from .verdict import clamp_t, verdict
+
+QUESTIONS_TOKENS = est_tokens(repr(QUESTIONS))
 
 
 async def triage(
@@ -33,6 +35,8 @@ async def triage(
     t0 = time.perf_counter()
     pr = await fetch_pr(ref, client)
     built = build_state(pr)
+    # o relatório mostra o total enviado: state + perguntas (smoke do M1: ~1,3k tokens fixos)
+    built.sent.tokens_est += QUESTIONS_TOKENS
     github_ms = (time.perf_counter() - t0) * 1000
 
     res = await decide(built.state, QUESTIONS)

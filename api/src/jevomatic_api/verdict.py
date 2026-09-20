@@ -1,8 +1,8 @@
 """Veredito determinístico: decisões do jev → lane de revisão.
 
 Regra pequena de propósito (lab 04: compor muitos átomos faz OR dos falsos positivos).
-Uma decisão só DECIDE a lane se tiver confidence ≥ t; abaixo disso ela entra em `uncertain`
-(gatilho da cascata pro LLM) e a lane cai no lado seguro:
+Uma decisão só DECIDE a lane se tiver confidence ≥ t. Abaixo disso a lane cai no lado seguro e a
+decisão entra em `uncertain` (gatilho da cascata pro LLM) — mas só se ainda puder mudar a lane:
   senior  ← flag de risco positivo e confiante, ou risk nível 2 confiante
   fast    ← tipo de baixo risco confiante + TODOS os flags negativos e confiantes + risk 0 confiante + PR pequeno
   normal  ← todo o resto
@@ -20,6 +20,7 @@ FLAGS = ["touches_auth_security", "touches_data_schema", "breaking_api"]
 FAST_TYPES = {"docs", "tests_only", "deps"}
 FAST_MAX_FILES = 25
 FAST_RUNNER_UP = 0.3  # tipo "quase fast": vale perguntar ao LLM
+SEVERE_MIN_PROB = 0.3  # risk incerto só importa se o nível 2 é plausível
 
 
 class AnswerLike(Protocol):
@@ -49,35 +50,46 @@ def verdict(
     v = Verdict(lane="normal", t=t)
     risk, ctype = decisions["risk"], decisions["change_type"]
     sure = {k: decisions[k].confidence >= t for k in [*FLAGS, "risk", "change_type"]}
+    risk_severe = sure["risk"] and round(risk.value) == 2
 
-    v.uncertain = [k for k in [*FLAGS, "risk"] if not sure[k]]
+    hot = [k for k in FLAGS if sure[k] and decisions[k].value >= 0.5]
+    if hot or risk_severe:
+        # senior é o teto: nenhuma decisão incerta muda a lane, então não há o que escalar
+        v.lane = "senior"
+        v.reasons = [*hot, *(["risk_severe"] if risk_severe else [])]
+        return v
+
+    # `uncertain` = só o que ainda pode mudar a lane (smoke do M1: escalar por todo score
+    # incerto mandava 6 de 7 PRs pro LLM; score é o primitivo menos confiável — labs 03/04)
+    all_cold = all(sure[k] and decisions[k].value < 0.5 for k in FLAGS)
+    small = files_changed <= FAST_MAX_FILES
     probs = ctype.probabilities or {}
     near_fast = ctype.value in FAST_TYPES or any(
         probs.get(o, 0) >= FAST_RUNNER_UP for o in FAST_TYPES
     )
-    if not sure["change_type"] and near_fast:
+    fast_reachable = all_cold and small and near_fast
+
+    v.uncertain = [k for k in FLAGS if not sure[k]]  # flag incerto pode virar senior
+    if not sure["risk"]:
+        could_be_severe = (risk.probabilities or {}).get("2", 0.0) >= SEVERE_MIN_PROB
+        if could_be_severe or fast_reachable:
+            v.uncertain.append("risk")
+    if not sure["change_type"] and fast_reachable:
         v.uncertain.append("change_type")
 
-    hot = [k for k in FLAGS if sure[k] and decisions[k].value >= 0.5]
-    if hot or (sure["risk"] and round(risk.value) == 2):
-        v.lane = "senior"
-        v.reasons = [*hot, *(["risk_severe"] if sure["risk"] and round(risk.value) == 2 else [])]
-        return v
-
-    all_cold = all(sure[k] and decisions[k].value < 0.5 for k in FLAGS)
     if (
         sure["change_type"]
         and ctype.value in FAST_TYPES
         and all_cold
+        and small
         and sure["risk"]
         and round(risk.value) == 0
-        and files_changed <= FAST_MAX_FILES
     ):
         v.lane = "fast"
         v.reasons = [f"type_{ctype.value}", "no_risk_flags", "risk_none", "small"]
         return v
 
-    if ctype.value in FAST_TYPES and files_changed > FAST_MAX_FILES:
+    if ctype.value in FAST_TYPES and not small:
         v.reasons.append("too_many_files_for_fast")
     if v.uncertain:
         v.reasons.append("uncertain_decisions")

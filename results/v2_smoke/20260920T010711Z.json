@@ -1,0 +1,1179 @@
+[
+  {
+    "expect": "docs/tradução → fast",
+    "url": "https://github.com/fastapi/fastapi/pull/13000",
+    "pr": {
+      "slug": "fastapi/fastapi#13000",
+      "title": "🌐 Add Korean translation for `docs/ko/docs/tutorial/cookie-param-models.md`",
+      "author": "hard-coders",
+      "author_association": "CONTRIBUTOR",
+      "state": "closed",
+      "draft": false,
+      "labels": [
+        "lang-all",
+        "lang-ko",
+        "approved-1"
+      ],
+      "additions": 76,
+      "deletions": 0,
+      "changed_files": 1,
+      "head_sha": "9bad893d876e5fd0cded1a04935fe8f9bbd1c238",
+      "html_url": "https://github.com/fastapi/fastapi/pull/13000"
+    },
+    "decisions": {
+      "change_type": {
+        "type": "choice",
+        "value": "docs",
+        "confidence": 1.0,
+        "probabilities": {
+          "config_infra": 0.0,
+          "bugfix": 0.0,
+          "docs": 1.0,
+          "refactor": 0.0,
+          "feature": 0.0,
+          "tests_only": 0.0,
+          "deps": 0.0
+        },
+        "source": "jev"
+      },
+      "risk": {
+        "type": "score",
+        "value": 0.0,
+        "confidence": 1.0,
+        "probabilities": {
+          "0": 1.0,
+          "1": 0.0,
+          "2": 0.0
+        },
+        "source": "jev"
+      },
+      "touches_auth_security": {
+        "type": "noul",
+        "value": 0.02,
+        "confidence": 0.96,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_data_schema": {
+        "type": "noul",
+        "value": 0.02,
+        "confidence": 0.96,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "breaking_api": {
+        "type": "noul",
+        "value": 0.01,
+        "confidence": 0.98,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_infra_ci": {
+        "type": "noul",
+        "value": 0.02,
+        "confidence": 0.96,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "has_tests": {
+        "type": "noul",
+        "value": 0.02,
+        "confidence": 0.96,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "description_explains_why": {
+        "type": "noul",
+        "value": 0.07,
+        "confidence": 0.86,
+        "probabilities": null,
+        "source": "jev"
+      }
+    },
+    "verdict": {
+      "lane": "fast",
+      "reasons": [
+        "type_docs",
+        "no_risk_flags",
+        "risk_none",
+        "small"
+      ],
+      "uncertain": [],
+      "t": 0.7
+    },
+    "sent": {
+      "tokens_est": 935,
+      "budget_tokens": 20000,
+      "files_total": 1,
+      "files_included": [
+        "docs/ko/docs/tutorial/cookie-param-models.md"
+      ],
+      "files_truncated": [],
+      "files_omitted": [],
+      "body_truncated": false,
+      "file_list_truncated": false
+    },
+    "trace": [
+      {
+        "stage": "github",
+        "latency_ms": 671.5,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "jev",
+        "latency_ms": 705.5,
+        "cost": 0.000101514,
+        "input_tokens": 2417,
+        "output_tokens": 202,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "code",
+        "latency_ms": 0.034,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "llm",
+        "latency_ms": 0.0,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": true,
+        "note": "cascata ainda não implementada (M3)"
+      }
+    ],
+    "versions": {
+      "questions": "pr-v1",
+      "jev_model": "typesafe/jev-1.13-20260917",
+      "api": "0.1.0"
+    },
+    "categories": {
+      "security": 0,
+      "schema": 0,
+      "api": 0,
+      "infra": 0,
+      "source": 0,
+      "tests": 0,
+      "docs": 1
+    },
+    "cached": false
+  },
+  {
+    "expect": "bump de dependência → fast/deps",
+    "url": "https://github.com/fastapi/fastapi/pull/16289",
+    "pr": {
+      "slug": "fastapi/fastapi#16289",
+      "title": "⬆ Bump starlette from 1.3.1 to 1.6.0",
+      "author": "dependabot[bot]",
+      "author_association": "CONTRIBUTOR",
+      "state": "closed",
+      "draft": false,
+      "labels": [
+        "dependencies",
+        "internal",
+        "python:uv"
+      ],
+      "additions": 3,
+      "deletions": 3,
+      "changed_files": 1,
+      "head_sha": "d7d63f8d6e8beef5c8027c2b05cbc6b750e984fd",
+      "html_url": "https://github.com/fastapi/fastapi/pull/16289"
+    },
+    "decisions": {
+      "change_type": {
+        "type": "choice",
+        "value": "deps",
+        "confidence": 1.0,
+        "probabilities": {
+          "config_infra": 0.0,
+          "feature": 0.0,
+          "tests_only": 0.0,
+          "bugfix": 0.0,
+          "docs": 0.0,
+          "refactor": 0.0,
+          "deps": 1.0
+        },
+        "source": "jev"
+      },
+      "risk": {
+        "type": "score",
+        "value": 1.52,
+        "confidence": 0.28,
+        "probabilities": {
+          "0": 0.03,
+          "1": 0.42,
+          "2": 0.55
+        },
+        "source": "jev"
+      },
+      "touches_auth_security": {
+        "type": "noul",
+        "value": 0.07,
+        "confidence": 0.86,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_data_schema": {
+        "type": "noul",
+        "value": 0.03,
+        "confidence": 0.94,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "breaking_api": {
+        "type": "noul",
+        "value": 0.09,
+        "confidence": 0.82,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_infra_ci": {
+        "type": "noul",
+        "value": 0.05,
+        "confidence": 0.9,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "has_tests": {
+        "type": "noul",
+        "value": 0.03,
+        "confidence": 0.94,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "description_explains_why": {
+        "type": "noul",
+        "value": 0.06,
+        "confidence": 0.88,
+        "probabilities": null,
+        "source": "jev"
+      }
+    },
+    "verdict": {
+      "lane": "normal",
+      "reasons": [
+        "uncertain_decisions"
+      ],
+      "uncertain": [
+        "risk"
+      ],
+      "t": 0.7
+    },
+    "sent": {
+      "tokens_est": 1504,
+      "budget_tokens": 20000,
+      "files_total": 1,
+      "files_included": [],
+      "files_truncated": [],
+      "files_omitted": [
+        {
+          "path": "uv.lock",
+          "reason": "lockfile"
+        }
+      ],
+      "body_truncated": true,
+      "file_list_truncated": false
+    },
+    "trace": [
+      {
+        "stage": "github",
+        "latency_ms": 592.5,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "jev",
+        "latency_ms": 425.7,
+        "cost": 0.000115164,
+        "input_tokens": 2742,
+        "output_tokens": 202,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "code",
+        "latency_ms": 0.024,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "llm",
+        "latency_ms": 0.0,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": true,
+        "note": "cascata ainda não implementada (M3)"
+      }
+    ],
+    "versions": {
+      "questions": "pr-v1",
+      "jev_model": "typesafe/jev-1.13-20260917",
+      "api": "0.1.0"
+    },
+    "categories": {
+      "security": 0,
+      "schema": 0,
+      "api": 0,
+      "infra": 0,
+      "source": 0,
+      "tests": 0,
+      "docs": 0
+    },
+    "cached": false
+  },
+  {
+    "expect": "ARMADILHA: docs que FALAM de segurança → não é flag de security",
+    "url": "https://github.com/pallets/werkzeug/pull/3252",
+    "pr": {
+      "slug": "pallets/werkzeug#3252",
+      "title": "add docs to address common invalid security reports",
+      "author": "davidism",
+      "author_association": "MEMBER",
+      "state": "closed",
+      "draft": false,
+      "labels": [],
+      "additions": 119,
+      "deletions": 39,
+      "changed_files": 8,
+      "head_sha": "5d39fd55ac5cefb996edce53d2b2e8b3677d8a8d",
+      "html_url": "https://github.com/pallets/werkzeug/pull/3252"
+    },
+    "decisions": {
+      "change_type": {
+        "type": "choice",
+        "value": "docs",
+        "confidence": 0.83,
+        "probabilities": {
+          "feature": 0.03,
+          "refactor": 0.09,
+          "tests_only": 0.0,
+          "config_infra": 0.0,
+          "bugfix": 0.03,
+          "docs": 0.85,
+          "deps": 0.0
+        },
+        "source": "jev"
+      },
+      "risk": {
+        "type": "score",
+        "value": 1.08,
+        "confidence": 0.66,
+        "probabilities": {
+          "0": 0.07,
+          "1": 0.77,
+          "2": 0.16
+        },
+        "source": "jev"
+      },
+      "touches_auth_security": {
+        "type": "noul",
+        "value": 0.75,
+        "confidence": 0.5,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_data_schema": {
+        "type": "noul",
+        "value": 0.03,
+        "confidence": 0.94,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "breaking_api": {
+        "type": "noul",
+        "value": 0.08,
+        "confidence": 0.84,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_infra_ci": {
+        "type": "noul",
+        "value": 0.02,
+        "confidence": 0.96,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "has_tests": {
+        "type": "noul",
+        "value": 0.03,
+        "confidence": 0.94,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "description_explains_why": {
+        "type": "noul",
+        "value": 0.96,
+        "confidence": 0.92,
+        "probabilities": null,
+        "source": "jev"
+      }
+    },
+    "verdict": {
+      "lane": "normal",
+      "reasons": [
+        "uncertain_decisions"
+      ],
+      "uncertain": [
+        "touches_auth_security",
+        "risk"
+      ],
+      "t": 0.7
+    },
+    "sent": {
+      "tokens_est": 5928,
+      "budget_tokens": 20000,
+      "files_total": 8,
+      "files_included": [
+        "src/werkzeug/security.py",
+        "src/werkzeug/utils.py",
+        "src/werkzeug/datastructures/headers.py",
+        "src/werkzeug/serving.py",
+        "src/werkzeug/sansio/multipart.py",
+        "src/werkzeug/http.py",
+        "src/werkzeug/test.py",
+        "docs/quickstart.rst"
+      ],
+      "files_truncated": [],
+      "files_omitted": [],
+      "body_truncated": false,
+      "file_list_truncated": false
+    },
+    "trace": [
+      {
+        "stage": "github",
+        "latency_ms": 617.0,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "jev",
+        "latency_ms": 473.5,
+        "cost": 0.000242802,
+        "input_tokens": 5781,
+        "output_tokens": 202,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "code",
+        "latency_ms": 0.022,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "llm",
+        "latency_ms": 0.0,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": true,
+        "note": "cascata ainda não implementada (M3)"
+      }
+    ],
+    "versions": {
+      "questions": "pr-v1",
+      "jev_model": "typesafe/jev-1.13-20260917",
+      "api": "0.1.0"
+    },
+    "categories": {
+      "security": 1,
+      "schema": 0,
+      "api": 0,
+      "infra": 0,
+      "source": 6,
+      "tests": 0,
+      "docs": 1
+    },
+    "cached": false
+  },
+  {
+    "expect": "workflow de CI → infra, config_infra",
+    "url": "https://github.com/pallets/flask/pull/5945",
+    "pr": {
+      "slug": "pallets/flask#5945",
+      "title": "add zizmor to scan workflows",
+      "author": "davidism",
+      "author_association": "MEMBER",
+      "state": "closed",
+      "draft": false,
+      "labels": [],
+      "additions": 51,
+      "deletions": 9,
+      "changed_files": 5,
+      "head_sha": "560c119e3dc33b35b9c57172fae521d99c2a1421",
+      "html_url": "https://github.com/pallets/flask/pull/5945"
+    },
+    "decisions": {
+      "change_type": {
+        "type": "choice",
+        "value": "config_infra",
+        "confidence": 1.0,
+        "probabilities": {
+          "refactor": 0.0,
+          "deps": 0.0,
+          "bugfix": 0.0,
+          "config_infra": 1.0,
+          "tests_only": 0.0,
+          "docs": 0.0,
+          "feature": 0.0
+        },
+        "source": "jev"
+      },
+      "risk": {
+        "type": "score",
+        "value": 0.42,
+        "confidence": 0.38,
+        "probabilities": {
+          "0": 0.71,
+          "1": 0.17,
+          "2": 0.12
+        },
+        "source": "jev"
+      },
+      "touches_auth_security": {
+        "type": "noul",
+        "value": 0.62,
+        "confidence": 0.24,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_data_schema": {
+        "type": "noul",
+        "value": 0.05,
+        "confidence": 0.9,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "breaking_api": {
+        "type": "noul",
+        "value": 0.03,
+        "confidence": 0.94,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_infra_ci": {
+        "type": "noul",
+        "value": 0.98,
+        "confidence": 0.96,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "has_tests": {
+        "type": "noul",
+        "value": 0.03,
+        "confidence": 0.94,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "description_explains_why": {
+        "type": "noul",
+        "value": 0.61,
+        "confidence": 0.22,
+        "probabilities": null,
+        "source": "jev"
+      }
+    },
+    "verdict": {
+      "lane": "normal",
+      "reasons": [
+        "uncertain_decisions"
+      ],
+      "uncertain": [
+        "touches_auth_security",
+        "risk"
+      ],
+      "t": 0.7
+    },
+    "sent": {
+      "tokens_est": 2003,
+      "budget_tokens": 20000,
+      "files_total": 5,
+      "files_included": [
+        ".github/workflows/zizmor.yaml",
+        ".github/workflows/tests.yaml",
+        ".github/workflows/lock.yaml",
+        ".github/workflows/pre-commit.yaml",
+        ".github/workflows/publish.yaml"
+      ],
+      "files_truncated": [],
+      "files_omitted": [],
+      "body_truncated": false,
+      "file_list_truncated": false
+    },
+    "trace": [
+      {
+        "stage": "github",
+        "latency_ms": 569.0,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "jev",
+        "latency_ms": 557.7,
+        "cost": 0.000134106,
+        "input_tokens": 3193,
+        "output_tokens": 204,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "code",
+        "latency_ms": 0.026,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "llm",
+        "latency_ms": 0.0,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": true,
+        "note": "cascata ainda não implementada (M3)"
+      }
+    ],
+    "versions": {
+      "questions": "pr-v1",
+      "jev_model": "typesafe/jev-1.13-20260917",
+      "api": "0.1.0"
+    },
+    "categories": {
+      "security": 0,
+      "schema": 0,
+      "api": 0,
+      "infra": 5,
+      "source": 0,
+      "tests": 0,
+      "docs": 0
+    },
+    "cached": false
+  },
+  {
+    "expect": "remove código deprecated → breaking_api?",
+    "url": "https://github.com/pydantic/pydantic/pull/720",
+    "pr": {
+      "slug": "pydantic/pydantic#720",
+      "title": "Remove old, deprecated code",
+      "author": "samuelcolvin",
+      "author_association": "MEMBER",
+      "state": "closed",
+      "draft": false,
+      "labels": [],
+      "additions": 6,
+      "deletions": 125,
+      "changed_files": 6,
+      "head_sha": "72bada8ca8390727ba6f72ae922d267982469343",
+      "html_url": "https://github.com/pydantic/pydantic/pull/720"
+    },
+    "decisions": {
+      "change_type": {
+        "type": "choice",
+        "value": "refactor",
+        "confidence": 0.9,
+        "probabilities": {
+          "deps": 0.0,
+          "feature": 0.05,
+          "docs": 0.0,
+          "refactor": 0.92,
+          "config_infra": 0.0,
+          "bugfix": 0.03,
+          "tests_only": 0.0
+        },
+        "source": "jev"
+      },
+      "risk": {
+        "type": "score",
+        "value": 1.79,
+        "confidence": 0.68,
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.2,
+          "2": 0.8
+        },
+        "source": "jev"
+      },
+      "touches_auth_security": {
+        "type": "noul",
+        "value": 0.04,
+        "confidence": 0.92,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_data_schema": {
+        "type": "noul",
+        "value": 0.03,
+        "confidence": 0.94,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "breaking_api": {
+        "type": "noul",
+        "value": 0.92,
+        "confidence": 0.84,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_infra_ci": {
+        "type": "noul",
+        "value": 0.04,
+        "confidence": 0.92,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "has_tests": {
+        "type": "noul",
+        "value": 0.24,
+        "confidence": 0.52,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "description_explains_why": {
+        "type": "noul",
+        "value": 0.58,
+        "confidence": 0.16,
+        "probabilities": null,
+        "source": "jev"
+      }
+    },
+    "verdict": {
+      "lane": "senior",
+      "reasons": [
+        "breaking_api"
+      ],
+      "uncertain": [
+        "risk"
+      ],
+      "t": 0.7
+    },
+    "sent": {
+      "tokens_est": 2910,
+      "budget_tokens": 20000,
+      "files_total": 6,
+      "files_included": [
+        "pydantic/main.py",
+        "pydantic/fields.py",
+        "tests/test_edge_cases.py",
+        "changes/README.md",
+        ".github/PULL_REQUEST_TEMPLATE.md",
+        "changes/720-samuelcolvin.rst"
+      ],
+      "files_truncated": [],
+      "files_omitted": [],
+      "body_truncated": false,
+      "file_list_truncated": false
+    },
+    "trace": [
+      {
+        "stage": "github",
+        "latency_ms": 578.3,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "jev",
+        "latency_ms": 483.6,
+        "cost": 0.000141918,
+        "input_tokens": 3379,
+        "output_tokens": 203,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "code",
+        "latency_ms": 0.026,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "llm",
+        "latency_ms": 0.0,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": true,
+        "note": "cascata ainda não implementada (M3)"
+      }
+    ],
+    "versions": {
+      "questions": "pr-v1",
+      "jev_model": "typesafe/jev-1.13-20260917",
+      "api": "0.1.0"
+    },
+    "categories": {
+      "security": 0,
+      "schema": 0,
+      "api": 0,
+      "infra": 0,
+      "source": 2,
+      "tests": 1,
+      "docs": 3
+    },
+    "cached": false
+  },
+  {
+    "expect": "bugfix pequeno em código → normal",
+    "url": "https://github.com/django/django/pull/18000",
+    "pr": {
+      "slug": "django/django#18000",
+      "title": "Fixed #35320 -- Removed unnecessary django.core.files.move._samefile() hook.",
+      "author": "bcail",
+      "author_association": "CONTRIBUTOR",
+      "state": "closed",
+      "draft": false,
+      "labels": [],
+      "additions": 5,
+      "deletions": 16,
+      "changed_files": 1,
+      "head_sha": "8dbfef469582128c9d8487bf3f45d861b2ecfcb9",
+      "html_url": "https://github.com/django/django/pull/18000"
+    },
+    "decisions": {
+      "change_type": {
+        "type": "choice",
+        "value": "refactor",
+        "confidence": 0.92,
+        "probabilities": {
+          "tests_only": 0.0,
+          "config_infra": 0.0,
+          "deps": 0.0,
+          "feature": 0.0,
+          "refactor": 0.9400000000000001,
+          "docs": 0.0,
+          "bugfix": 0.06
+        },
+        "source": "jev"
+      },
+      "risk": {
+        "type": "score",
+        "value": 1.14,
+        "confidence": 0.68,
+        "probabilities": {
+          "0": 0.04,
+          "1": 0.78,
+          "2": 0.18
+        },
+        "source": "jev"
+      },
+      "touches_auth_security": {
+        "type": "noul",
+        "value": 0.07,
+        "confidence": 0.86,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_data_schema": {
+        "type": "noul",
+        "value": 0.02,
+        "confidence": 0.96,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "breaking_api": {
+        "type": "noul",
+        "value": 0.05,
+        "confidence": 0.9,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_infra_ci": {
+        "type": "noul",
+        "value": 0.02,
+        "confidence": 0.96,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "has_tests": {
+        "type": "noul",
+        "value": 0.13,
+        "confidence": 0.74,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "description_explains_why": {
+        "type": "noul",
+        "value": 0.32,
+        "confidence": 0.36,
+        "probabilities": null,
+        "source": "jev"
+      }
+    },
+    "verdict": {
+      "lane": "normal",
+      "reasons": [
+        "uncertain_decisions"
+      ],
+      "uncertain": [
+        "risk"
+      ],
+      "t": 0.7
+    },
+    "sent": {
+      "tokens_est": 680,
+      "budget_tokens": 20000,
+      "files_total": 1,
+      "files_included": [
+        "django/core/files/move.py"
+      ],
+      "files_truncated": [],
+      "files_omitted": [],
+      "body_truncated": false,
+      "file_list_truncated": false
+    },
+    "trace": [
+      {
+        "stage": "github",
+        "latency_ms": 595.2,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "jev",
+        "latency_ms": 383.8,
+        "cost": 6.8628e-05,
+        "input_tokens": 1634,
+        "output_tokens": 203,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "code",
+        "latency_ms": 0.025,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "llm",
+        "latency_ms": 0.0,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": true,
+        "note": "cascata ainda não implementada (M3)"
+      }
+    ],
+    "versions": {
+      "questions": "pr-v1",
+      "jev_model": "typesafe/jev-1.13-20260917",
+      "api": "0.1.0"
+    },
+    "categories": {
+      "security": 0,
+      "schema": 0,
+      "api": 0,
+      "infra": 0,
+      "source": 1,
+      "tests": 0,
+      "docs": 0
+    },
+    "cached": false
+  },
+  {
+    "expect": "migração de streamfield → schema?",
+    "url": "https://github.com/wagtail/wagtail/pull/12409",
+    "pr": {
+      "slug": "wagtail/wagtail#12409",
+      "title": "Handle undefined fields on revisions in streamfield migrations",
+      "author": "jams2",
+      "author_association": "CONTRIBUTOR",
+      "state": "closed",
+      "draft": false,
+      "labels": [
+        "status:Needs Review",
+        "component:Streamfield"
+      ],
+      "additions": 45,
+      "deletions": 1,
+      "changed_files": 4,
+      "head_sha": "f9fdb5ea5b8c4a92293e0c68b93865ee9d9002f4",
+      "html_url": "https://github.com/wagtail/wagtail/pull/12409"
+    },
+    "decisions": {
+      "change_type": {
+        "type": "choice",
+        "value": "bugfix",
+        "confidence": 1.0,
+        "probabilities": {
+          "docs": 0.0,
+          "tests_only": 0.0,
+          "bugfix": 1.0,
+          "config_infra": 0.0,
+          "feature": 0.0,
+          "deps": 0.0,
+          "refactor": 0.0
+        },
+        "source": "jev"
+      },
+      "risk": {
+        "type": "score",
+        "value": 1.78,
+        "confidence": 0.67,
+        "probabilities": {
+          "0": 0.0,
+          "1": 0.22,
+          "2": 0.78
+        },
+        "source": "jev"
+      },
+      "touches_auth_security": {
+        "type": "noul",
+        "value": 0.04,
+        "confidence": 0.92,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_data_schema": {
+        "type": "noul",
+        "value": 0.06,
+        "confidence": 0.88,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "breaking_api": {
+        "type": "noul",
+        "value": 0.04,
+        "confidence": 0.92,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "touches_infra_ci": {
+        "type": "noul",
+        "value": 0.03,
+        "confidence": 0.94,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "has_tests": {
+        "type": "noul",
+        "value": 0.98,
+        "confidence": 0.96,
+        "probabilities": null,
+        "source": "jev"
+      },
+      "description_explains_why": {
+        "type": "noul",
+        "value": 0.6,
+        "confidence": 0.2,
+        "probabilities": null,
+        "source": "jev"
+      }
+    },
+    "verdict": {
+      "lane": "normal",
+      "reasons": [
+        "uncertain_decisions"
+      ],
+      "uncertain": [
+        "risk"
+      ],
+      "t": 0.7
+    },
+    "sent": {
+      "tokens_est": 1487,
+      "budget_tokens": 20000,
+      "files_total": 4,
+      "files_included": [
+        "wagtail/blocks/migrations/migrate_operation.py",
+        "wagtail/tests/streamfield_migrations/test_migrations.py",
+        "CHANGELOG.txt",
+        "docs/releases/7.3.md"
+      ],
+      "files_truncated": [],
+      "files_omitted": [],
+      "body_truncated": false,
+      "file_list_truncated": false
+    },
+    "trace": [
+      {
+        "stage": "github",
+        "latency_ms": 653.7,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "jev",
+        "latency_ms": 455.3,
+        "cost": 9.5382e-05,
+        "input_tokens": 2271,
+        "output_tokens": 203,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "code",
+        "latency_ms": 0.02,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": false,
+        "note": null
+      },
+      {
+        "stage": "llm",
+        "latency_ms": 0.0,
+        "cost": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "skipped": true,
+        "note": "cascata ainda não implementada (M3)"
+      }
+    ],
+    "versions": {
+      "questions": "pr-v1",
+      "jev_model": "typesafe/jev-1.13-20260917",
+      "api": "0.1.0"
+    },
+    "categories": {
+      "security": 0,
+      "schema": 1,
+      "api": 0,
+      "infra": 0,
+      "source": 0,
+      "tests": 1,
+      "docs": 2
+    },
+    "cached": false
+  }
+]

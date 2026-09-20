@@ -5,6 +5,7 @@ vai pra `api.github.com` (sem SSRF)."""
 
 from __future__ import annotations
 
+import asyncio
 import os
 import re
 import time
@@ -123,15 +124,18 @@ async def fetch_pr(ref: PrRef, client: httpx.AsyncClient | None = None) -> PullR
     client = client or httpx.AsyncClient(timeout=TIMEOUT)
     base = f"{API}/repos/{ref.owner}/{ref.repo}/pulls/{ref.number}"
     try:
-        r = await client.get(base, headers=_headers())
+        # PR e 1ª página de arquivos em paralelo: em sequência o GitHub custava mais que o jev
+        r, first = await asyncio.gather(
+            client.get(base, headers=_headers()),
+            client.get(
+                f"{base}/files", params={"per_page": PER_PAGE, "page": 1}, headers=_headers()
+            ),
+        )
         _check(r)
         d = r.json()
         files: list[PrFile] = []
-        page = 1
-        while len(files) < MAX_FILES:
-            fr = await client.get(
-                f"{base}/files", params={"per_page": PER_PAGE, "page": page}, headers=_headers()
-            )
+        page, fr = 1, first
+        while True:
             _check(fr)
             batch = fr.json()
             files += [
@@ -144,9 +148,12 @@ async def fetch_pr(ref: PrRef, client: httpx.AsyncClient | None = None) -> PullR
                 )
                 for f in batch
             ]
-            if len(batch) < PER_PAGE:
+            if len(batch) < PER_PAGE or len(files) >= MAX_FILES:
                 break
             page += 1
+            fr = await client.get(
+                f"{base}/files", params={"per_page": PER_PAGE, "page": page}, headers=_headers()
+            )
     except httpx.HTTPError as e:
         raise TriageError("github_unavailable", "Falha ao falar com o GitHub.", 502) from e
     finally:

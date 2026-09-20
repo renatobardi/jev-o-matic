@@ -13,7 +13,9 @@ CASES = json.loads((Path(__file__).parent / "verdict_cases.json").read_text(enco
 def _answers(d: dict[str, list[Any]]) -> dict[str, Answer]:
     out = {}
     for k, v in d.items():
-        kind = "choice" if k == "change_type" else "score" if k == "risk" else "noul"
+        kind = (
+            "choice" if k == "change_type" else "score" if k == "risk" else "noul"
+        )  # [value, conf, probs?]
         out[k] = Answer(kind, v[0], v[1], v[2] if len(v) > 2 else None)
     return out
 
