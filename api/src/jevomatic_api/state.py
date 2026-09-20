@@ -19,7 +19,10 @@ MIN_PATCH_LINES = 30  # última tentativa de encaixar um arquivo antes de omitir
 MAX_LISTED_FILES = 300
 
 # Ordem em que os patches disputam o orçamento. Menor = entra primeiro.
-CATEGORIES = ["security", "schema", "api", "infra", "source", "tests", "docs"]
+CATEGORIES = ["security", "schema", "api", "infra", "source", "deps", "tests", "docs"]
+# Código que roda em produção. Se o PR tem algum, a via rápida fica fechada (verdict.py) — guarda
+# em código contra o jev dizer "docs" num diff com lógica.
+RUNTIME_CATEGORIES = ("security", "schema", "api", "source")
 
 _OMIT: list[tuple[str, re.Pattern[str]]] = [
     (
@@ -48,6 +51,13 @@ _OMIT: list[tuple[str, re.Pattern[str]]] = [
     ),
 ]
 
+# Manifestos de dependência e config de ferramenta de dev: sem isso caíam em "source" (o resto) e
+# um bump do dependabot contaria como código de produção.
+_DEPS = re.compile(
+    r"(^|/)(package\.json|pyproject\.toml|requirements[^/]*\.(txt|in)|constraints[^/]*\.txt|Pipfile|"
+    r"setup\.cfg|go\.mod|Cargo\.toml|Gemfile|composer\.json|pom\.xml|build\.gradle(\.kts)?|"
+    r"\.pre-commit-config\.ya?ml|\.tool-versions|\.nvmrc|\.python-version)$"
+)
 _TESTS = re.compile(
     r"(^|/)(tests?|__tests__|e2e|spec|specs|fixtures)/|(^|/)test_[^/]+$|"
     r"[._-](test|spec)\.[A-Za-z]+$|_test\.[A-Za-z]+$|(^|/)conftest\.py$"
@@ -96,6 +106,7 @@ def omit_reason(f: PrFile) -> str | None:
 def categorize(path: str) -> str:
     # tests/docs primeiro: `tests/test_auth.py` é teste, não lógica de autenticação.
     for name, pat in (
+        ("deps", _DEPS),  # antes de docs: requirements.txt não é documentação
         ("tests", _TESTS),
         ("docs", _DOCS),
         ("security", _SECURITY),
@@ -203,3 +214,7 @@ def build_state(pr: PullRequest, budget_tokens: int = BUDGET_TOKENS) -> BuiltSta
     # só arquivos revisáveis: lockfile/binário/gerado não contam pro veredito
     counts = {c: sum(1 for f in candidates if cats[f.path] == c) for c in CATEGORIES}
     return BuiltState(state=state, sent=sent, categories=counts)
+
+
+def runtime_files(categories: dict[str, int]) -> int:
+    return sum(categories.get(c, 0) for c in RUNTIME_CATEGORIES)

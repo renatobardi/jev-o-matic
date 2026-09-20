@@ -32,7 +32,7 @@ PR = {
 }
 FILES = [
     {
-        "filename": "src/werkzeug/security.py",
+        "filename": "docs/security.rst",
         "status": "modified",
         "additions": 1,
         "deletions": 0,

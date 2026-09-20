@@ -6,6 +6,7 @@ type Raw = [number | string, number, Record<string, number>?];
 interface Case {
   name: string;
   files: number;
+  runtime?: number;
   t: number;
   lane: string;
   uncertain: string[];
@@ -18,7 +19,7 @@ const toAnswers = (d: Case["d"]): Record<string, AnswerLike> =>
 // A mesma tabela que valida o verdict.py: as duas implementações não podem divergir.
 for (const c of cases as unknown as Case[]) {
   test(`veredito: ${c.name}`, () => {
-    const v = verdict(toAnswers(c.d), c.files, c.t);
+    const v = verdict(toAnswers(c.d), c.files, c.t, c.runtime ?? 0);
     expect([v.lane, v.uncertain]).toEqual([c.lane, c.uncertain]);
   });
 }

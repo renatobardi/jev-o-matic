@@ -22,7 +22,7 @@ def _answers(d: dict[str, list[Any]]) -> dict[str, Answer]:
 
 @pytest.mark.parametrize("case", CASES, ids=[c["name"] for c in CASES])
 def test_cases(case: dict[str, Any]) -> None:
-    v = verdict(_answers(case["d"]), case["files"], case["t"])
+    v = verdict(_answers(case["d"]), case["files"], case["t"], case.get("runtime", 0))
     assert (v.lane, v.uncertain) == (case["lane"], case["uncertain"])
     assert v.reasons or v.lane == "normal"
 

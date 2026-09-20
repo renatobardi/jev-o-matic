@@ -5,6 +5,7 @@ Uma decisão só DECIDE a lane se tiver confidence ≥ t. Abaixo disso a lane ca
 decisão entra em `uncertain` (gatilho da cascata pro LLM) — mas só se ainda puder mudar a lane:
   senior  ← flag de risco positivo e confiante, ou risk nível 2 confiante
   fast    ← tipo de baixo risco confiante + TODOS os flags negativos e confiantes + risk 0 confiante + PR pequeno
+            + NENHUM arquivo de código de produção (contado em código pelo state.py, não pelo jev)
   normal  ← todo o resto
 A mesma tabela de casos (tests/verdict_cases.json) valida o port em TypeScript do web."""
 
@@ -46,7 +47,10 @@ def clamp_t(t: float | None) -> float:
 
 
 def verdict(
-    decisions: Mapping[str, AnswerLike], files_changed: int, t: float = DEFAULT_T
+    decisions: Mapping[str, AnswerLike],
+    files_changed: int,
+    t: float = DEFAULT_T,
+    runtime_files: int = 0,
 ) -> Verdict:
     v = Verdict(lane="normal", t=t)
     risk, ctype = decisions["risk"], decisions["change_type"]
@@ -68,7 +72,8 @@ def verdict(
     near_fast = ctype.value in FAST_TYPES or any(
         probs.get(o, 0) >= FAST_RUNNER_UP for o in FAST_TYPES
     )
-    fast_reachable = all_cold and small and near_fast
+    no_runtime = runtime_files == 0  # guarda em código: jev diz "docs", diff tem lógica → sem fast
+    fast_reachable = all_cold and small and near_fast and no_runtime
 
     v.uncertain = [k for k in FLAGS if not sure[k]]  # flag incerto pode virar senior
     if not sure["risk"]:
@@ -83,15 +88,24 @@ def verdict(
         and ctype.value in FAST_TYPES
         and all_cold
         and small
+        and no_runtime
         and sure["risk"]
         and round(risk.value) == 0
     ):
         v.lane = "fast"
-        v.reasons = [f"type_{ctype.value}", "no_risk_flags", "risk_none", "small"]
+        v.reasons = [
+            f"type_{ctype.value}",
+            "no_risk_flags",
+            "risk_none",
+            "small",
+            "no_runtime_files",
+        ]
         return v
 
     if ctype.value in FAST_TYPES and not small:
         v.reasons.append("too_many_files_for_fast")
+    if ctype.value in FAST_TYPES and not no_runtime:
+        v.reasons.append("runtime_files_block_fast")
     if v.uncertain:
         v.reasons.append("uncertain_decisions")
     return v

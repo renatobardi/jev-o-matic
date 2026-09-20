@@ -24,7 +24,7 @@ from .schemas import (
     VerdictOut,
     VersionsOut,
 )
-from .state import build_state, est_tokens
+from .state import build_state, est_tokens, runtime_files
 from .verdict import LANE_KEYS, clamp_t, verdict
 
 QUESTIONS_TOKENS = est_tokens(repr(QUESTIONS))
@@ -94,7 +94,8 @@ async def triage(
     g.budget.record(res.cost)
 
     t1 = time.perf_counter()
-    first = verdict(res.answers, pr.changed_files, threshold)
+    runtime = runtime_files(built.categories)
+    first = verdict(res.answers, pr.changed_files, threshold, runtime)
     code_ms = (time.perf_counter() - t1) * 1000
 
     final, answers = first, dict(res.answers)
@@ -116,7 +117,7 @@ async def triage(
                 g.budget.record(op.cost, llm=True)
                 llm_answers, llm_model = op.answers, op.model
                 answers.update({k: v.answer for k, v in llm_answers.items()})
-                final = verdict(answers, pr.changed_files, threshold)
+                final = verdict(answers, pr.changed_files, threshold, runtime)
                 llm_stage = StageOut(
                     stage="llm",
                     latency_ms=op.latency_ms,

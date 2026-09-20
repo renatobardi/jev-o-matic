@@ -34,7 +34,19 @@ function pyRound(v: number): number {
   return floor % 2 === 0 ? floor : floor + 1;
 }
 
-export function verdict(decisions: Record<string, AnswerLike>, filesChanged: number, t: number = DEFAULT_T): LocalVerdict {
+const RUNTIME_CATEGORIES = ["security", "schema", "api", "source"];
+
+/** Arquivos de código de produção, a partir do `categories` que a API devolve. */
+export function runtimeFiles(categories: Record<string, number>): number {
+  return RUNTIME_CATEGORIES.reduce((n, c) => n + (categories[c] ?? 0), 0);
+}
+
+export function verdict(
+  decisions: Record<string, AnswerLike>,
+  filesChanged: number,
+  t: number = DEFAULT_T,
+  runtime: number = 0,
+): LocalVerdict {
   const v: LocalVerdict = { lane: "normal", reasons: [], uncertain: [], t };
   const risk = decisions.risk;
   const ctype = decisions.change_type;
@@ -54,7 +66,8 @@ export function verdict(decisions: Record<string, AnswerLike>, filesChanged: num
   const probs = ctype.probabilities ?? {};
   const isFastType = FAST_TYPES.includes(ctype.value as string);
   const nearFast = isFastType || FAST_TYPES.some((o) => (probs[o] ?? 0) >= FAST_RUNNER_UP);
-  const fastReachable = allCold && small && nearFast;
+  const noRuntime = runtime === 0;
+  const fastReachable = allCold && small && nearFast && noRuntime;
 
   v.uncertain = FLAGS.filter((k) => !sure(k));
   if (!sure("risk")) {
@@ -63,13 +76,14 @@ export function verdict(decisions: Record<string, AnswerLike>, filesChanged: num
   }
   if (!sure("change_type") && fastReachable) v.uncertain.push("change_type");
 
-  if (sure("change_type") && isFastType && allCold && small && sure("risk") && riskLevel === 0) {
+  if (sure("change_type") && isFastType && allCold && small && noRuntime && sure("risk") && riskLevel === 0) {
     v.lane = "fast";
-    v.reasons = [`type_${ctype.value as string}`, "no_risk_flags", "risk_none", "small"];
+    v.reasons = [`type_${ctype.value as string}`, "no_risk_flags", "risk_none", "small", "no_runtime_files"];
     return v;
   }
 
   if (isFastType && !small) v.reasons.push("too_many_files_for_fast");
+  if (isFastType && !noRuntime) v.reasons.push("runtime_files_block_fast");
   if (v.uncertain.length > 0) v.reasons.push("uncertain_decisions");
   return v;
 }
