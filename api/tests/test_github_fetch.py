@@ -15,7 +15,7 @@ PR = {
     "labels": [{"name": "bug"}],
     "state": "open",
     "draft": False,
-    "base": {"ref": "main"},
+    "base": {"ref": "main", "repo": {"private": False, "visibility": "public"}},
     "head": {"sha": "abc123"},
     "additions": 10,
     "deletions": 2,
@@ -116,3 +116,40 @@ async def test_network_failure() -> None:
         with pytest.raises(TriageError) as e:
             await fetch_pr(REF, c)
     assert e.value.status == 502
+
+
+@pytest.mark.parametrize(
+    "repo",
+    [
+        {"private": True, "visibility": "private"},
+        {"private": False, "visibility": "internal"},
+        {},  # sem o campo: falha fechado
+    ],
+)
+async def test_private_repo_is_refused_even_if_the_token_can_read_it(
+    repo: dict[str, object],
+) -> None:
+    """O token deveria ser só de repo público; se não for, a demo não pode virar leitor de repo privado."""
+    calls: list[str] = []
+
+    def h(req: httpx.Request) -> httpx.Response:
+        calls.append(req.url.path)
+        if req.url.path.endswith("/files"):
+            return httpx.Response(200, json=[_file(1)])
+        return httpx.Response(200, json={**PR, "base": {"ref": "main", "repo": repo}})
+
+    async with _client(httpx.MockTransport(h)) as c:
+        with pytest.raises(TriageError) as e:
+            await fetch_pr(REF, c)
+    assert (e.value.code, e.value.status) == ("pr_not_found", 404)  # mesma resposta de "não existe"
+
+
+async def test_html_url_is_built_from_the_ref_not_copied() -> None:
+    def h(req: httpx.Request) -> httpx.Response:
+        if req.url.path.endswith("/files"):
+            return httpx.Response(200, json=[_file(1)])
+        return httpx.Response(200, json={**PR, "html_url": "javascript:alert(1)"})
+
+    async with _client(httpx.MockTransport(h)) as c:
+        pr = await fetch_pr(REF, c)
+    assert pr.html_url == f"https://github.com/{REF.owner}/{REF.repo}/pull/{REF.number}"

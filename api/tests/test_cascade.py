@@ -23,7 +23,7 @@ PR = {
     "labels": [],
     "state": "open",
     "draft": False,
-    "base": {"ref": "main"},
+    "base": {"ref": "main", "repo": {"private": False, "visibility": "public"}},
     "head": {"sha": "s"},
     "additions": 1,
     "deletions": 0,
