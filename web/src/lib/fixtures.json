@@ -481,8 +481,7 @@
    ],
    "uncertain": [
     "touches_auth_security",
-    "risk",
-    "change_type"
+    "risk"
    ],
    "t": 0.7,
    "escalated": [],

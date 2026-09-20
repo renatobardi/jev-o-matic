@@ -39,13 +39,17 @@ else:
     for d in unc["decisions"].values():
         if d.get("original"):
             d.update(d["original"], source="jev", rationale=None, original=None)
-    order = ["touches_auth_security", "touches_data_schema", "breaking_api", "risk", "change_type"]
-    unc["verdict"].update(
-        lane=casc["verdict"]["jev_lane"],
-        reasons=["uncertain_decisions"],
-        uncertain=sorted(casc["verdict"]["escalated"], key=order.index),
-        escalated=[],
-    )
+    # O que o jev sozinho deixaria incerto NÃO é o `escalated` (a chamada única do LLM leva tudo
+    # abaixo de t). Regra do verdict.py pro caso com código de produção no diff (fast fechado):
+    # flag abaixo de t sempre; risk só se o nível 2 é plausível; change_type nunca.
+    # O teste do web (verdict.test.ts) confere o resultado contra o verdict.ts.
+    t, dec = casc["verdict"]["t"], unc["decisions"]
+    if not sum(casc["categories"].get(c, 0) for c in ("security", "schema", "api", "source")):
+        sys.exit("erro: cascade sem código de produção — a derivação do `uncertain` não cobre esse caso")
+    pending = [k for k in ("touches_auth_security", "touches_data_schema", "breaking_api") if dec[k]["confidence"] < t]
+    if dec["risk"]["confidence"] < t and (dec["risk"]["probabilities"] or {}).get("2", 0) >= 0.3:
+        pending.append("risk")
+    unc["verdict"].update(lane=casc["verdict"]["jev_lane"], reasons=["uncertain_decisions"], uncertain=pending, escalated=[])
     llm = next(s for s in unc["trace"] if s["stage"] == "llm")
     llm.update(latency_ms=0.0, cost=None, input_tokens=None, output_tokens=None, skipped=True,
                note="LLM indisponível — mantido o veredito do jev")
