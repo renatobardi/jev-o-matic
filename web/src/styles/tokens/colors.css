@@ -1,0 +1,44 @@
+/* Tokens de cor do Kubo (mesmos do studio): neutros stone quentes, primário mono quase-preto (OKLCH).
+   Escuro via classe .dark. Só o que esta página usa, mais as três cores de via. */
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.147 0.004 49.25);
+  --card: oklch(1 0 0);
+  --primary: oklch(0.216 0.006 56.043);
+  --primary-foreground: oklch(0.985 0.001 106.423);
+  --muted: oklch(0.97 0.001 106.424);
+  --muted-foreground: oklch(0.553 0.013 58.071);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.923 0.003 48.717);
+  --input: oklch(0.923 0.003 48.717);
+  --ring: oklch(0.709 0.01 56.259);
+
+  --lane-fast: oklch(0.52 0.13 155);
+  --lane-normal: oklch(0.5 0.1 250);
+  --lane-senior: oklch(0.55 0.17 40);
+  --warn: oklch(0.62 0.14 75);
+  --add: oklch(0.5 0.13 155);
+  --del: oklch(0.55 0.2 27);
+}
+
+.dark {
+  --background: oklch(0.147 0.004 49.25);
+  --foreground: oklch(0.985 0.001 106.423);
+  --card: oklch(0.216 0.006 56.043);
+  --primary: oklch(0.92 0.004 106.423);
+  --primary-foreground: oklch(0.205 0.006 56.043);
+  --muted: oklch(0.268 0.007 34.298);
+  --muted-foreground: oklch(0.709 0.01 56.259);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.553 0.013 58.071);
+
+  --lane-fast: oklch(0.75 0.14 155);
+  --lane-normal: oklch(0.75 0.1 250);
+  --lane-senior: oklch(0.76 0.14 50);
+  --warn: oklch(0.8 0.13 80);
+  --add: oklch(0.75 0.14 155);
+  --del: oklch(0.72 0.17 25);
+}
