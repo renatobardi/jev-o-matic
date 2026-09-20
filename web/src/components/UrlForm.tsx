@@ -7,9 +7,11 @@ interface Props {
   busy: boolean;
   onSubmit: (url: string) => void;
   onExample: (example: (typeof EXAMPLES)[number]) => void;
+  /** URL do exemplo que está na tela: o chip dele fica invertido. */
+  activeUrl: string | null;
 }
 
-export function UrlForm({ busy, onSubmit, onExample }: Props) {
+export function UrlForm({ busy, onSubmit, onExample, activeUrl }: Props) {
   const [url, setUrl] = useState("");
   const [hint, setHint] = useState<string | null>(null);
 
@@ -61,7 +63,14 @@ export function UrlForm({ busy, onSubmit, onExample }: Props) {
       <div className="examples">
         <span className="meta">or try:</span>
         {EXAMPLES.map((ex) => (
-          <button key={ex.url} type="button" className="chip" disabled={busy} onClick={() => pick(ex)}>
+          <button
+            key={ex.url}
+            type="button"
+            className={ex.url === activeUrl ? "chip is-active" : "chip"}
+            aria-pressed={ex.url === activeUrl}
+            disabled={busy}
+            onClick={() => pick(ex)}
+          >
             {ex.label}
           </button>
         ))}

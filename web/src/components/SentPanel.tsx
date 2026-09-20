@@ -7,7 +7,7 @@ export function SentPanel({ sent }: { sent: TriageResult["sent"] }) {
   return (
     <details className="card sent">
       <summary>
-        <span className="eyebrow">what was sent to jev</span>
+        <span className="eyebrow">what was sent to Jev</span>
         <span className="meta">
           ~{int(sent.tokens_est)} tokens · {sent.files_included.length} of {int(sent.files_total)}{" "}
           {sent.files_total === 1 ? "file" : "files"}

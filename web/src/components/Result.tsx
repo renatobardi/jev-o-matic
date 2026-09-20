@@ -1,10 +1,8 @@
 import { useMemo, useState } from "react";
 import type { Decision, TriageResult } from "../lib/api";
-import { int } from "../lib/format";
 import { verdict as localVerdict, runtimeFiles } from "../lib/verdict";
 import { DecisionList } from "./DecisionList";
 import { SentPanel } from "./SentPanel";
-import { ThresholdSlider } from "./ThresholdSlider";
 import { Trace } from "./Trace";
 import { VerdictBadge } from "./VerdictBadge";
 
@@ -26,31 +24,25 @@ export function Result({ result, recorded = false }: { result: TriageResult; rec
 
   return (
     <article className="result">
-      <header className="card pr-head">
-        <p className="meta">
-          <a href={pr.html_url} target="_blank" rel="noreferrer">
-            {pr.slug}
-          </a>{" "}
-          · {pr.author} · {pr.state}
-          {pr.draft && " · draft"}
-        </p>
-        <h2>{pr.title}</h2>
-        <p className="meta">
-          {int(pr.changed_files)} {pr.changed_files === 1 ? "file" : "files"} ·{" "}
-          <span className="add">+{int(pr.additions)}</span> <span className="del">−{int(pr.deletions)}</span>
-          {result.cached && " · cached result"}
-        </p>
-        {recorded && <p className="meta">Recorded result of a real run — paste any PR URL above to run it live.</p>}
-      </header>
-
       <VerdictBadge
+        pr={pr}
         verdict={simulated ? { ...local, escalated: [], jev_lane: null } : result.verdict}
         simulated={simulated}
+        cached={result.cached}
+        recorded={recorded}
       />
-      <ThresholdSlider t={t} serverT={serverT} wouldEscalate={local.uncertain.length} onChange={setT} />
-      <DecisionList decisions={simulated ? jev : result.decisions} verdict={simulated ? local : result.verdict} />
-      <Trace trace={result.trace} />
-      <SentPanel sent={result.sent} />
+      <div className="columns">
+        <DecisionList
+          decisions={simulated ? jev : result.decisions}
+          verdict={simulated ? local : result.verdict}
+          serverT={serverT}
+          onThreshold={setT}
+        />
+        <aside className="side">
+          <Trace trace={result.trace} />
+          <SentPanel sent={result.sent} />
+        </aside>
+      </div>
     </article>
   );
 }

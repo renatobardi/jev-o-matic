@@ -54,16 +54,23 @@ export function App() {
   return (
     <div className="page">
       <header className="masthead">
-        <p className="eyebrow">jev-o-matic · lab v2</p>
-        <h1>Pull request triage with jev</h1>
-        <p className="lede">
-          Paste a public PR. <strong>jev</strong> answers typed questions about the diff in about half a second,{" "}
-          <strong>code</strong> picks the review lane, and only the doubt goes to an <strong>LLM</strong>.
-        </p>
+        <div className="masthead-main">
+          <p className="eyebrow">Jev-o-matic · lab</p>
+          <h1>Pull request triage with Jev</h1>
+          <p className="lede">
+            <strong>Jev</strong> answers typed questions about the diff in about half a second,{" "}
+            <strong>code</strong> picks the review lane, and only the doubt goes to an <strong>LLM</strong>.
+          </p>
+        </div>
+        <DemoNotice />
       </header>
 
-      <DemoNotice />
-      <UrlForm busy={view.kind === "loading"} onSubmit={run} onExample={runExample} />
+      <UrlForm
+        busy={view.kind === "loading"}
+        onSubmit={run}
+        onExample={runExample}
+        activeUrl={view.kind === "done" ? view.result.pr.html_url : null}
+      />
 
       <main aria-live="polite">
         {view.kind === "idle" && (
@@ -72,7 +79,7 @@ export function App() {
         {view.kind === "loading" && (
           <div className="card loading" role="status">
             <span className="spinner" aria-hidden="true" />
-            Fetching the PR from GitHub and asking jev…
+            Fetching the PR from GitHub and asking Jev…
           </div>
         )}
         {view.kind === "error" && (
@@ -81,7 +88,10 @@ export function App() {
             <span className="meta"> ({view.error.code})</span>
           </div>
         )}
-        {view.kind === "done" && <Result result={view.result} recorded={view.recorded} />}
+        {view.kind === "done" && (
+          // key: trocar de PR zera o threshold simulado do resultado anterior
+          <Result key={view.result.pr.html_url} result={view.result} recorded={view.recorded} />
+        )}
       </main>
 
       <Footer versions={view.kind === "done" ? view.result.versions : null} />
