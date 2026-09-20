@@ -6,8 +6,9 @@ from fastapi.responses import JSONResponse
 
 from . import __version__
 from .errors import TriageError
+from .guards import TtlCache, budget_from_env, rate_limiter_from_env
 from .schemas import ErrorOut, TriageRequest, TriageResponse
-from .triage import triage
+from .triage import Guards, triage
 
 app = FastAPI(
     title="jev-o-matic PR Triage",
@@ -40,14 +41,20 @@ async def health() -> dict[str, str]:
     return {"status": "ok", "version": __version__}
 
 
+# Um conjunto de guardas por processo (a api roda com 1 worker — ver Dockerfile).
+GUARDS = Guards(rate=rate_limiter_from_env(), budget=budget_from_env(), cache=TtlCache())
+
+
+def client_ip(request: Request) -> str:
+    """IP já resolvido pelo uvicorn a partir do X-Forwarded-For que o Caddy repassa.
+    A garantia contra header forjado é de borda: o Caddy só confia em proxy de faixa privada e o
+    Nginx do host deve SOBRESCREVER o X-Forwarded-For com $remote_addr (docs/production.md)."""
+    return request.client.host if request.client else "unknown"
+
+
 @app.post(
     "/api/triage",
-    responses={
-        422: {"model": ErrorOut},
-        404: {"model": ErrorOut},
-        429: {"model": ErrorOut},
-        502: {"model": ErrorOut},
-    },
+    responses={code: {"model": ErrorOut} for code in (404, 422, 429, 502, 503)},
 )
-async def post_triage(body: TriageRequest) -> TriageResponse:
-    return await triage(body.url, body.t)
+async def post_triage(body: TriageRequest, request: Request) -> TriageResponse:
+    return await triage(body.url, body.t, guards=GUARDS, client_ip=client_ip(request))

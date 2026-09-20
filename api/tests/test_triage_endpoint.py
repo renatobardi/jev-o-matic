@@ -4,10 +4,12 @@ import httpx
 import pytest
 from fastapi.testclient import TestClient
 
+from jevomatic_api import main as main_mod
 from jevomatic_api import triage as triage_mod
 from jevomatic_api.github import fetch_pr as real_fetch
 from jevomatic_api.main import app
 from jevomatic_api.questions import QUESTIONS, QUESTIONS_VERSION
+from jevomatic_api.triage import Guards
 
 PR = {
     "title": "Harden token check",
@@ -63,6 +65,8 @@ def _gh(
 @pytest.fixture
 def api(monkeypatch: pytest.MonkeyPatch) -> TestClient:
     monkeypatch.setenv("JEV_BACKEND", "mock")
+    # guardas novas por teste: cache e rate limit são estado do processo
+    monkeypatch.setattr(main_mod, "GUARDS", Guards())
     return TestClient(app)
 
 

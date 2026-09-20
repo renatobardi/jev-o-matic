@@ -47,7 +47,7 @@ async def main() -> None:
     out = []
     for expect, url in PRS:
         try:
-            r = await triage(url)
+            r = await triage(url)  # guardas novas a cada chamada: sem cache nem limite
         except TriageError as e:
             print(f"\n✗ {url}\n  {e.code}: {e.message}")
             continue

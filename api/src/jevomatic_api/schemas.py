@@ -29,19 +29,29 @@ class PrOut(BaseModel):
     html_url: str
 
 
+class JevOriginalOut(BaseModel):
+    value: Any
+    confidence: float
+    probabilities: dict[str, float] | None = None
+
+
 class DecisionOut(BaseModel):
     type: str
     value: Any
     confidence: float
     probabilities: dict[str, float] | None = None
-    source: str = "jev"  # "jev" | "llm" (M3)
+    source: str = "jev"  # "jev" | "llm"
+    rationale: str | None = None  # só quando source == "llm"; texto puro
+    original: JevOriginalOut | None = None  # o que o jev tinha dito, quando o LLM respondeu
 
 
 class VerdictOut(BaseModel):
     lane: str
     reasons: list[str]
-    uncertain: list[str]
+    uncertain: list[str]  # ainda incertas depois da cascata
     t: float
+    escalated: list[str] = []  # decisões que foram pro LLM
+    jev_lane: str | None = None  # via que o jev sozinho daria (antes do LLM)
 
 
 class OmittedOut(BaseModel):
@@ -73,6 +83,7 @@ class StageOut(BaseModel):
 class VersionsOut(BaseModel):
     questions: str
     jev_model: str
+    llm_model: str | None = None
     api: str
 
 
