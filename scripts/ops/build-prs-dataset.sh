@@ -14,6 +14,8 @@ if [[ -s "${OUT}" && "${1:-}" != "--force" ]]; then
     exit 1
 fi
 
+trap 'rm -f "${OUT}.tmp"' EXIT
+
 echo "==> test na main (o script usa o state.py atual)"
 "${ROOT}/scripts/ops/deploy-test.sh"
 

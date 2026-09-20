@@ -222,3 +222,6 @@ __marimo__/
 
 # Pasta que o app do Claude cria ao salvar arquivos na pasta conectada.
 Claude outputs/
+
+# saída parcial de script de ops que falhou no meio
+*.tmp

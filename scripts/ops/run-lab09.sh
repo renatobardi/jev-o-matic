@@ -11,8 +11,11 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 NAME="${CONTAINER_NAME:-jev-o-matic-test}"
 HOST="${INSTALL_APP_HOST:-oute-server}"
 DATA="${ROOT}/datasets/prs_v1.jsonl"
-OUT="${ROOT}/results/09_pr_triage/$(date -u +%Y%m%dT%H%M%SZ).jsonl"
-mkdir -p "$(dirname "${OUT}")"
+# Ensaio (LAB09_LIMIT) vai pra subpasta: a análise offline pega o run mais recente de results/09_pr_triage/*.jsonl
+DIR="${ROOT}/results/09_pr_triage${LAB09_LIMIT:+/ensaio}"
+OUT="${DIR}/$(date -u +%Y%m%dT%H%M%SZ).jsonl"
+mkdir -p "${DIR}"
+trap 'rm -f "${OUT}.tmp"' EXIT
 
 echo "==> dataset → container"
 ssh "${HOST}" "lxc exec ${NAME} -- bash -lc 'cat > /tmp/prs_v1.jsonl'" < "${DATA}"

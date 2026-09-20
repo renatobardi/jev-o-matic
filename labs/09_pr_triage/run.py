@@ -110,24 +110,27 @@ async def online() -> None:
 
 # ------------------------------------------------------------------ offline (no Mac, python puro)
 
-ROOT = Path(__file__).resolve().parents[2]
+
+def _root() -> Path:
+    """Só a metade offline tem arquivo: a online chega por stdin, onde __file__ não é um caminho."""
+    return Path(__file__).resolve().parents[2]
 
 
 def _verdict_fn() -> Any:
     """verdict.py de produção, importado pelo caminho (só stdlib) — sem instalar o pacote."""
-    sys.path.insert(0, str(ROOT / "api" / "src" / "jevomatic_api"))
+    sys.path.insert(0, str(_root() / "api" / "src" / "jevomatic_api"))
     import verdict as v  # type: ignore[import-not-found]
 
     return v
 
 
 def _load(split: str) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-    runs = sorted((ROOT / "results" / "09_pr_triage").glob("*.jsonl"))
+    runs = sorted((_root() / "results" / "09_pr_triage").glob("*.jsonl"))
     if not runs:
         sys.exit("nenhum run em results/09_pr_triage/ — rode scripts/ops/run-lab09.sh")
     lines = [json.loads(x) for x in runs[-1].read_text(encoding="utf-8").splitlines() if x.strip()]
     meta, res = lines[0]["meta"], {x["id"]: x for x in lines[1:]}
-    labels_path = ROOT / "datasets" / "prs_v1_labels.jsonl"
+    labels_path = _root() / "datasets" / "prs_v1_labels.jsonl"
     if not labels_path.exists():
         sys.exit("faltam os rótulos finais: datasets/prs_v1_labels.jsonl (#40)")
     labels = {
@@ -135,7 +138,7 @@ def _load(split: str) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     }
     data = [
         json.loads(x)
-        for x in (ROOT / "datasets" / "prs_v1.jsonl").read_text(encoding="utf-8").splitlines()
+        for x in (_root() / "datasets" / "prs_v1.jsonl").read_text(encoding="utf-8").splitlines()
     ]
     items = [
         {"pr": d, "label": labels[d["id"]], "run": res[d["id"]]}
