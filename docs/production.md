@@ -35,12 +35,13 @@ E criar o environment `jev-o-matic-test` no repo (Settings → Environments). Se
 
 `/opt/app/.env`, modo 600, nunca no git (ver `.env.example`): `OPENROUTER_API_KEY`, `GITHUB_TOKEN`, `JEV_MODEL`, `LLM_MODEL`, `APP_PORT`. Fonte: Vaultwarden, itens `jev-o-matic-test <NOME>`.
 
-Do Mac, sem o valor passar por tela nem histórico:
+Do Mac, sem o valor passar por tela, argumento nem histórico:
 
 ```bash
-ssh oute-server "lxc exec jev-o-matic-test -- bash -c 'umask 077 && cat > /opt/app/.env'" < .env
-ssh oute-server "lxc exec jev-o-matic-test -- bash -lc 'cd /opt/app && docker compose up -d'"
+scripts/ops/push-env.sh
 ```
+
+Cada variável vem do `.env` da raiz; se lá estiver vazia, do ambiente do shell (key exportada no `~/.zshrc`, por exemplo). O script grava o arquivo no container, recria a `api` e confere que a key está presente — sem imprimir valor.
 
 ## Atualizar
 

@@ -15,7 +15,6 @@ HOST="${INSTALL_APP_HOST:-oute-server}"
 INSTALL="${LAB}/.devin/skills/install-app/scripts/install-app.sh"
 
 [[ -x "${INSTALL}" ]] || { echo "erro: não achei o install-app em ${LAB} (defina LAB_REPO)" >&2; exit 2; }
-[[ -f "${ROOT}/.env" ]] || { echo "erro: ${ROOT}/.env não existe (copie de .env.example)" >&2; exit 2; }
 
 if [[ "${1:-}" == "--dry-run" ]]; then
     (cd "${LAB}" && "${INSTALL}" "${REPO_URL}" --port "${PORT}" --dry-run)
@@ -37,11 +36,10 @@ if ssh -n "${HOST}" "lxc info ${NAME}" >/dev/null 2>&1; then
 fi
 (cd "${LAB}" && "${INSTALL}" "${REPO_URL}" --port "${PORT}" ${RESUME[@]+"${RESUME[@]}"})  # forma segura com `set -u` no bash 3.2 do macOS
 
-echo "==> 3/5 segredos: .env → /opt/app/.env (modo 600; o valor não passa por tela nem argumento)"
-{ grep -vE '^(APP_PORT)=' "${ROOT}/.env"; echo "APP_PORT=${PORT}"; } \
-    | ssh "${HOST}" "lxc exec ${NAME} -- bash -c 'umask 077 && cat > /opt/app/.env'"
+echo "==> 3/5 segredos → /opt/app/.env (do .env ou, se vazio lá, do shell) e recria a api"
+APP_PORT="${PORT}" "${ROOT}/scripts/ops/push-env.sh"
 
-echo "==> 4/5 recria a stack com o .env"
+echo "==> 4/5 stack inteira no commit da main"
 ssh -n "${HOST}" "lxc exec ${NAME} -- bash -lc 'cd /opt/app && git pull --ff-only && docker compose up -d --build'"
 
 echo "==> 5/5 health"
