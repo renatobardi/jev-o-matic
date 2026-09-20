@@ -35,7 +35,7 @@ if ssh -n "${HOST}" "lxc info ${NAME}" >/dev/null 2>&1; then
     ssh -n "${HOST}" "lxc exec ${NAME} -- bash -lc 'cd /opt/app 2>/dev/null && git pull --ff-only || true'"
     RESUME=(--resume)
 fi
-(cd "${LAB}" && "${INSTALL}" "${REPO_URL}" --port "${PORT}" "${RESUME[@]}")
+(cd "${LAB}" && "${INSTALL}" "${REPO_URL}" --port "${PORT}" ${RESUME[@]+"${RESUME[@]}"})  # forma segura com `set -u` no bash 3.2 do macOS
 
 echo "==> 3/5 segredos: .env → /opt/app/.env (modo 600; o valor não passa por tela nem argumento)"
 { grep -vE '^(APP_PORT)=' "${ROOT}/.env"; echo "APP_PORT=${PORT}"; } \
