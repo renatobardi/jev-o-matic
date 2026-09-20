@@ -225,3 +225,6 @@ Claude outputs/
 
 # saída parcial de script de ops que falhou no meio
 *.tmp
+
+# ensaios parciais do lab 09 (LAB09_LIMIT)
+results/09_pr_triage/ensaio/
