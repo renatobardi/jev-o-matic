@@ -33,8 +33,11 @@ NEW_KEY=false
 for tool in ssh dig curl python3; do
     command -v "${tool}" >/dev/null 2>&1 || { echo "error: ${tool} não encontrado" >&2; exit 2; }
 done
+[[ -d "${LAB_DIR}" ]] || { echo "error: repo lab não encontrado em ${LAB_DIR} (use LAB_DIR=)" >&2; exit 2; }
+# Caminho canônico: o path_utils do lab recusa qualquer caminho com "..".
+LAB_DIR="$(cd "${LAB_DIR}" && pwd -P)"
 INSTALL="${LAB_DIR}/.devin/skills/install-app/scripts/install-app.sh"
-[[ -x "${INSTALL}" ]] || { echo "error: repo lab não encontrado em ${LAB_DIR} (use LAB_DIR=)" >&2; exit 2; }
+[[ -x "${INSTALL}" ]] || { echo "error: install-app não encontrado em ${LAB_DIR}" >&2; exit 2; }
 LAB_PY="${LAB_DIR}/.venv/bin/python"
 [[ -x "${LAB_PY}" ]] || LAB_PY=python3
 [[ "$(dig +short "${DOMAIN}" @1.1.1.1 | tail -1)" == "${PUBLIC_IP}" ]] \
