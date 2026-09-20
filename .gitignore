@@ -219,3 +219,6 @@ __marimo__/
 
 # O template Python ignora `lib/` (venvs antigos); o código do front mora em web/src/lib.
 !web/src/lib/
+
+# Pasta que o app do Claude cria ao salvar arquivos na pasta conectada.
+Claude outputs/
