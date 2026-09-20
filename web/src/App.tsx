@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { DemoNotice } from "./components/DemoNotice";
 import { Footer } from "./components/Footer";
 import { Result } from "./components/Result";
+import { ThemeToggle } from "./components/ThemeToggle";
 import { UrlForm } from "./components/UrlForm";
 import { ApiError, postTriage, type TriageResult } from "./lib/api";
 import type { EXAMPLES } from "./lib/examples";
@@ -55,7 +56,9 @@ export function App() {
     <div className="page">
       <header className="masthead">
         <div className="masthead-main">
-          <p className="eyebrow">Jev-o-matic · lab</p>
+          <p className="eyebrow eyebrow-row">
+            Jev-o-matic · lab <ThemeToggle />
+          </p>
           <h1>Pull request triage with Jev</h1>
           <p className="lede">
             <strong>Jev</strong> answers typed questions about the diff in about half a second,{" "}
