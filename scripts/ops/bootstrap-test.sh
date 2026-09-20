@@ -27,7 +27,15 @@ cd "${ROOT}"
 [[ "$(git rev-parse main)" == "$(git rev-parse origin/main)" ]] || git push origin main
 
 echo "==> 2/5 install-app (LXC + Docker + clone + compose up) — alguns minutos na primeira vez"
-(cd "${LAB}" && "${INSTALL}" "${REPO_URL}" --port "${PORT}")
+RESUME=()
+if ssh -n "${HOST}" "lxc info ${NAME}" >/dev/null 2>&1; then
+    # Sobrou de uma tentativa que falhou: o install-app não re-clona um /opt/app que já existe,
+    # então o checkout é atualizado aqui antes de retomar.
+    echo "    container já existe — atualizando /opt/app e retomando (--resume)"
+    ssh -n "${HOST}" "lxc exec ${NAME} -- bash -lc 'cd /opt/app 2>/dev/null && git pull --ff-only || true'"
+    RESUME=(--resume)
+fi
+(cd "${LAB}" && "${INSTALL}" "${REPO_URL}" --port "${PORT}" "${RESUME[@]}")
 
 echo "==> 3/5 segredos: .env → /opt/app/.env (modo 600; o valor não passa por tela nem argumento)"
 { grep -vE '^(APP_PORT)=' "${ROOT}/.env"; echo "APP_PORT=${PORT}"; } \
