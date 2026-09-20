@@ -4,7 +4,7 @@
 #
 # Segredos do repo (ver docs/production.md): TS_AUTHKEY_DEV, JEV_CD_SSH_KEY,
 # JEV_TEST_SSH_HOST (ex.: ubuntu@oute-server), JEV_TEST_URL (ex.: http://100.66.254.24:3770).
-# Sem eles o job falha no primeiro passo — o deploy manual do docs/production.md continua valendo.
+# Sem eles o job termina verde com um aviso e não implanta nada — o deploy manual continua valendo.
 
 name: CD
 
@@ -33,12 +33,32 @@ jobs:
     env:
       DEPLOY_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
     steps:
+      # Sem os segredos o CD não está ativado: termina verde com um aviso, em vez de falhar (e
+      # mandar e-mail) a cada push. `secrets` não pode ser lido num `if:` de job, daí o passo.
+      - name: CD ativado?
+        id: ready
+        env:
+          TS: ${{ secrets.TS_AUTHKEY_DEV }}
+          KEY: ${{ secrets.JEV_CD_SSH_KEY }}
+          SSH_HOST: ${{ secrets.JEV_TEST_SSH_HOST }}
+          APP_URL: ${{ secrets.JEV_TEST_URL }}
+        run: |
+          if [[ -n "$TS" && -n "$KEY" && -n "$SSH_HOST" && -n "$APP_URL" ]]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::CD não ativado: faltam segredos (docs/production.md). Deploy manual: scripts/ops/deploy-test.sh"
+            echo "CD não ativado — faltam segredos. Nada foi implantado." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
       - name: Connect to Tailscale
+        if: steps.ready.outputs.ready == 'true'
         uses: tailscale/github-action@6cae46e2d796f265265cfcf628b72a32b4d7cade # v3
         with:
           authkey: ${{ secrets.TS_AUTHKEY_DEV }}
 
       - name: Wait for the Tailscale backend to settle
+        if: steps.ready.outputs.ready == 'true'
         run: |
           for attempt in $(seq 1 30); do
             state=$(tailscale status --json | python3 -c "import json,sys; print(json.load(sys.stdin)['BackendState'])")
@@ -48,6 +68,7 @@ jobs:
           echo "::error::Tailscale backend never reached Running" && exit 1
 
       - name: Load deploy SSH key
+        if: steps.ready.outputs.ready == 'true'
         env:
           SSH_KEY: ${{ secrets.JEV_CD_SSH_KEY }}
         run: |
@@ -56,6 +77,7 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
 
       - name: Deploy the validated commit
+        if: steps.ready.outputs.ready == 'true'
         env:
           HOST: ${{ secrets.JEV_TEST_SSH_HOST }}
         run: |
@@ -74,6 +96,7 @@ jobs:
           echo "Deployed \`$DEPLOY_SHA\` to jev-o-matic-test." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Wait for health
+        if: steps.ready.outputs.ready == 'true'
         env:
           APP_URL: ${{ secrets.JEV_TEST_URL }}
         run: |

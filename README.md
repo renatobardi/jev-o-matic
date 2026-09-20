@@ -39,6 +39,8 @@ results/   JSONL por execução (versionado: é o dado bruto do lab)
 
 ## v2 — PR Triage
 
+**No ar: https://jev-o-matic.oute.pro** — demo de laboratório, sem acurácia medida.
+
 Aplicação em cima do que os labs mediram: cola a URL de um PR público → o jev responde perguntas tipadas sobre o diff → código decide a via de revisão → só a dúvida vai pro LLM.
 
 ```

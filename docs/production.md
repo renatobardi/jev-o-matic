@@ -78,8 +78,17 @@ Molde: `studio/scripts/ops/provision-studio-prd.sh`, sem Firebase, banco nem bac
 - O vhost **sobrescreve** `X-Forwarded-For` com `$remote_addr` (ver Guardas) e limita o corpo a 16k.
 - Pede a senha sudo do host (keychain `lab-oute-sudo` ou digitada) só no passo do Nginx.
 
-Atualizar o prd (o CD só cobre o `-test`):
+Atualizar o prd (o CD só cobre o `-test`; produção é sempre um ato deliberado):
 
 ```bash
-CONTAINER_NAME=jev-o-matic-prd APP_URL=https://jev-o-matic.oute.pro scripts/ops/deploy-test.sh
+scripts/ops/deploy-prd.sh     # checkout do SHA da main + rebuild + health + smoke
 ```
+
+## Smoke
+
+```bash
+scripts/ops/smoke.sh          # prd
+scripts/ops/smoke.sh test
+```
+
+Health, página, 301, uma triagem real conferida contra o contrato, 422 pra URL fora do GitHub, e o IP que a api registrou vs o seu IP público (é o que prova que o rate limit por IP vale no prd). Não gasta LLM. Na tailnet o split DNS leva ao IP Tailscale do host: pra conferir o IP de visitante, rode de fora (4G).
