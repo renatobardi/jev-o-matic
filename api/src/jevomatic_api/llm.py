@@ -23,6 +23,8 @@ from .jev import Answer, Question
 URL = "https://openrouter.ai/api/v1/chat/completions"
 TIMEOUT = 60.0
 MAX_RATIONALE = 300
+# Folga pra modelo de raciocínio: os tokens de raciocínio contam no limite, e com pouco o JSON nem sai.
+MAX_TOKENS = 1500
 
 SYSTEM = """You are a senior engineer giving a second opinion on a pull request triage.
 A fast classifier was unsure about some questions; answer ONLY those questions.
@@ -130,6 +132,7 @@ async def _call(
     state: dict[str, Any],
     questions: dict[str, Question],
     client: httpx.AsyncClient | None,
+    max_tokens: int,
 ) -> dict[str, Any]:
     key = os.getenv("OPENROUTER_API_KEY")
     if not key:
@@ -143,7 +146,7 @@ async def _call(
         "temperature": 0,
         "response_format": {"type": "json_object"},
         "usage": {"include": True},
-        "max_tokens": 600,
+        "max_tokens": max_tokens,
         "messages": [{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}],
     }
     headers = {"Authorization": f"Bearer {key}", "X-Title": "jev-o-matic"}
@@ -178,14 +181,19 @@ async def _call(
 
 
 async def second_opinion(
-    state: dict[str, Any], questions: dict[str, Question], client: httpx.AsyncClient | None = None
+    state: dict[str, Any],
+    questions: dict[str, Question],
+    client: httpx.AsyncClient | None = None,
+    *,
+    model: str | None = None,
+    max_tokens: int = MAX_TOKENS,
 ) -> LlmResult:
-    model = os.getenv("LLM_MODEL", "~openai/gpt-sol-latest")
+    use: str = model or os.getenv("LLM_MODEL") or "~openai/gpt-sol-latest"
     t0 = time.perf_counter()
     if os.getenv("JEV_BACKEND") == "mock":
         data = _mock(questions)
     else:
-        data = await _call(model, state, questions, client)
+        data = await _call(use, state, questions, client, max_tokens)
     latency = (time.perf_counter() - t0) * 1000
     try:
         content = data["choices"][0]["message"]["content"]
@@ -198,5 +206,5 @@ async def second_opinion(
         input_tokens=usage.get("prompt_tokens"),
         output_tokens=usage.get("completion_tokens"),
         cost=usage.get("cost"),
-        model=data.get("model", model),
+        model=data.get("model") or use,
     )
