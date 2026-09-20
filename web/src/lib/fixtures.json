@@ -24,14 +24,14 @@
     "value": "docs",
     "confidence": 1.0,
     "probabilities": {
+     "docs": 1.0,
      "mixed": 0.0,
      "refactor": 0.0,
      "config_infra": 0.0,
      "tests_only": 0.0,
      "feature": 0.0,
-     "deps": 0.0,
      "bugfix": 0.0,
-     "docs": 1.0
+     "deps": 0.0
     },
     "source": "jev",
     "rationale": null,
@@ -97,8 +97,8 @@
    },
    "description_explains_why": {
     "type": "noul",
-    "value": 0.07,
-    "confidence": 0.86,
+    "value": 0.06,
+    "confidence": 0.88,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -134,7 +134,7 @@
   "trace": [
    {
     "stage": "github",
-    "latency_ms": 713.4,
+    "latency_ms": 717.1,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -143,7 +143,7 @@
    },
    {
     "stage": "jev",
-    "latency_ms": 720.5,
+    "latency_ms": 709.0,
     "cost": 0.00010836,
     "input_tokens": 2580,
     "output_tokens": 209,
@@ -152,7 +152,7 @@
    },
    {
     "stage": "code",
-    "latency_ms": 0.026,
+    "latency_ms": 0.027,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -166,7 +166,7 @@
     "input_tokens": null,
     "output_tokens": null,
     "skipped": true,
-    "note": "nenhuma decisão incerta"
+    "note": "no uncertain decision"
    }
   ],
   "versions": {
@@ -206,16 +206,16 @@
    "change_type": {
     "type": "choice",
     "value": "refactor",
-    "confidence": 0.82,
+    "confidence": 0.8,
     "probabilities": {
-     "config_infra": 0.0,
      "tests_only": 0.0,
-     "deps": 0.0,
      "feature": 0.06,
-     "refactor": 0.84,
+     "config_infra": 0.0,
+     "mixed": 0.09,
      "docs": 0.0,
+     "deps": 0.0,
      "bugfix": 0.02,
-     "mixed": 0.08
+     "refactor": 0.83
     },
     "source": "jev",
     "rationale": null,
@@ -223,12 +223,12 @@
    },
    "risk": {
     "type": "score",
-    "value": 1.96,
-    "confidence": 0.95,
+    "value": 1.95,
+    "confidence": 0.92,
     "probabilities": {
      "0": 0.0,
-     "1": 0.03,
-     "2": 0.97
+     "1": 0.05,
+     "2": 0.95
     },
     "source": "jev",
     "rationale": null,
@@ -272,8 +272,8 @@
    },
    "has_tests": {
     "type": "noul",
-    "value": 0.26,
-    "confidence": 0.48,
+    "value": 0.3,
+    "confidence": 0.4,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -281,8 +281,8 @@
    },
    "description_explains_why": {
     "type": "noul",
-    "value": 0.62,
-    "confidence": 0.24,
+    "value": 0.61,
+    "confidence": 0.22,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -319,7 +319,7 @@
   "trace": [
    {
     "stage": "github",
-    "latency_ms": 483.4,
+    "latency_ms": 489.3,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -328,7 +328,7 @@
    },
    {
     "stage": "jev",
-    "latency_ms": 407.0,
+    "latency_ms": 367.1,
     "cost": 0.000148764,
     "input_tokens": 3542,
     "output_tokens": 210,
@@ -337,7 +337,7 @@
    },
    {
     "stage": "code",
-    "latency_ms": 0.019,
+    "latency_ms": 0.02,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -351,7 +351,7 @@
     "input_tokens": null,
     "output_tokens": null,
     "skipped": true,
-    "note": "nenhuma decisão incerta"
+    "note": "no uncertain decision"
    }
   ],
   "versions": {
@@ -391,16 +391,16 @@
    "change_type": {
     "type": "choice",
     "value": "docs",
-    "confidence": 0.49,
+    "confidence": 0.52,
     "probabilities": {
      "bugfix": 0.01,
+     "feature": 0.01,
+     "tests_only": 0.0,
      "refactor": 0.02,
      "config_infra": 0.0,
-     "mixed": 0.41,
-     "feature": 0.01,
      "deps": 0.0,
-     "docs": 0.55,
-     "tests_only": 0.0
+     "docs": 0.57,
+     "mixed": 0.39
     },
     "source": "jev",
     "rationale": null,
@@ -408,12 +408,12 @@
    },
    "risk": {
     "type": "score",
-    "value": 1.71,
-    "confidence": 0.56,
+    "value": 1.7,
+    "confidence": 0.54,
     "probabilities": {
      "0": 0.02,
-     "1": 0.25,
-     "2": 0.73
+     "1": 0.26,
+     "2": 0.72
     },
     "source": "jev",
     "rationale": null,
@@ -421,8 +421,8 @@
    },
    "touches_auth_security": {
     "type": "noul",
-    "value": 0.72,
-    "confidence": 0.44,
+    "value": 0.73,
+    "confidence": 0.46,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -430,8 +430,8 @@
    },
    "touches_data_schema": {
     "type": "noul",
-    "value": 0.03,
-    "confidence": 0.94,
+    "value": 0.02,
+    "confidence": 0.96,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -509,7 +509,7 @@
   "trace": [
    {
     "stage": "github",
-    "latency_ms": 482.8,
+    "latency_ms": 473.4,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -518,7 +518,7 @@
    },
    {
     "stage": "jev",
-    "latency_ms": 435.6,
+    "latency_ms": 457.5,
     "cost": 0.000249648,
     "input_tokens": 5944,
     "output_tokens": 209,
@@ -527,7 +527,7 @@
    },
    {
     "stage": "code",
-    "latency_ms": 0.027,
+    "latency_ms": 0.025,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -541,7 +541,7 @@
     "input_tokens": null,
     "output_tokens": null,
     "skipped": true,
-    "note": "LLM indisponível — mantido o veredito do jev"
+    "note": "LLM unavailable — kept the jev verdict"
    }
   ],
   "versions": {
@@ -580,23 +580,23 @@
   "decisions": {
    "change_type": {
     "type": "choice",
-    "value": "refactor",
+    "value": "mixed",
     "confidence": 1.0,
     "probabilities": null,
     "source": "llm",
-    "rationale": "A maior parte da alteração reorganiza e esclarece implementações e docstrings existentes, preservando o comportamento geral, embora inclua pequenos ajustes defensivos.",
+    "rationale": "The pull request combines documentation and comments with a secure_filename refactor and behavioral hardening of dev-server chunk parsing.",
     "original": {
      "value": "docs",
-     "confidence": 0.49,
+     "confidence": 0.52,
      "probabilities": {
       "bugfix": 0.01,
+      "feature": 0.01,
+      "tests_only": 0.0,
       "refactor": 0.02,
       "config_infra": 0.0,
-      "mixed": 0.41,
-      "feature": 0.01,
       "deps": 0.0,
-      "docs": 0.55,
-      "tests_only": 0.0
+      "docs": 0.57,
+      "mixed": 0.39
      }
     }
    },
@@ -606,14 +606,14 @@
     "confidence": 1.0,
     "probabilities": null,
     "source": "llm",
-    "rationale": "O código alterado é lógica de produção comum, principalmente sanitização de nomes de arquivo e parsing do servidor de desenvolvimento, sem envolver autenticação, segredos ou dados persistidos.",
+    "rationale": "The modified logic is production parsing and filename-sanitization code, but it does not implement authentication, authorization, secret handling, or another critical production operation.",
     "original": {
-     "value": 1.71,
-     "confidence": 0.56,
+     "value": 1.7,
+     "confidence": 0.54,
      "probabilities": {
       "0": 0.02,
-      "1": 0.25,
-      "2": 0.73
+      "1": 0.26,
+      "2": 0.72
      }
     }
    },
@@ -623,17 +623,17 @@
     "confidence": 1.0,
     "probabilities": null,
     "source": "llm",
-    "rationale": "A alteração modifica lógica de sanitização de entradas em `secure_filename` e adiciona limites ao processamento de chunks, ambos relacionados à segurança de entradas.",
+    "rationale": "The change modifies security-sensitive input sanitization in secure_filename and adds defensive limits to chunked-input parsing.",
     "original": {
-     "value": 0.72,
-     "confidence": 0.44,
+     "value": 0.73,
+     "confidence": 0.46,
      "probabilities": null
     }
    },
    "touches_data_schema": {
     "type": "noul",
-    "value": 0.03,
-    "confidence": 0.94,
+    "value": 0.02,
+    "confidence": 0.96,
     "probabilities": null,
     "source": "jev",
     "rationale": null,
@@ -712,7 +712,7 @@
   "trace": [
    {
     "stage": "github",
-    "latency_ms": 482.8,
+    "latency_ms": 473.4,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -721,7 +721,7 @@
    },
    {
     "stage": "jev",
-    "latency_ms": 435.6,
+    "latency_ms": 457.5,
     "cost": 0.000249648,
     "input_tokens": 5944,
     "output_tokens": 209,
@@ -730,7 +730,7 @@
    },
    {
     "stage": "code",
-    "latency_ms": 0.027,
+    "latency_ms": 0.025,
     "cost": null,
     "input_tokens": null,
     "output_tokens": null,
@@ -739,10 +739,10 @@
    },
    {
     "stage": "llm",
-    "latency_ms": 6190.7,
-    "cost": 0.0020394,
-    "input_tokens": 5355,
-    "output_tokens": 584,
+    "latency_ms": 8516.6,
+    "cost": 0.00209835,
+    "input_tokens": 5346,
+    "output_tokens": 635,
     "skipped": false,
     "note": null
    }
@@ -762,6 +762,393 @@
    "deps": 0,
    "tests": 0,
    "docs": 1
+  },
+  "cached": false
+ },
+ "deps": {
+  "pr": {
+   "slug": "fastapi/fastapi#16289",
+   "title": "⬆ Bump starlette from 1.3.1 to 1.6.0",
+   "author": "dependabot[bot]",
+   "author_association": "CONTRIBUTOR",
+   "state": "closed",
+   "draft": false,
+   "labels": [
+    "dependencies",
+    "internal",
+    "python:uv"
+   ],
+   "additions": 3,
+   "deletions": 3,
+   "changed_files": 1,
+   "head_sha": "d7d63f8d6e8beef5c8027c2b05cbc6b750e984fd",
+   "html_url": "https://github.com/fastapi/fastapi/pull/16289"
+  },
+  "decisions": {
+   "change_type": {
+    "type": "choice",
+    "value": "deps",
+    "confidence": 1.0,
+    "probabilities": {
+     "tests_only": 0.0,
+     "docs": 0.0,
+     "bugfix": 0.0,
+     "deps": 1.0,
+     "mixed": 0.0,
+     "feature": 0.0,
+     "refactor": 0.0,
+     "config_infra": 0.0
+    },
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "risk": {
+    "type": "score",
+    "value": 0.0,
+    "confidence": 1.0,
+    "probabilities": {
+     "0": 1.0,
+     "1": 0.0,
+     "2": 0.0
+    },
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "touches_auth_security": {
+    "type": "noul",
+    "value": 0.07,
+    "confidence": 0.86,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "touches_data_schema": {
+    "type": "noul",
+    "value": 0.04,
+    "confidence": 0.92,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "breaking_api": {
+    "type": "noul",
+    "value": 0.04,
+    "confidence": 0.92,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "touches_infra_ci": {
+    "type": "noul",
+    "value": 0.05,
+    "confidence": 0.9,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "has_tests": {
+    "type": "noul",
+    "value": 0.03,
+    "confidence": 0.94,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "description_explains_why": {
+    "type": "noul",
+    "value": 0.06,
+    "confidence": 0.88,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   }
+  },
+  "verdict": {
+   "lane": "fast",
+   "reasons": [
+    "type_deps",
+    "no_risk_flags",
+    "risk_none",
+    "small",
+    "no_runtime_files"
+   ],
+   "uncertain": [],
+   "t": 0.7,
+   "escalated": [],
+   "jev_lane": "fast"
+  },
+  "sent": {
+   "tokens_est": 2947,
+   "budget_tokens": 20000,
+   "files_total": 1,
+   "files_included": [],
+   "files_truncated": [],
+   "files_omitted": [
+    {
+     "path": "uv.lock",
+     "reason": "lockfile"
+    }
+   ],
+   "body_truncated": true,
+   "file_list_truncated": false
+  },
+  "trace": [
+   {
+    "stage": "github",
+    "latency_ms": 495.2,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "jev",
+    "latency_ms": 415.3,
+    "cost": 0.00012201,
+    "input_tokens": 2905,
+    "output_tokens": 209,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "code",
+    "latency_ms": 0.022,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "llm",
+    "latency_ms": 0.0,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": true,
+    "note": "no uncertain decision"
+   }
+  ],
+  "versions": {
+   "questions": "pr-v2",
+   "jev_model": "typesafe/jev-1.13-20260917",
+   "llm_model": null,
+   "api": "0.1.0"
+  },
+  "categories": {
+   "security": 0,
+   "schema": 0,
+   "api": 0,
+   "infra": 0,
+   "source": 0,
+   "deps": 0,
+   "tests": 0,
+   "docs": 0
+  },
+  "cached": false
+ },
+ "ci": {
+  "pr": {
+   "slug": "pallets/flask#5945",
+   "title": "add zizmor to scan workflows",
+   "author": "davidism",
+   "author_association": "MEMBER",
+   "state": "closed",
+   "draft": false,
+   "labels": [],
+   "additions": 51,
+   "deletions": 9,
+   "changed_files": 5,
+   "head_sha": "560c119e3dc33b35b9c57172fae521d99c2a1421",
+   "html_url": "https://github.com/pallets/flask/pull/5945"
+  },
+  "decisions": {
+   "change_type": {
+    "type": "choice",
+    "value": "config_infra",
+    "confidence": 1.0,
+    "probabilities": {
+     "tests_only": 0.0,
+     "mixed": 0.0,
+     "config_infra": 1.0,
+     "refactor": 0.0,
+     "deps": 0.0,
+     "feature": 0.0,
+     "bugfix": 0.0,
+     "docs": 0.0
+    },
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "risk": {
+    "type": "score",
+    "value": 2.0,
+    "confidence": 1.0,
+    "probabilities": null,
+    "source": "llm",
+    "rationale": "The changes modify CI/CD infrastructure and authorization for workflows that can publish releases and alter repository issues, pull requests, and discussions.",
+    "original": {
+     "value": 0.56,
+     "confidence": 0.16,
+     "probabilities": {
+      "0": 0.72,
+      "1": 0.0,
+      "2": 0.28
+     }
+    }
+   },
+   "touches_auth_security": {
+    "type": "noul",
+    "value": 1.0,
+    "confidence": 1.0,
+    "probabilities": null,
+    "source": "llm",
+    "rationale": "The diff changes GitHub Actions permissions and credential handling, including workflow/job authorization scopes, checkout credential persistence, and release-token usage.",
+    "original": {
+     "value": 0.61,
+     "confidence": 0.22,
+     "probabilities": null
+    }
+   },
+   "touches_data_schema": {
+    "type": "noul",
+    "value": 0.04,
+    "confidence": 0.92,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "breaking_api": {
+    "type": "noul",
+    "value": 0.03,
+    "confidence": 0.94,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "touches_infra_ci": {
+    "type": "noul",
+    "value": 0.98,
+    "confidence": 0.96,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "has_tests": {
+    "type": "noul",
+    "value": 0.03,
+    "confidence": 0.94,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "description_explains_why": {
+    "type": "noul",
+    "value": 0.6,
+    "confidence": 0.2,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   }
+  },
+  "verdict": {
+   "lane": "senior",
+   "reasons": [
+    "touches_auth_security",
+    "risk_severe"
+   ],
+   "uncertain": [],
+   "t": 0.7,
+   "escalated": [
+    "risk",
+    "touches_auth_security"
+   ],
+   "jev_lane": "normal"
+  },
+  "sent": {
+   "tokens_est": 3446,
+   "budget_tokens": 20000,
+   "files_total": 5,
+   "files_included": [
+    ".github/workflows/zizmor.yaml",
+    ".github/workflows/tests.yaml",
+    ".github/workflows/lock.yaml",
+    ".github/workflows/pre-commit.yaml",
+    ".github/workflows/publish.yaml"
+   ],
+   "files_truncated": [],
+   "files_omitted": [],
+   "body_truncated": false,
+   "file_list_truncated": false
+  },
+  "trace": [
+   {
+    "stage": "github",
+    "latency_ms": 465.2,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "jev",
+    "latency_ms": 350.1,
+    "cost": 0.000140952,
+    "input_tokens": 3356,
+    "output_tokens": 211,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "code",
+    "latency_ms": 0.03,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "llm",
+    "latency_ms": 4999.0,
+    "cost": 0.00102065,
+    "input_tokens": 2432,
+    "output_tokens": 344,
+    "skipped": false,
+    "note": null
+   }
+  ],
+  "versions": {
+   "questions": "pr-v2",
+   "jev_model": "typesafe/jev-1.13-20260917",
+   "llm_model": "openai/gpt-5.6-luna",
+   "api": "0.1.0"
+  },
+  "categories": {
+   "security": 0,
+   "schema": 0,
+   "api": 0,
+   "infra": 5,
+   "source": 0,
+   "deps": 0,
+   "tests": 0,
+   "docs": 0
   },
   "cached": false
  }
