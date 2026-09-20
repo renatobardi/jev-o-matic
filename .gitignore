@@ -231,3 +231,6 @@ results/09_pr_triage/ensaio/
 
 # lock do Excel
 ~$*
+
+# macOS
+.DS_Store
