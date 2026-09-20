@@ -1,5 +1,9 @@
 """Fonte do dataset de tickets (sintético, escrito à mão por Claude, revisão por amostragem do Bardi).
-Rodar: uv run python datasets/build_tickets.py  → datasets/tickets_v1.jsonl
+Rodar: uv run python datasets/build_tickets.py  → datasets/tickets_v1.1.jsonl
+
+v1.1 (2026-09-20, revisão Bardi): has_bug=True em t061 (cartão recusado só no nosso checkout),
+t077 (relatórios de instantâneo p/ 40s), t081 (e-mail de reset não chega). Mantidos: t045, t075, t078.
+tickets_v1.jsonl fica congelado (base do run 20260920T000223Z).
 
 Rótulos
   dept    : billing | technical | sales | retention   (time que DEVE tratar primeiro)
@@ -86,7 +90,7 @@ ROWS = [
     (S, None, 0, 0, 0, 0, "easy", "third_party", "Meu chefe pediu para eu levantar o preço de vocês para 200 usuários. Pode me mandar?", "My boss asked me to get your pricing for 200 users. Can you send it?"),
     (T, None, 2, 0, 0, 1, "easy", "", "Sistema fora do ar para todos os nossos 300 atendentes. Cada minuto é prejuízo.", "System is down for all 300 of our agents. Every minute is a loss."),
     # ---------------- ambiguous (dept discutível → alt)
-    (B, T, 2, 0, 0, 0, "ambiguous", "", "Meu cartão é recusado no checkout de vocês três vezes seguidas, mas funciona em qualquer outro site. Preciso pagar hoje para não suspender.", "My card gets declined at your checkout three times in a row but works everywhere else. I need to pay today to avoid suspension."),
+    (B, T, 2, 0, 0, 1, "ambiguous", "", "Meu cartão é recusado no checkout de vocês três vezes seguidas, mas funciona em qualquer outro site. Preciso pagar hoje para não suspender.", "My card gets declined at your checkout three times in a row but works everywhere else. I need to pay today to avoid suspension."),
     (T, B, 1, 0, 0, 1, "ambiguous", "", "A tela de faturas não carrega, fica girando. Preciso baixar a nota fiscal.", "The invoices page never loads, it just spins. I need to download my invoice."),
     (R, B, 1, 1, 1, 0, "ambiguous", "multi", "Quero cancelar e receber de volta o proporcional do anual que paguei em julho.", "I want to cancel and get back the prorated amount of the annual plan I paid in July."),
     (R, T, 2, 0, 1, 1, "ambiguous", "multi", "Terceira queda do sistema este mês. Se acontecer de novo, a gente sai. Agora está fora do ar outra vez.", "Third outage this month. If it happens again, we are out. It is down again right now."),
@@ -102,11 +106,11 @@ ROWS = [
     (S, T, 0, 0, 0, 0, "ambiguous", "", "Antes de fechar o contrato preciso saber se vocês integram com SAP. Tem alguém técnico que possa confirmar?", "Before signing I need to know whether you integrate with SAP. Is there someone technical who can confirm?"),
     (B, None, 1, 0, 0, 0, "ambiguous", "", "Tem uma cobrança de R$ 37,90 no meu extrato com o nome de vocês que eu não reconheço.", "There is a $37.90 charge on my statement under your name that I do not recognize."),
     (R, None, 1, 0, 0, 0, "ambiguous", "", "Onde fica o botão de cancelar? Só quero saber onde fica, por enquanto.", "Where is the cancel button? I just want to know where it is, for now."),
-    (T, None, 1, 0, 0, 0, "ambiguous", "", "Desde ontem os relatórios demoram uns 40 segundos para abrir. Antes era instantâneo. Pode ser minha internet, não sei.", "Since yesterday the reports take about 40 seconds to open. It used to be instant. Could be my connection, not sure."),
+    (T, None, 1, 0, 0, 1, "ambiguous", "", "Desde ontem os relatórios demoram uns 40 segundos para abrir. Antes era instantâneo. Pode ser minha internet, não sei.", "Since yesterday the reports take about 40 seconds to open. It used to be instant. Could be my connection, not sure."),
     (B, None, 2, 1, 0, 0, "ambiguous", "", "Debitaram R$ 4.800 em vez de R$ 480. Isso zerou a conta da empresa e tenho folha para pagar amanhã.", "You debited $4,800 instead of $480. That emptied the company account and I have payroll due tomorrow."),
     (S, None, 0, 0, 0, 0, "ambiguous", "", "Vi que vocês lançaram um módulo de IA. Já está incluso no que eu pago?", "I saw you launched an AI module. Is it already included in what I pay?"),
     (R, B, 1, 1, 1, 0, "ambiguous", "multi", "Cancelei em agosto, tenho o e-mail de confirmação, e continuam cobrando. Parem e devolvam os dois meses.", "I cancelled in August, I have the confirmation email, and you keep charging me. Stop and return the two months."),
-    (T, None, 1, 0, 0, 0, "ambiguous", "", "Não consigo entrar. Acho que esqueci a senha, mas o e-mail de redefinição também não chega.", "I cannot get in. I think I forgot my password, but the reset email never arrives either."),
+    (T, None, 1, 0, 0, 1, "ambiguous", "", "Não consigo entrar. Acho que esqueci a senha, mas o e-mail de redefinição também não chega.", "I cannot get in. I think I forgot my password, but the reset email never arrives either."),
     (S, R, 1, 0, 0, 0, "ambiguous", "", "Nosso contrato vence em 30 dias. Quero renegociar valores e escopo antes de decidir qualquer coisa.", "Our contract expires in 30 days. I want to renegotiate price and scope before deciding anything."),
     (B, None, 0, 0, 0, 0, "ambiguous", "", "Vocês emitem nota com retenção de ISS? Meu financeiro está perguntando antes de aprovar o pagamento.", "Do you issue invoices with tax withholding? My finance team is asking before approving the payment."),
     (T, R, 2, 0, 1, 1, "ambiguous", "multi", "Perdemos os dados de uma semana inteira por causa do bug de sincronização. Quero falar com um gerente hoje ou encerramos.", "We lost a full week of data because of the sync bug. I want to talk to a manager today or we terminate."),
@@ -132,7 +136,7 @@ ROWS = [
 
 
 def main() -> None:
-    out = Path(__file__).with_name("tickets_v1.jsonl")
+    out = Path(__file__).with_name("tickets_v1.1.jsonl")
     with out.open("w", encoding="utf-8") as f:
         for i, (dept, alt, urg, refund, churn, bug, diff, tags, pt, en) in enumerate(ROWS, 1):
             f.write(json.dumps({

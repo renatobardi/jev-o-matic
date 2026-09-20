@@ -22,8 +22,8 @@ Backend atual: OpenRouter Decisions API (alpha), modelo `typesafe/jev-1.13`. O `
 | 01 primitives | Como é a resposta de cada primitivo? | pronto |
 | 02 fanout | 1 vs 20 perguntas na mesma chamada: latência, custo, drift? | pronto |
 | 03 confidence-routing | Qual threshold separa código / LLM / humano? | pronto (offline) |
-| 04 composite-scoring | Julgamento único vs dimensões + pesos | — |
-| 05 cascade | jev→LLM: economia vs tudo no LLM | — |
+| 04 composite-scoring | Urgency: score único vs dimensões atômicas combinadas em código | pronto |
+| 05 cascade | jev→LLM: economia e acerto vs tudo no LLM | pronto |
 | 06 jaggedness | Onde erra (retratação, terceiro, negação, contagem, datas) e o wording mitiga? | pronto |
 | 07 pt-br | PT-BR degrada vs EN? | pronto (offline) |
 | 08 calibration | Confidence bate com acerto real? | pronto (offline) |

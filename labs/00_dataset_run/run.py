@@ -12,7 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 from harness import JevClient, choice, noul, score
 from harness.client import ROOT, RunLog
 
-DATASET = ROOT / "datasets" / "tickets_v1.jsonl"
+DATASET = ROOT / "datasets" / "tickets_v1.1.jsonl"
 WORKERS = 8
 
 QUESTIONS = {
@@ -28,8 +28,17 @@ QUESTIONS = {
         "Needs action today: operation blocked, imminent deadline or ongoing financial damage",
     ]),
     "refund_wanted": noul("The customer wants money returned to them, stated explicitly or clearly implied"),
-    "churn_threat": noul("The customer threatens, announces or requests to cancel, downgrade or leave"),
-    "has_bug": noul("The customer reports a software defect or malfunction"),
+    # v3 do lab 06: instrução curta + criteria true/false com os quase-positivos no false
+    "churn_threat": noul("The customer intends to cancel or leave",
+                         true="The author, speaking for themselves, still wants to cancel, downgrade or leave our service",
+                         false="The author stays with us, withdrew an earlier cancellation, is leaving a different company, "
+                               "or only mentions someone else cancelling"),
+    "has_bug": noul("The customer reports a software defect",
+                    true="Our product is malfunctioning for the author right now",
+                    false="Everything works, the problem was already fixed, or the defect belongs to another company's product"),
+    # v0 (wording do 1º run) na mesma chamada, pra comparação direta
+    "churn_threat_v0": noul("The customer threatens, announces or requests to cancel, downgrade or leave"),
+    "has_bug_v0": noul("The customer reports a software defect or malfunction"),
 }
 
 
@@ -38,7 +47,7 @@ def hit(key: str, value, labels: dict) -> bool:
         return value in (labels["department"], labels["alt_department"])
     if key == "urgency":
         return round(value) == labels["urgency"]
-    return (value >= 0.5) == labels[key]
+    return (value >= 0.5) == labels[key.removesuffix("_v0")]
 
 
 def main() -> None:

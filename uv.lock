@@ -97,12 +97,14 @@ name = "jev-o-matic"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "httpx" },
     { name = "openrouter" },
     { name = "python-dotenv" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "httpx", specifier = ">=0.27" },
     { name = "openrouter", specifier = ">=1.2.6" },
     { name = "python-dotenv", specifier = ">=1.0" },
 ]
