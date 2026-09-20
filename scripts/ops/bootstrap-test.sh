@@ -48,7 +48,7 @@ LAB_PY="${LAB}/.venv/bin/python"
 [[ -x "${LAB_PY}" ]] || LAB_PY=python3
 TS_IP="$(cd "${LAB}" && "${LAB_PY}" tools/inventory_ops.py server-ip servers/oute-server/inventory.yaml)"
 for attempt in $(seq 1 30); do
-    if curl -fsS --max-time 3 "http://${TS_IP}:${PORT}/api/health"; then
+    if curl -fsS --max-time 3 2>/dev/null "http://${TS_IP}:${PORT}/api/health"; then
         echo; echo "ok: http://${TS_IP}:${PORT}"
         echo "lembrete: commitar inventory.yaml + PORTS.md no repo lab"
         exit 0

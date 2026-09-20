@@ -21,7 +21,7 @@ ssh -n "${HOST}" "lxc exec ${NAME} -- bash -lc 'set -eu; cd /opt/app; git fetch 
 
 echo "==> health"
 for attempt in $(seq 1 30); do
-    if curl -fsS --max-time 3 "${URL}/api/health"; then
+    if curl -fsS --max-time 3 2>/dev/null "${URL}/api/health"; then
         echo; echo "ok: ${URL} em ${SHA:0:7}"
         exit 0
     fi
