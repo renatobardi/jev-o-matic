@@ -1,5 +1,7 @@
 """App FastAPI. Tudo fica sob /api — o Caddy roteia /api/* pra cá e o resto pro web."""
 
+import os
+
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -13,8 +15,9 @@ from .triage import Guards, triage
 app = FastAPI(
     title="jev-o-matic PR Triage",
     version=__version__,
-    docs_url="/api/docs",
-    openapi_url="/api/openapi.json",
+    # Swagger e o schema só com API_DOCS=1 (dev). Em produção não há por que publicar o mapa da API.
+    docs_url="/api/docs" if os.getenv("API_DOCS") == "1" else None,
+    openapi_url="/api/openapi.json" if os.getenv("API_DOCS") == "1" else None,
     redoc_url=None,
 )
 

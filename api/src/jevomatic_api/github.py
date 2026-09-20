@@ -10,6 +10,7 @@ import os
 import re
 import time
 from dataclasses import dataclass, field
+from typing import Any
 from urllib.parse import urlsplit
 
 import httpx
@@ -118,7 +119,17 @@ def _check(r: httpx.Response) -> None:
         )
     if r.status_code in (401, 403, 404):
         raise TriageError("pr_not_found", "Pull request not found, or it is private.", 404)
-    raise TriageError("github_unavailable", f"GitHub respondeu {r.status_code}.", 502)
+    raise TriageError("github_unavailable", f"GitHub answered {r.status_code}.", 502)
+
+
+def _require_public(pr: dict[str, Any]) -> None:
+    """Defesa em profundidade: o GITHUB_TOKEN deve ser só-leitura de repo público, mas se um dia
+    alguém gravar um token com acesso a repo privado, esta demo (aberta, sem login, que manda o
+    diff pra terceiros) viraria um leitor público dos repos privados do dono. Recusa aqui, com a
+    MESMA resposta de "não encontrado" — não confirma que o repo existe."""
+    repo = (pr.get("base") or {}).get("repo") or {}
+    if repo.get("private") is not False or repo.get("visibility", "public") != "public":
+        raise TriageError("pr_not_found", "Pull request not found, or it is private.", 404)
 
 
 async def fetch_pr(ref: PrRef, client: httpx.AsyncClient | None = None) -> PullRequest:
@@ -135,6 +146,7 @@ async def fetch_pr(ref: PrRef, client: httpx.AsyncClient | None = None) -> PullR
         )
         _check(r)
         d = r.json()
+        _require_public(d)
         files: list[PrFile] = []
         page, fr = 1, first
         while True:
@@ -177,7 +189,8 @@ async def fetch_pr(ref: PrRef, client: httpx.AsyncClient | None = None) -> PullR
         additions=int(d.get("additions", 0)),
         deletions=int(d.get("deletions", 0)),
         changed_files=total,
-        html_url=d.get("html_url", ""),
+        # montado aqui, não copiado da resposta: o link que a página abre é sempre github.com
+        html_url=f"https://github.com/{ref.owner}/{ref.repo}/pull/{ref.number}",
         files=files[:MAX_FILES],
         files_truncated=total > MAX_FILES,
     )

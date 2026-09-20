@@ -142,7 +142,10 @@ async def _call(
     if not key:
         raise LlmUnavailable("OPENROUTER_API_KEY ausente")
     user = (
-        "<pull_request>\n" + json.dumps(state, ensure_ascii=False) + "\n</pull_request>\n\n"
+        # "<" escapado: um diff com "</pull_request>" no texto não fecha a marcação de dado não confiável
+        "<pull_request>\n"
+        + json.dumps(state, ensure_ascii=False).replace("<", "\\u003c")
+        + "\n</pull_request>\n\n"
         "Questions to answer:\n" + json.dumps(questions, ensure_ascii=False)
     )
     body: dict[str, Any] = {

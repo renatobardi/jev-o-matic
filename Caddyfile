@@ -10,6 +10,21 @@
 # HTTP puro dentro do container: a fronteira de rede é a Tailscale (test) ou o
 # Nginx/Certbot do host (público). Aqui o Caddy só roteia.
 :80 {
+	# Cabeçalhos de segurança pra página E pra api. Ficam aqui (e não no Nginx do host) pra viajarem
+	# com o app e valerem igual em test e prd.
+	header {
+		# só carrega o que é nosso; a exceção é a Inter do Google Fonts (CSS de um host, fonte de outro).
+		# 'unsafe-inline' só em style: os gráficos de barra usam style="width:…" — script inline segue proibido.
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+		Cross-Origin-Opener-Policy "same-origin"
+		-Server
+	}
+
 	handle /api/* {
 		reverse_proxy api:8000
 	}

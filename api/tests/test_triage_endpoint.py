@@ -19,7 +19,7 @@ PR = {
     "labels": [],
     "state": "open",
     "draft": False,
-    "base": {"ref": "main"},
+    "base": {"ref": "main", "repo": {"private": False, "visibility": "public"}},
     "head": {"sha": "deadbeef"},
     "additions": 12,
     "deletions": 3,
@@ -138,3 +138,14 @@ def test_jev_down_is_502_or_503(api: TestClient, monkeypatch: pytest.MonkeyPatch
     monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
     r = api.post("/api/triage", json={"url": "https://github.com/o/r/pull/1"})
     assert r.status_code == 503 and r.json()["error"]["code"] == "jev_unavailable"
+
+
+def test_api_docs_are_off_by_default() -> None:
+    """Sem API_DOCS=1 o Swagger e o schema não são publicados."""
+    from fastapi.testclient import TestClient
+
+    from jevomatic_api.main import app
+
+    c = TestClient(app)
+    assert c.get("/api/docs").status_code == 404 and c.get("/api/openapi.json").status_code == 404
+    assert c.get("/api/health").status_code == 200
