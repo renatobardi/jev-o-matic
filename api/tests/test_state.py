@@ -8,6 +8,7 @@ from jevomatic_api.state import (
     categorize,
     est_tokens,
     omit_reason,
+    runtime_files,
     truncate_patch,
 )
 
@@ -95,6 +96,13 @@ def test_omit_no_patch_and_removed() -> None:
         ("infra/main.tf", "infra"),
         ("docker-compose.prod.yml", "infra"),
         ("src/utils/format.py", "source"),
+        ("package.json", "deps"),
+        ("web/package.json", "deps"),
+        ("pyproject.toml", "deps"),
+        ("requirements-dev.txt", "deps"),  # não é docs, apesar do .txt
+        (".pre-commit-config.yaml", "deps"),
+        ("go.mod", "deps"),
+        ("src/package.json.ts", "source"),
     ],
 )
 def test_categorize(path: str, cat: str) -> None:
@@ -164,3 +172,9 @@ def test_report_fields() -> None:
     assert b.sent.body_truncated and b.sent.file_list_truncated and b.sent.files_total == 350
     assert b.state["pull_request"]["description"].endswith("[descrição truncada]")
     assert b.categories["source"] == 2 and sum(b.categories.values()) == 2  # só revisáveis
+
+
+def test_runtime_files_conta_so_codigo_de_producao() -> None:
+    cats = {"security": 1, "schema": 0, "api": 2, "infra": 4, "source": 3, "deps": 5, "tests": 6}
+    assert runtime_files(cats) == 6
+    assert runtime_files({"docs": 3, "deps": 1, "tests": 2, "infra": 1}) == 0

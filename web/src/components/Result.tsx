@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import type { Decision, TriageResult } from "../lib/api";
 import { int } from "../lib/format";
-import { verdict as localVerdict } from "../lib/verdict";
+import { verdict as localVerdict, runtimeFiles } from "../lib/verdict";
 import { DecisionList } from "./DecisionList";
 import { SentPanel } from "./SentPanel";
 import { ThresholdSlider } from "./ThresholdSlider";
@@ -20,7 +20,8 @@ export function Result({ result }: { result: TriageResult }) {
   const serverT = result.verdict.t;
   const [t, setT] = useState(serverT);
   const jev = useMemo(() => jevOnly(result.decisions), [result.decisions]);
-  const local = useMemo(() => localVerdict(jev, pr.changed_files, t), [jev, pr.changed_files, t]);
+  const runtime = runtimeFiles(result.categories);
+  const local = useMemo(() => localVerdict(jev, pr.changed_files, t, runtime), [jev, pr.changed_files, t, runtime]);
   const simulated = t !== serverT;
 
   return (

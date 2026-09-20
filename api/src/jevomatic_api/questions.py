@@ -7,13 +7,25 @@ Regras dos labs aplicadas:
 - relação dentro de UMA pergunta; nada de átomos pra compor depois (labs 04 e 06 v4)
 - score com níveis mutuamente exclusivos, ancorados em estado observável (lab 04 u1)
 - contagem e tamanho ficam em código, não aqui
+
+pr-v2 (#12, decisões no doc 14 do Project):
+- `risk` deixou de ser contrafactual ("quanto dano um erro causaria") e passou a descrever o que o
+  diff TOCA — no smoke do v1 ficou incerto em 6 de 7 PRs
+- nível 2 do `risk` cobre também o que nenhum flag cobre: dinheiro, concorrência/estado, deleção
+- `change_type` ganhou `mixed`: PR misto não cabia em opções "Only …" e a confidence caía por
+  artefato do enum. `mixed` nunca é via rápida (não está em FAST_TYPES)
+- `breaking_api` só vale com marca de público VISÍVEL no diff; sem marca → false (subestima, não chuta)
+- 1ª rodada do aceite: nível 1 do `risk` definido por NEGAÇÃO ("runtime, e nada da lista crítica")
+  morreu — p(1)≈0 e 8 de 9 PRs com código deram nível 2. Virou afirmação (o que É código comum).
+  CI cabia no nível 0 (tooling) E no 2 ("shared infrastructure") e rachava 0,65/0,35: CI foi pro 0,
+  o 2 ficou com "manifests de deploy / IaC que a produção roda"
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-QUESTIONS_VERSION = "pr-v1"
+QUESTIONS_VERSION = "pr-v2"
 
 Question = dict[str, Any]
 
@@ -31,31 +43,39 @@ QUESTIONS: dict[str, Question] = {
         "type": "choice",
         "instructions": "What kind of change is this pull request, judged by what the diff actually does",
         "criteria": {
-            "feature": "Adds new behavior that users or API callers can observe",
-            "bugfix": "Corrects wrong behavior of code that already existed",
+            "feature": "Adds new behavior that users or API callers can observe; supporting tests "
+            "and docs for that behavior may be included",
+            "bugfix": "Corrects wrong behavior of code that already existed; supporting tests and "
+            "docs for that fix may be included",
             "refactor": "Restructures or cleans up code while keeping behavior the same",
             "deps": "Only bumps dependency versions, lockfiles or vendored packages",
             "docs": "Only changes documentation, comments, translations or examples",
             "config_infra": "Only changes CI, build, deployment, tooling or configuration files",
             "tests_only": "Only adds or changes automated tests",
+            "mixed": "Combines two or more of the kinds above as independent changes and none of "
+            "them accounts for most of the diff (for example a bug fix plus an unrelated refactor "
+            "plus a dependency bump)",
         },
     },
     "risk": {
         "type": "score",
-        "instructions": "How much damage could a mistake in this pull request cause in production",
+        "instructions": "Which is the most sensitive kind of code that the diff adds, removes or modifies",
         "criteria": [
             (
-                "None: the change cannot alter production runtime behavior (docs, comments, tests, "
-                "formatting, translations, dev-only tooling)"
+                "Nothing that runs in production: only documentation, comments, tests, formatting, "
+                "translations, dependency version bumps, CI checks, linters or developer tooling"
             ),
             (
-                "Contained: changes runtime behavior in a limited area; a mistake would be noticed and "
-                "reverted without lasting damage"
+                "Ordinary production code: business logic, user interface, rendering, parsing, "
+                "formatting of output, helpers, logging, error messages or command-line behavior"
             ),
             (
-                "Severe: a mistake could lose or corrupt data, open a security hole, cause an outage or "
-                "break existing clients (authentication, permissions, payments, migrations, public API "
-                "contracts, shared infrastructure)"
+                "Critical production code: authentication, authorization or secret handling; "
+                "database migrations or persisted data structure; removal or signature change of a "
+                "public interface; deployment manifests or infrastructure-as-code that production "
+                "runs on; calculation or movement of money; locks, transactions, retries, "
+                "idempotency or cache invalidation; or code that deletes, truncates or overwrites "
+                "persisted data"
             ),
         ],
     },
@@ -74,10 +94,12 @@ QUESTIONS: dict[str, Question] = {
         "structure is untouched",
     ),
     "breaking_api": _noul(
-        "The diff breaks existing callers of a public interface",
-        true="An existing public endpoint, exported function, CLI flag, configuration key or message "
-        "format is removed, renamed, or changes its required inputs or its outputs",
-        false="Only backwards-compatible additions, internal changes, or no public interface is touched",
+        "The diff visibly breaks existing callers of a public interface",
+        true="The diff removes, renames or changes the required inputs or the outputs of something "
+        "visibly marked as public in the diff itself: an HTTP route, an exported symbol (__all__, "
+        "export, pub, public), a CLI flag, or a documented configuration key or message format",
+        false="Only backwards-compatible additions or deprecation warnings, changes to internal or "
+        "private code, or nothing in the diff shows that the changed item is public",
     ),
     "touches_infra_ci": _noul(
         "The diff changes how the project is built, tested in CI or deployed",

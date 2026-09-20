@@ -592,5 +592,185 @@
     0.84
    ]
   }
+ },
+ {
+  "name": "v2: docs confiante mas 1 arquivo de runtime → normal, sem escalar",
+  "files": 3,
+  "runtime": 1,
+  "t": 0.7,
+  "lane": "normal",
+  "uncertain": [],
+  "d": {
+   "change_type": [
+    "docs",
+    0.95,
+    {
+     "docs": 0.96
+    }
+   ],
+   "risk": [
+    0.02,
+    0.97
+   ],
+   "touches_auth_security": [
+    0.02,
+    0.96
+   ],
+   "touches_data_schema": [
+    0.01,
+    0.98
+   ],
+   "breaking_api": [
+    0.03,
+    0.94
+   ]
+  }
+ },
+ {
+  "name": "v2: runtime no diff fecha o fast → risk/change_type incertos não escalam",
+  "files": 3,
+  "runtime": 2,
+  "t": 0.7,
+  "lane": "normal",
+  "uncertain": [],
+  "d": {
+   "change_type": [
+    "docs",
+    0.5,
+    {
+     "docs": 0.55,
+     "refactor": 0.4
+    }
+   ],
+   "risk": [
+    0.4,
+    0.4,
+    {
+     "0": 0.6,
+     "1": 0.35,
+     "2": 0.05
+    }
+   ],
+   "touches_auth_security": [
+    0.02,
+    0.96
+   ],
+   "touches_data_schema": [
+    0.01,
+    0.98
+   ],
+   "breaking_api": [
+    0.03,
+    0.94
+   ]
+  }
+ },
+ {
+  "name": "v2: mesmo caso sem runtime → fast alcançável, escala risk e change_type",
+  "files": 3,
+  "runtime": 0,
+  "t": 0.7,
+  "lane": "normal",
+  "uncertain": [
+   "risk",
+   "change_type"
+  ],
+  "d": {
+   "change_type": [
+    "docs",
+    0.5,
+    {
+     "docs": 0.55,
+     "refactor": 0.4
+    }
+   ],
+   "risk": [
+    0.4,
+    0.4,
+    {
+     "0": 0.6,
+     "1": 0.35,
+     "2": 0.05
+    }
+   ],
+   "touches_auth_security": [
+    0.02,
+    0.96
+   ],
+   "touches_data_schema": [
+    0.01,
+    0.98
+   ],
+   "breaking_api": [
+    0.03,
+    0.94
+   ]
+  }
+ },
+ {
+  "name": "v2: mixed confiante e tudo frio → normal, nunca fast",
+  "files": 4,
+  "runtime": 0,
+  "t": 0.7,
+  "lane": "normal",
+  "uncertain": [],
+  "d": {
+   "change_type": [
+    "mixed",
+    0.9,
+    {
+     "mixed": 0.91
+    }
+   ],
+   "risk": [
+    0.05,
+    0.95
+   ],
+   "touches_auth_security": [
+    0.02,
+    0.96
+   ],
+   "touches_data_schema": [
+    0.01,
+    0.98
+   ],
+   "breaking_api": [
+    0.03,
+    0.94
+   ]
+  }
+ },
+ {
+  "name": "v2: mixed com flag quente → senior",
+  "files": 4,
+  "runtime": 3,
+  "t": 0.7,
+  "lane": "senior",
+  "uncertain": [],
+  "d": {
+   "change_type": [
+    "mixed",
+    0.9,
+    {
+     "mixed": 0.91
+    }
+   ],
+   "risk": [
+    1.0,
+    0.8
+   ],
+   "touches_auth_security": [
+    0.95,
+    0.9
+   ],
+   "touches_data_schema": [
+    0.01,
+    0.98
+   ],
+   "breaking_api": [
+    0.03,
+    0.94
+   ]
+  }
  }
 ]

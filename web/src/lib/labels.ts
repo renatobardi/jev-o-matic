@@ -23,6 +23,7 @@ export const CHOICE: Record<string, string> = {
   feature: "feature",
   bugfix: "bugfix",
   refactor: "refactor",
+  mixed: "misto",
   deps: "dependências",
   docs: "docs",
   config_infra: "config / infra",
@@ -43,6 +44,8 @@ export const REASON: Record<string, string> = {
   risk_none: "não altera produção",
   small: "PR pequeno",
   too_many_files_for_fast: "arquivos demais pra via rápida",
+  no_runtime_files: "nenhum arquivo de código de produção",
+  runtime_files_block_fast: "tem código de produção no diff",
   uncertain_decisions: "há decisões incertas",
 };
 
