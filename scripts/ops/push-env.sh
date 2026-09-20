@@ -16,6 +16,14 @@ from_file() {  # valor de $1 no .env, sem aspas em volta; vazio se ausente
     sed -n "s/^$1=//p" "${ROOT}/.env" | tail -1 | sed -e 's/[[:space:]]*#.*$//' -e 's/^"\(.*\)"$/\1/' -e "s/^'\(.*\)'\$/\1/"
 }
 
+# Este script REESCREVE o .env inteiro a partir do Mac. Desde que test e prd têm keys dedicadas,
+# gravadas direto no servidor, isso apagaria a key de lá. Só segue com --force.
+if [[ "${1:-}" != "--force" ]] && ssh -n "${HOST}" "lxc exec ${NAME} -- grep -q '^OPENROUTER_API_KEY=.' /opt/app/.env" 2>/dev/null; then
+    echo "erro: ${NAME} já tem OPENROUTER_API_KEY no .env — este script a sobrescreveria com a do seu Mac." >&2
+    echo "      Pra trocar UMA variável use set-openrouter-key.sh / set-github-token.sh. Pra reescrever tudo: --force" >&2
+    exit 2
+fi
+
 BODY=""
 for var in ${VARS}; do
     value="$(from_file "${var}")"

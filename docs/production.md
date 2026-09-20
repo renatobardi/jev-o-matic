@@ -43,6 +43,21 @@ scripts/ops/push-env.sh
 
 Cada variável vem do `.env` da raiz; se lá estiver vazia, do ambiente do shell (key exportada no `~/.zshrc`, por exemplo). O script grava o arquivo no container, recria a `api` e confere que a key está presente — sem imprimir valor.
 
+## Checklist de ops de um ambiente novo
+
+O que o `provision-prd.sh` NÃO faz — convenções do `lab` e segredos que nascem fora do servidor:
+
+| # | O quê | Comando | Por quê |
+|---|---|---|---|
+| 1 | `GITHUB_TOKEN` nos containers | `scripts/ops/set-github-token.sh` | sem token: 60 req/h por IP no GitHub, somando test + prd (mesmo IP de saída) → ~30 triagens novas/hora no total |
+| 2 | Key do OpenRouter dedicada, com limite de crédito | `CONTAINER_NAME=<c> scripts/ops/set-openrouter-key.sh` | é o teto duro de gasto |
+| 3 | Conferir drift do inventory | `cd ../lab && tools/sync-inventory.sh` | o `request-flow` do lab só fecha a instalação depois disso |
+| 4 | DNS de fallback | `cd ../lab && bash tools/deploy-dns.sh` | `docs/dns.md`: domínio novo → regenerar; é o que o Uptime Kuma e containers fora da tailnet usam pra resolver |
+| 5 | Monitor no Uptime Kuma | `gen-monitoring-configs.py` + `apply-monitoring-config.py` (pede credenciais do Kuma e do Telegram) | ADR-0001 do lab: app público sem monitor cai em silêncio |
+| 6 | Segredos no Vaultwarden | itens `jev-o-matic-<env> OPENROUTER_API_KEY` / `GITHUB_TOKEN` | convenção do lab; key do OpenRouter não é recuperável depois de criada (perdeu → gera outra) |
+
+Nunca use `push-env.sh` num ambiente que já tem key: ele reescreve o `.env` inteiro a partir do Mac (agora exige `--force`).
+
 ## Guardas (app pública com a key do dono)
 
 Em memória, por processo: rate limit por IP, teto diário de LLM e de gasto, cache de 10 min por PR. Variáveis e defaults no `.env.example`. Reiniciar zera contadores — o teto duro é o **limite de crédito da key** no OpenRouter.
