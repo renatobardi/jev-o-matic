@@ -1,0 +1,84 @@
+# CD — põe no jev-o-matic-test o commit exato que o CI validou. Versão enxuta do cd.yml do studio:
+# disparado pelo término do CI (não pelo push), SHA = workflow_run.head_sha, deploy por
+# Tailscale + SSH + `lxc exec`, checkout detached do SHA, health check no fim.
+#
+# Segredos do repo (ver docs/production.md): TS_AUTHKEY_DEV, JEV_CD_SSH_KEY,
+# JEV_TEST_SSH_HOST (ex.: ubuntu@oute-server), JEV_TEST_URL (ex.: http://100.66.254.24:3770).
+# Sem eles o job falha no primeiro passo — o deploy manual do docs/production.md continua valendo.
+
+name: CD
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-test:
+    if: >-
+      github.repository == 'renatobardi/jev-o-matic' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event.workflow_run.event == 'push' &&
+        github.event.workflow_run.conclusion == 'success'))
+    runs-on: ubuntu-26.04
+    environment: jev-o-matic-test
+    concurrency:
+      group: cd-jev-o-matic-test
+      cancel-in-progress: false
+    env:
+      DEPLOY_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+    steps:
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@6cae46e2d796f265265cfcf628b72a32b4d7cade # v3
+        with:
+          authkey: ${{ secrets.TS_AUTHKEY_DEV }}
+
+      - name: Wait for the Tailscale backend to settle
+        run: |
+          for attempt in $(seq 1 30); do
+            state=$(tailscale status --json | python3 -c "import json,sys; print(json.load(sys.stdin)['BackendState'])")
+            [[ "$state" == "Running" ]] && exit 0
+            sleep 2
+          done
+          echo "::error::Tailscale backend never reached Running" && exit 1
+
+      - name: Load deploy SSH key
+        env:
+          SSH_KEY: ${{ secrets.JEV_CD_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Deploy the validated commit
+        env:
+          HOST: ${{ secrets.JEV_TEST_SSH_HOST }}
+        run: |
+          on_host() {
+            ssh -o StrictHostKeyChecking=no -o ConnectTimeout=15 "$HOST" \
+              "lxc exec jev-o-matic-test -- bash -lc '$1'"
+          }
+          # O restart do caddy é incondicional: o compose não recria serviço cujo único insumo
+          # alterado é um arquivo bind-mounted (o Caddyfile).
+          on_host "set -eu; cd /opt/app; git fetch --quiet origin main; git checkout --force --detach $DEPLOY_SHA; docker compose up -d --build; docker compose restart caddy"
+          running=$(on_host 'cd /opt/app && git rev-parse HEAD' | tr -d '\r')
+          if [[ "$running" != "$DEPLOY_SHA" ]]; then
+            echo "::error::jev-o-matic-test is running $running, expected $DEPLOY_SHA"
+            exit 1
+          fi
+          echo "Deployed \`$DEPLOY_SHA\` to jev-o-matic-test." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Wait for health
+        env:
+          APP_URL: ${{ secrets.JEV_TEST_URL }}
+        run: |
+          for attempt in $(seq 1 30); do
+            curl -fsS --max-time 2 "$APP_URL/api/health" && exit 0
+            sleep 2
+          done
+          echo "::error::jev-o-matic-test never became healthy after deploy" && exit 1

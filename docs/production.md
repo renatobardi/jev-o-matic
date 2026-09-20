@@ -9,13 +9,27 @@ Convenções do host: `renatobardi/lab` → `docs/oute-server-app-setup.md`. Est
 - O Caddy publica `:80` e `:${APP_PORT}` (default 3770 — a porta alocada no inventory; o proxy LXD da Tailscale conecta nela).
 - Acesso: `http://100.66.254.24:<porta>` pela tailnet.
 
-## Instalar (uma vez, do repo `lab`)
+## Instalar (uma vez, do Mac — é quem tem Tailscale SSH e o repo `lab`)
 
 ```bash
-.devin/skills/install-app/scripts/install-app.sh https://github.com/renatobardi/jev-o-matic --port 3770
+scripts/ops/bootstrap-test.sh --dry-run   # confere o plano
+scripts/ops/bootstrap-test.sh             # push, install-app, .env no servidor, compose up, health
 ```
 
-Se o inventory alocar outra porta, grave `APP_PORT=<porta>` no `.env` do servidor.
+O script chama o `install-app.sh` do `lab` com `--port 3770`. Depois, commitar `inventory.yaml` + `PORTS.md` no `lab`.
+
+## CD (depois do bootstrap, nada mais roda no Mac além do `git push`)
+
+`.github/workflows/cd.yml`: CI verde na `main` → Tailscale + SSH → checkout do SHA validado em `/opt/app` → `docker compose up -d --build` → health. Segredos do repo, uma vez (mesmos valores que o studio usa pra Tailscale/SSH):
+
+```bash
+gh secret set TS_AUTHKEY_DEV       # authkey efêmera da tailnet (Vaultwarden)
+gh secret set JEV_CD_SSH_KEY < caminho/da/chave_privada_de_deploy
+gh secret set JEV_TEST_SSH_HOST --body 'ubuntu@oute-server'
+gh secret set JEV_TEST_URL --body 'http://100.66.254.24:3770'
+```
+
+E criar o environment `jev-o-matic-test` no repo (Settings → Environments). Sem os segredos o CD falha no primeiro passo e o deploy manual abaixo continua valendo.
 
 ## Segredos
 

@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  api:
+    runs-on: ubuntu-26.04
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      # Mesmo uv pinado do api/Dockerfile; ele baixa o Python do .python-version.
+      - name: Install uv
+        run: "pip install --only-binary :all: uv==0.12.12"
+      - name: Sync
+        run: uv sync --locked
+      - name: Lint
+        run: uv run ruff check . && uv run ruff format --check .
+      - name: Type-check
+        run: uv run mypy src tests scripts
+      - name: Tests
+        run: uv run pytest -q
+
+  web:
+    runs-on: ubuntu-26.04
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+      - name: Install
+        run: bun install --frozen-lockfile --ignore-scripts
+      - name: Type-check + build
+        run: bun run build
+      - name: Lint
+        run: bun run lint
+      - name: Unit tests
+        run: bun run test
+
+  stack:
+    # As imagens de verdade, do jeito que o servidor builda. jev em mock: o CI não gasta nem
+    # precisa de segredo; o GitHub real é o único externo (PR público, sem token).
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Build e sobe
+        run: |
+          printf 'JEV_BACKEND=mock\nAPP_PORT=3770\n' > .env
+          docker compose up -d --build
+      - name: Health pelo Caddy, nas duas portas
+        run: |
+          for attempt in $(seq 1 30); do
+            curl -fsS --max-time 2 http://localhost:3770/api/health && break
+            sleep 2
+          done
+          curl -fsS http://localhost/api/health
+      - name: A página e a triagem respondem
+        run: |
+          curl -fsS http://localhost/ | grep -q '<div id="root">'
+          curl -fsS -X POST http://localhost/api/triage -H 'Content-Type: application/json' \
+            -d '{"url":"https://github.com/fastapi/fastapi/pull/13000"}' | tee /tmp/triage.json
+          python3 -c "import json; d=json.load(open('/tmp/triage.json')); assert d['verdict']['lane'] in ('fast','normal','senior'), d"
+      - name: Logs se falhar
+        if: failure()
+        run: docker compose logs --no-color | tail -100
+      - name: Derruba
+        if: always()
+        run: docker compose down -v
