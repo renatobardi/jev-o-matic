@@ -69,7 +69,9 @@ class PullRequest:
 
 def parse_pr_url(url: str) -> PrRef:
     bad = TriageError(
-        "invalid_url", "Cole a URL de um PR público: https://github.com/owner/repo/pull/123", 422
+        "invalid_url",
+        "Paste the URL of a public pull request: https://github.com/owner/repo/pull/123",
+        422,
     )
     if len(url) > 300:
         raise bad
@@ -110,12 +112,12 @@ def _check(r: httpx.Response) -> None:
         wait = int(r.headers.get("retry-after", "0") or 0) or max(reset - int(time.time()), 1)
         raise TriageError(
             "github_rate_limited",
-            "Limite da API do GitHub atingido. Tente mais tarde.",
+            "GitHub API rate limit reached. Try again later.",
             429,
             retry_after=wait,
         )
     if r.status_code in (401, 403, 404):
-        raise TriageError("pr_not_found", "PR não encontrado ou privado.", 404)
+        raise TriageError("pr_not_found", "Pull request not found, or it is private.", 404)
     raise TriageError("github_unavailable", f"GitHub respondeu {r.status_code}.", 502)
 
 
@@ -155,7 +157,7 @@ async def fetch_pr(ref: PrRef, client: httpx.AsyncClient | None = None) -> PullR
                 f"{base}/files", params={"per_page": PER_PAGE, "page": page}, headers=_headers()
             )
     except httpx.HTTPError as e:
-        raise TriageError("github_unavailable", "Falha ao falar com o GitHub.", 502) from e
+        raise TriageError("github_unavailable", "Could not reach GitHub.", 502) from e
     finally:
         if own:
             await client.aclose()

@@ -51,7 +51,7 @@ def normalize(ans: dict[str, Any]) -> Answer:
         if conf is None:
             conf = chance_normalized(probs) if probs else 0.0
         return Answer(t, ans[t], float(conf), probs)
-    raise TriageError("jev_unavailable", f"Resposta do jev em formato inesperado ({t}).", 502)
+    raise TriageError("jev_unavailable", f"Unexpected jev answer format ({t}).", 502)
 
 
 def _mock(state: dict[str, Any], questions: dict[str, Question]) -> dict[str, Any]:
@@ -95,12 +95,24 @@ def _mock(state: dict[str, Any], questions: dict[str, Question]) -> dict[str, An
     }
 
 
+def _out_of_credits(e: Exception | None) -> bool:
+    """OpenRouter: 402 = sem crédito na conta; 403 "Key limit exceeded" = limite da key."""
+    if e is None:
+        return False
+    text = str(e).lower()
+    return (
+        getattr(e, "status_code", None) == 402
+        or "limit exceeded" in text
+        or "insufficient credits" in text
+    )
+
+
 def _call_openrouter(
     model: str, state: dict[str, Any], questions: dict[str, Question]
 ) -> dict[str, Any]:
     key = os.getenv("OPENROUTER_API_KEY")
     if not key:
-        raise TriageError("jev_unavailable", "OPENROUTER_API_KEY não configurada no servidor.", 503)
+        raise TriageError("jev_unavailable", "OPENROUTER_API_KEY is not set on the server.", 503)
     from openrouter import OpenRouter
 
     last: Exception | None = None
@@ -113,7 +125,13 @@ def _call_openrouter(
         except Exception as e:  # noqa: BLE001 — SDK alpha: qualquer falha vira erro único da API
             last = e
             time.sleep(0.5 * (attempt + 1))
-    raise TriageError("jev_unavailable", "O jev não respondeu. Tente de novo.", 502) from last
+    if _out_of_credits(last):
+        raise TriageError(
+            "credits_exhausted",
+            "This demo ran out of credits. Thanks to everyone who tried it — the examples still work.",
+            503,
+        ) from last
+    raise TriageError("jev_unavailable", "jev did not answer. Try again.", 502) from last
 
 
 async def decide(state: dict[str, Any], questions: dict[str, Question]) -> JevResult:
@@ -125,11 +143,13 @@ async def decide(state: dict[str, Any], questions: dict[str, Question]) -> JevRe
     elif backend == "openrouter":
         raw = await asyncio.to_thread(_call_openrouter, model, state, questions)
     else:
-        raise TriageError("jev_unavailable", f"JEV_BACKEND desconhecido: {backend}", 503)
+        raise TriageError("jev_unavailable", f"Unknown JEV_BACKEND: {backend}", 503)
     latency = (time.perf_counter() - t0) * 1000
     missing = set(questions) - set(raw["answers"])
     if missing:
-        raise TriageError("jev_unavailable", f"O jev não respondeu: {sorted(missing)}", 502)
+        raise TriageError(
+            "jev_unavailable", f"jev left questions unanswered: {sorted(missing)}", 502
+        )
     usage = raw.get("usage", {})
     return JevResult(
         answers={k: normalize(raw["answers"][k]) for k in questions},

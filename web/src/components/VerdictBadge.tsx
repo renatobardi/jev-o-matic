@@ -7,8 +7,8 @@ export function VerdictBadge({ verdict, simulated }: { verdict: TriageResult["ve
   const escalated = verdict.escalated ?? [];
   const names = (keys: string[]) => keys.map((k) => DECISION[k] ?? k).join(", ");
   return (
-    <section className={`card verdict lane-${verdict.lane}`} aria-label="Veredito">
-      <p className="eyebrow">veredito · decidido em código{simulated && " · simulação"}</p>
+    <section className={`card verdict lane-${verdict.lane}`} aria-label="Verdict">
+      <p className="eyebrow">verdict · decided in code{simulated && " · simulation"}</p>
       <h3>{lane.title}</h3>
       <p>{lane.blurb}</p>
       {reasons.length > 0 && (
@@ -20,16 +20,16 @@ export function VerdictBadge({ verdict, simulated }: { verdict: TriageResult["ve
       )}
       {escalated.length > 0 && (
         <p className="uncertain-note">
-          <strong>Cascata:</strong> o jev ficou incerto em {names(escalated)} e o LLM respondeu no lugar.
+          <strong>Cascade:</strong> jev was uncertain about {names(escalated)} and the LLM answered instead.
           {verdict.jev_lane && verdict.jev_lane !== verdict.lane
-            ? ` Só com o jev, a via seria “${LANE[verdict.jev_lane].title}”.`
-            : " A via não mudou."}
+            ? ` With jev alone, the lane would be “${LANE[verdict.jev_lane].title}”.`
+            : " The lane did not change."}
         </p>
       )}
       {verdict.uncertain.length > 0 && (
         <p className="uncertain-note">
-          Sem confiança ≥ {verdict.t.toLocaleString("pt-BR")} em: {names(verdict.uncertain)}. A via fica no lado seguro
-          {simulated ? " — é o que a cascata mandaria pro LLM." : " (o LLM não respondeu)."}
+          No confidence ≥ {verdict.t.toLocaleString("en-US")} on: {names(verdict.uncertain)}. The lane stays on the safe side
+          {simulated ? " — this is what the cascade would send to the LLM." : " (the LLM did not answer)."}
         </p>
       )}
     </section>

@@ -78,7 +78,7 @@ export async function parseError(res: Response): Promise<ApiError> {
   } catch {
     // corpo não é JSON
   }
-  return new ApiError("unexpected", `O servidor respondeu ${res.status}.`, res.status);
+  return new ApiError("unexpected", `The server answered ${res.status}.`, res.status);
 }
 
 export async function postTriage(url: string, fetcher: typeof fetch = fetch): Promise<TriageResult> {
@@ -90,7 +90,7 @@ export async function postTriage(url: string, fetcher: typeof fetch = fetch): Pr
       body: JSON.stringify({ url }),
     });
   } catch {
-    throw new ApiError("network", "Não consegui falar com o servidor.", 0);
+    throw new ApiError("network", "Could not reach the server.", 0);
   }
   if (!res.ok) throw await parseError(res);
   return (await res.json()) as TriageResult;

@@ -1,7 +1,7 @@
 export function DemoNotice() {
   return (
     <p className="notice" role="note">
-      <strong>Demo de laboratório.</strong> Medido em 29 PRs reais rotulados por uma IA (não por revisores humanos): a cascata deu a mesma via do rotulador em 20 e nunca pediu menos revisão que ele. Amostra pequena; não use como gate de verdade.
+      <strong>Lab demo.</strong> Measured on 29 real PRs labeled by an AI (not by human reviewers): the cascade picked the same lane as the labeler in 20 and never asked for less review than it did. Small sample; do not use it as a real gate.
     </p>
   );
 }

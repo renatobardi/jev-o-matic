@@ -7,14 +7,14 @@ export function Trace({ trace }: { trace: Stage[] }) {
   const total = ran.reduce((a, s) => a + s.latency_ms, 0);
   const cost = ran.reduce((a, s) => a + (s.cost ?? 0), 0);
   return (
-    <section className="card" aria-label="Etapas">
-      <p className="eyebrow">trilha · jev → código → LLM</p>
+    <section className="card" aria-label="Stages">
+      <p className="eyebrow">trace · jev → code → LLM</p>
       <ol className="trace">
         {trace.map((s) => (
           <li key={s.stage} className={s.skipped ? "stage is-skipped" : "stage"}>
             <span className="stage-name">{STAGE[s.stage] ?? s.stage}</span>
             {s.skipped ? (
-              <span className="meta">{s.note ?? "não acionado"}</span>
+              <span className="meta">{s.note ?? "not called"}</span>
             ) : (
               <>
                 <span className="stage-time">{ms(s.latency_ms)}</span>
@@ -29,7 +29,7 @@ export function Trace({ trace }: { trace: Stage[] }) {
         ))}
       </ol>
       <p className="meta">
-        Total {ms(total)} · {usd(cost)}. O GitHub entra na conta de tempo, não na do modelo.
+        Total {ms(total)} · {usd(cost)}. GitHub counts toward the time, not toward the model cost.
       </p>
     </section>
   );

@@ -1,71 +1,71 @@
-// Texto de interface. As chaves são as da API (questions.py / verdict.py).
+// Interface text. Keys are the API's (questions.py / verdict.py).
 
 import type { Lane } from "./api";
 
 export const LANE: Record<Lane, { title: string; blurb: string }> = {
-  fast: { title: "Merge rápido", blurb: "Baixo risco: um revisor, sem cerimônia." },
-  normal: { title: "Revisão normal", blurb: "Fluxo padrão de code review." },
-  senior: { title: "Revisão sênior", blurb: "Toca em área sensível: precisa de alguém experiente." },
+  fast: { title: "Fast merge", blurb: "Low risk: one reviewer, no ceremony." },
+  normal: { title: "Normal review", blurb: "The standard code review flow." },
+  senior: { title: "Senior review", blurb: "Touches a sensitive area: needs someone experienced." },
 };
 
 export const DECISION: Record<string, string> = {
-  change_type: "Tipo de mudança",
-  risk: "Risco em produção",
-  touches_auth_security: "Mexe em lógica de segurança",
-  touches_data_schema: "Muda estrutura de dados persistidos",
-  breaking_api: "Quebra quem usa a interface pública",
-  touches_infra_ci: "Mexe em build, CI ou deploy",
-  has_tests: "Traz testes do que muda",
-  description_explains_why: "Descrição explica o porquê",
+  change_type: "Kind of change",
+  risk: "Production risk",
+  touches_auth_security: "Touches security logic",
+  touches_data_schema: "Changes persisted data structure",
+  breaking_api: "Breaks users of a public interface",
+  touches_infra_ci: "Touches build, CI or deploy",
+  has_tests: "Ships tests for what it changes",
+  description_explains_why: "Description explains why",
 };
 
 export const CHOICE: Record<string, string> = {
   feature: "feature",
   bugfix: "bugfix",
   refactor: "refactor",
-  mixed: "misto",
-  deps: "dependências",
+  mixed: "mixed",
+  deps: "dependencies",
   docs: "docs",
   config_infra: "config / infra",
-  tests_only: "só testes",
+  tests_only: "tests only",
 };
 
-export const RISK_LEVEL = ["nenhum", "contido", "severo"];
+export const RISK_LEVEL = ["none", "contained", "severe"];
 
 export const REASON: Record<string, string> = {
-  touches_auth_security: "mexe em lógica de segurança",
-  touches_data_schema: "muda estrutura de dados",
-  breaking_api: "quebra interface pública",
-  risk_severe: "risco severo",
-  type_docs: "só documentação",
-  type_tests_only: "só testes",
-  type_deps: "só dependências",
-  no_risk_flags: "nenhum sinal de risco",
-  risk_none: "não altera produção",
-  small: "PR pequeno",
-  too_many_files_for_fast: "arquivos demais pra via rápida",
-  no_runtime_files: "nenhum arquivo de código de produção",
-  runtime_files_block_fast: "tem código de produção no diff",
-  uncertain_decisions: "há decisões incertas",
+  touches_auth_security: "touches security logic",
+  touches_data_schema: "changes data structure",
+  breaking_api: "breaks a public interface",
+  risk_severe: "severe risk",
+  type_docs: "docs only",
+  type_tests_only: "tests only",
+  type_deps: "dependencies only",
+  no_risk_flags: "no risk signal",
+  risk_none: "does not alter production",
+  small: "small PR",
+  too_many_files_for_fast: "too many files for the fast lane",
+  no_runtime_files: "no production code files",
+  runtime_files_block_fast: "production code in the diff",
+  uncertain_decisions: "some decisions are uncertain",
 };
 
 export const OMIT_REASON: Record<string, string> = {
   lockfile: "lockfile",
-  vendored: "código de terceiros",
-  build_output: "saída de build",
-  minified: "minificado",
-  snapshot: "snapshot de teste",
-  generated: "gerado",
-  binary: "binário",
-  no_patch: "sem diff disponível",
-  removed: "arquivo removido",
-  budget: "não coube no orçamento",
-  github_file_cap: "além do teto do GitHub",
+  vendored: "third-party code",
+  build_output: "build output",
+  minified: "minified",
+  snapshot: "test snapshot",
+  generated: "generated",
+  binary: "binary",
+  no_patch: "no diff available",
+  removed: "file removed",
+  budget: "did not fit the budget",
+  github_file_cap: "beyond GitHub's file cap",
 };
 
 export const STAGE: Record<string, string> = {
   github: "GitHub",
   jev: "jev",
-  code: "Código",
+  code: "Code",
   llm: "LLM",
 };

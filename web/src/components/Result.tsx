@@ -15,7 +15,7 @@ function jevOnly(decisions: Record<string, Decision>): Record<string, Decision> 
   );
 }
 
-export function Result({ result }: { result: TriageResult }) {
+export function Result({ result, recorded = false }: { result: TriageResult; recorded?: boolean }) {
   const { pr } = result;
   const serverT = result.verdict.t;
   const [t, setT] = useState(serverT);
@@ -36,10 +36,11 @@ export function Result({ result }: { result: TriageResult }) {
         </p>
         <h2>{pr.title}</h2>
         <p className="meta">
-          {int(pr.changed_files)} {pr.changed_files === 1 ? "arquivo" : "arquivos"} ·{" "}
+          {int(pr.changed_files)} {pr.changed_files === 1 ? "file" : "files"} ·{" "}
           <span className="add">+{int(pr.additions)}</span> <span className="del">−{int(pr.deletions)}</span>
-          {result.cached && " · resultado em cache"}
+          {result.cached && " · cached result"}
         </p>
+        {recorded && <p className="meta">Recorded result of a real run — paste any PR URL above to run it live.</p>}
       </header>
 
       <VerdictBadge

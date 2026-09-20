@@ -167,7 +167,7 @@ async def test_default_model_is_the_bakeoff_winner(monkeypatch: pytest.MonkeyPat
         await llm.second_opinion({}, {"risk": QS["risk"]}, c)
         await llm.second_opinion({}, {"risk": QS["risk"]}, c, model="x/explicit")
     assert sent == [
-        "~openai/gpt-luna-latest",
+        llm.DEFAULT_MODEL,
         "z-ai/glm-5.3",
         "x/explicit",
     ]  # default < env < argumento

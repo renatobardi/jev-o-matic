@@ -40,7 +40,7 @@ class RateLimiter:
         if len(hits) >= self.per_day:
             raise TriageError(
                 "rate_limited",
-                "Limite diário de triagens atingido pra este IP.",
+                "You have used today's live triages for this IP. The examples still work.",
                 429,
                 retry_after=max(int(hits[0] + 86_400 - now), 1),
             )
@@ -48,7 +48,7 @@ class RateLimiter:
         if len(recent) >= self.per_minute:
             raise TriageError(
                 "rate_limited",
-                "Muitas triagens em sequência. Espere um pouco.",
+                "Too many triages in a row. Wait a moment.",
                 429,
                 retry_after=max(int(recent[0] + 60 - now), 1),
             )
@@ -63,7 +63,7 @@ class DailyBudget:
     """Teto diário de chamadas ao LLM e de gasto total. Vira à meia-noite UTC."""
 
     max_llm_calls: int = 200
-    max_spend_usd: float = 1.0
+    max_spend_usd: float = 2.0
     clock: Clock = time.time
     _day: int = -1
     llm_calls: int = 0
@@ -114,8 +114,8 @@ class TtlCache[V]:
 
 
 def rate_limiter_from_env() -> RateLimiter:
-    return RateLimiter(_env_int("RATE_PER_MIN", 6), _env_int("RATE_PER_DAY", 60))
+    return RateLimiter(_env_int("RATE_PER_MIN", 6), _env_int("RATE_PER_DAY", 10))
 
 
 def budget_from_env() -> DailyBudget:
-    return DailyBudget(_env_int("MAX_LLM_CALLS_DAY", 200), _env_float("MAX_SPEND_DAY_USD", 1.0))
+    return DailyBudget(_env_int("MAX_LLM_CALLS_DAY", 200), _env_float("MAX_SPEND_DAY_USD", 2.0))
