@@ -45,7 +45,10 @@ echo "==> 4/5 recria a stack com o .env"
 ssh -n "${HOST}" "lxc exec ${NAME} -- bash -lc 'cd /opt/app && git pull --ff-only && docker compose up -d --build'"
 
 echo "==> 5/5 health"
-TS_IP="$(cd "${LAB}" && python3 tools/inventory_ops.py server-ip servers/oute-server/inventory.yaml)"
+# Mesmo Python do install-app: o venv do lab tem jsonschema/pyyaml; o python3 do sistema não.
+LAB_PY="${LAB}/.venv/bin/python"
+[[ -x "${LAB_PY}" ]] || LAB_PY=python3
+TS_IP="$(cd "${LAB}" && "${LAB_PY}" tools/inventory_ops.py server-ip servers/oute-server/inventory.yaml)"
 for attempt in $(seq 1 30); do
     if curl -fsS --max-time 3 "http://${TS_IP}:${PORT}/api/health"; then
         echo; echo "ok: http://${TS_IP}:${PORT}"
