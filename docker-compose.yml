@@ -1,0 +1,34 @@
+# jev-o-matic v2 — PR Triage. Mesmo desenho do studio, sem banco: api + web + Caddy.
+# No oute-server roda dentro de um LXC próprio, em /opt/app (lab: install-app.sh).
+
+services:
+  api:
+    build: ./api
+    # Segredos e modelos vêm do /opt/app/.env (modo 600, fora do git). Sem ele a stack sobe
+    # igual — a triagem responde 503 "OPENROUTER_API_KEY não configurada" até o arquivo existir.
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      # A api não publica porta: só o Caddy desta rede fala com ela, então o
+      # X-Forwarded-* que ele manda é aceito como está.
+      FORWARDED_ALLOW_IPS: "*"
+    restart: unless-stopped
+
+  web:
+    build: ./web
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2.9-alpine
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    ports:
+      # 80: alvo do Nginx do host quando o app é público (padrão do studio-prd).
+      # APP_PORT: porta alocada no inventory do lab — é nela que o proxy LXD da Tailscale conecta.
+      - "80:80"
+      - "${APP_PORT:-3770}:80"
+    depends_on:
+      - api
+      - web
+    restart: unless-stopped

@@ -36,3 +36,13 @@ labs/      um diretório por experimento (run.py)
 datasets/  dados rotulados
 results/   JSONL por execução (versionado: é o dado bruto do lab)
 ```
+
+## v2 — PR Triage
+
+Aplicação em cima do que os labs mediram: cola a URL de um PR público → o jev responde perguntas tipadas sobre o diff → código decide a via de revisão → só a dúvida vai pro LLM.
+
+```
+api/   FastAPI: GitHub → state (orçamento de tokens) → jev → veredito
+web/   React + Vite: página única
+docker-compose.yml + Caddyfile   api + web + Caddy; deploy em docs/production.md
+```

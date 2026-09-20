@@ -1,0 +1,21 @@
+{
+	auto_https off
+	admin off
+	servers {
+		# Em produção o TLS termina no Nginx do host, que chega pela bridge do LXD (faixa privada).
+		trusted_proxies static private_ranges
+	}
+}
+
+# HTTP puro dentro do container: a fronteira de rede é a Tailscale (test) ou o
+# Nginx/Certbot do host (público). Aqui o Caddy só roteia.
+:80 {
+	handle /api/* {
+		reverse_proxy api:8000
+	}
+
+	handle {
+		# nginx-unprivileged (não-root) escuta em 8080 — ver web/Dockerfile.
+		reverse_proxy web:8080
+	}
+}
