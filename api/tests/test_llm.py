@@ -149,3 +149,25 @@ async def test_network_failure_and_missing_key(monkeypatch: pytest.MonkeyPatch) 
     async with httpx.AsyncClient(transport=httpx.MockTransport(h)) as c:
         with pytest.raises(llm.LlmUnavailable):
             await llm.second_opinion({}, QS, c)
+
+
+async def test_default_model_is_the_bakeoff_winner(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("JEV_BACKEND", "openrouter")
+    monkeypatch.setenv("OPENROUTER_API_KEY", "k")
+    monkeypatch.delenv("LLM_MODEL", raising=False)
+    sent: list[str] = []
+
+    def h(req: httpx.Request) -> httpx.Response:
+        sent.append(json.loads(req.content)["model"])
+        return _reply({"risk": {"value": 1, "reason": "contido"}})
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(h)) as c:
+        await llm.second_opinion({}, {"risk": QS["risk"]}, c)
+        monkeypatch.setenv("LLM_MODEL", "z-ai/glm-5.3")
+        await llm.second_opinion({}, {"risk": QS["risk"]}, c)
+        await llm.second_opinion({}, {"risk": QS["risk"]}, c, model="x/explicit")
+    assert sent == [
+        "~openai/gpt-luna-latest",
+        "z-ai/glm-5.3",
+        "x/explicit",
+    ]  # default < env < argumento

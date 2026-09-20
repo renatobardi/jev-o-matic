@@ -23,6 +23,10 @@ from .jev import Answer, Question
 URL = "https://openrouter.ai/api/v1/chat/completions"
 TIMEOUT = 60.0
 MAX_RATIONALE = 300
+# Escolhido no bake-off de 2026-09-20 (results/v2_llm_bakeoff): 70/70 respostas válidas, mesma via
+# que o gpt-sol em 13/14 PRs (e na que difere o sol era o ponto fora da curva), p50 4,2 s vs 6,2 s,
+# 9,6× mais barato. Modelos de raciocínio (glm, kimi, deepseek) ficaram em 10–49 s de p50.
+DEFAULT_MODEL = "~openai/gpt-luna-latest"
 # Folga pra modelo de raciocínio: os tokens de raciocínio contam no limite, e com pouco o JSON nem sai.
 MAX_TOKENS = 1500
 
@@ -188,7 +192,7 @@ async def second_opinion(
     model: str | None = None,
     max_tokens: int = MAX_TOKENS,
 ) -> LlmResult:
-    use: str = model or os.getenv("LLM_MODEL") or "~openai/gpt-sol-latest"
+    use: str = model or os.getenv("LLM_MODEL") or DEFAULT_MODEL
     t0 = time.perf_counter()
     if os.getenv("JEV_BACKEND") == "mock":
         data = _mock(questions)
