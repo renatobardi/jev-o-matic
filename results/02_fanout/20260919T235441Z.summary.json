@@ -1,0 +1,293 @@
+{
+  "model": "typesafe/jev-1.13-20260917",
+  "R": 5,
+  "table": [
+    {
+      "n": 1,
+      "lat_med": 325.6,
+      "lat_min": 291.4,
+      "lat_max": 429.9,
+      "in_tok": 397,
+      "out_tok": 22,
+      "cost": 1.6674e-05,
+      "seq_ms": 366.2,
+      "par_ms": 366.2,
+      "tok_single_sum": 397,
+      "cost_single_sum": 1.6674e-05
+    },
+    {
+      "n": 2,
+      "lat_med": 350.3,
+      "lat_min": 283.8,
+      "lat_max": 377.2,
+      "in_tok": 490,
+      "out_tok": 65,
+      "cost": 2.058e-05,
+      "seq_ms": 774.5,
+      "par_ms": 396.7,
+      "tok_single_sum": 873,
+      "cost_single_sum": 3.6666000000000004e-05
+    },
+    {
+      "n": 5,
+      "lat_med": 319.1,
+      "lat_min": 295.2,
+      "lat_max": 374.6,
+      "in_tok": 563,
+      "out_tok": 117,
+      "cost": 2.3646e-05,
+      "seq_ms": 1761.3,
+      "par_ms": 503.1,
+      "tok_single_sum": 2095,
+      "cost_single_sum": 8.799e-05
+    },
+    {
+      "n": 10,
+      "lat_med": 305.9,
+      "lat_min": 276.8,
+      "lat_max": 378.9,
+      "in_tok": 707,
+      "out_tok": 220,
+      "cost": 2.9694e-05,
+      "seq_ms": 3454.5,
+      "par_ms": 519.8,
+      "tok_single_sum": 4154,
+      "cost_single_sum": 0.000174468
+    },
+    {
+      "n": 20,
+      "lat_med": 331.6,
+      "lat_min": 308.4,
+      "lat_max": 497.6,
+      "in_tok": 995,
+      "out_tok": 411,
+      "cost": 4.179e-05,
+      "seq_ms": 6803.6,
+      "par_ms": 529.2,
+      "tok_single_sum": 8272,
+      "cost_single_sum": 0.000347424
+    }
+  ],
+  "drift": [
+    {
+      "q": "refund_wanted",
+      "type": "noul",
+      "solo": 0.74,
+      "batch": 0.74,
+      "solo_runs": [
+        0.74,
+        0.75,
+        0.74
+      ]
+    },
+    {
+      "q": "department",
+      "type": "choice",
+      "solo": "billing",
+      "batch": "billing",
+      "solo_runs": [
+        "billing",
+        "billing",
+        "billing"
+      ]
+    },
+    {
+      "q": "frustration",
+      "type": "score",
+      "solo": 1.72,
+      "batch": 1.72,
+      "solo_runs": [
+        1.72,
+        1.68,
+        1.69
+      ]
+    },
+    {
+      "q": "churn_threat",
+      "type": "noul",
+      "solo": 0.98,
+      "batch": 0.98,
+      "solo_runs": [
+        0.98,
+        0.98,
+        0.98
+      ]
+    },
+    {
+      "q": "has_bug",
+      "type": "noul",
+      "solo": 0.97,
+      "batch": 0.97,
+      "solo_runs": [
+        0.97,
+        0.97,
+        0.97
+      ]
+    },
+    {
+      "q": "urgency",
+      "type": "score",
+      "solo": 1.84,
+      "batch": 1.84,
+      "solo_runs": [
+        1.84,
+        1.83,
+        1.83
+      ]
+    },
+    {
+      "q": "repeat_contact",
+      "type": "noul",
+      "solo": 0.96,
+      "batch": 0.96,
+      "solo_runs": [
+        0.96,
+        0.96,
+        0.96
+      ]
+    },
+    {
+      "q": "mentions_competitor",
+      "type": "noul",
+      "solo": 0.98,
+      "batch": 0.98,
+      "solo_runs": [
+        0.98,
+        0.98,
+        0.98
+      ]
+    },
+    {
+      "q": "has_deadline",
+      "type": "noul",
+      "solo": 0.98,
+      "batch": 0.98,
+      "solo_runs": [
+        0.98,
+        0.98,
+        0.98
+      ]
+    },
+    {
+      "q": "language",
+      "type": "choice",
+      "solo": "pt",
+      "batch": "pt",
+      "solo_runs": [
+        "pt",
+        "pt",
+        "pt"
+      ]
+    },
+    {
+      "q": "multi_issue",
+      "type": "noul",
+      "solo": 0.98,
+      "batch": 0.98,
+      "solo_runs": [
+        0.98,
+        0.98,
+        0.98
+      ]
+    },
+    {
+      "q": "sentiment",
+      "type": "score",
+      "solo": 0.0,
+      "batch": 0.0,
+      "solo_runs": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "q": "customer_value",
+      "type": "score",
+      "solo": 1.98,
+      "batch": 1.98,
+      "solo_runs": [
+        1.98,
+        1.98,
+        1.97
+      ]
+    },
+    {
+      "q": "needs_human",
+      "type": "noul",
+      "solo": 0.94,
+      "batch": 0.93,
+      "solo_runs": [
+        0.94,
+        0.93,
+        0.93
+      ]
+    },
+    {
+      "q": "polite",
+      "type": "noul",
+      "solo": 0.18,
+      "batch": 0.18,
+      "solo_runs": [
+        0.18,
+        0.15,
+        0.17
+      ]
+    },
+    {
+      "q": "asks_question",
+      "type": "noul",
+      "solo": 0.1,
+      "batch": 0.09,
+      "solo_runs": [
+        0.1,
+        0.1,
+        0.11
+      ]
+    },
+    {
+      "q": "product_area",
+      "type": "choice",
+      "solo": "payments_screen",
+      "batch": "payments_screen",
+      "solo_runs": [
+        "payments_screen",
+        "payments_screen",
+        "payments_screen"
+      ]
+    },
+    {
+      "q": "legal_risk",
+      "type": "noul",
+      "solo": 0.01,
+      "batch": 0.01,
+      "solo_runs": [
+        0.01,
+        0.01,
+        0.01
+      ]
+    },
+    {
+      "q": "clarity",
+      "type": "score",
+      "solo": 1.98,
+      "batch": 1.97,
+      "solo_runs": [
+        1.98,
+        1.98,
+        1.97
+      ]
+    },
+    {
+      "q": "spam",
+      "type": "noul",
+      "solo": 0.03,
+      "batch": 0.03,
+      "solo_runs": [
+        0.03,
+        0.03,
+        0.03
+      ]
+    }
+  ]
+}

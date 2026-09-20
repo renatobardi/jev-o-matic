@@ -1,0 +1,19 @@
+[project]
+name = "jev-o-matic"
+version = "0.1.0"
+description = "Lab para estudar o jev (modelo System One da TypeSafe)"
+requires-python = ">=3.10"
+dependencies = [
+    "openrouter>=1.2.6",
+    "python-dotenv>=1.0",
+]
+
+[project.scripts]
+lab = "harness.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["harness", "labs"]
