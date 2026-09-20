@@ -1,0 +1,2339 @@
+{
+ "reference": "~openai/gpt-sol-latest",
+ "models": [
+  "~openai/gpt-sol-latest",
+  "z-ai/glm-5.3",
+  "~deepseek/deepseek-pro-latest",
+  "moonshotai/kimi-k2.6",
+  "~openai/gpt-luna-latest",
+  "z-ai/glm-5.3-flash"
+ ],
+ "keys": [
+  "touches_auth_security",
+  "touches_data_schema",
+  "breaking_api",
+  "risk",
+  "change_type"
+ ],
+ "rows": [
+  {
+   "url": "https://github.com/fastapi/fastapi/pull/13000",
+   "hint": "tradução de docs",
+   "title": "🌐 Add Korean translation for `docs/ko/docs/tutorial/cookie-param-models.md`",
+   "files": 1,
+   "tokens_est": 935,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.02,
+     "confidence": 0.96
+    },
+    "touches_data_schema": {
+     "value": 0.02,
+     "confidence": 0.96
+    },
+    "breaking_api": {
+     "value": 0.01,
+     "confidence": 0.98
+    },
+    "risk": {
+     "value": 0.0,
+     "confidence": 1.0
+    },
+    "change_type": {
+     "value": "docs",
+     "confidence": 1.0
+    }
+   },
+   "jev_ms": 835.6,
+   "jev_cost": 0.000101514,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 3721.5,
+     "cost": 0.006671,
+     "input_tokens": 2009,
+     "output_tokens": 165,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração adiciona apenas uma tradução da documentação sobre parâmetros de cookie, sem modificar lógica de autenticação, sessão ou segurança."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de dados persistidos, migração, tabela ou modelo ORM foi alterado."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A mudança não altera endpoints nem outras interfaces públicas; apenas adiciona uma página de documentação em coreano."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "Por ser exclusivamente uma tradução de documentação, a alteração não afeta o comportamento do sistema em produção."
+      },
+      "change_type": {
+       "value": "docs",
+       "reason": "O diff adiciona somente uma tradução em coreano de uma página da documentação."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "error": "JSON sem 'answers'",
+     "latency_ms": 5166
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "served_by": "deepseek/deepseek-v4-pro-0813",
+     "latency_ms": 10042.3,
+     "cost": 0.00204664,
+     "input_tokens": 2188,
+     "output_tokens": 174,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração é apenas uma tradução de documentação, sem lógica de segurança."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há mudanças em esquemas de dados persistidos, apenas um arquivo de documentação."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública é alterada; é somente documentação."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "A mudança não afeta o comportamento de produção, pois é uma tradução de documentação."
+      },
+      "change_type": {
+       "value": "docs",
+       "reason": "O diff adiciona um arquivo de documentação traduzido para coreano."
+      }
+     }
+    },
+    "moonshotai/kimi-k2.6": {
+     "served_by": "moonshotai/kimi-k2.6",
+     "latency_ms": 44571.9,
+     "cost": 0.00642424,
+     "input_tokens": 2232,
+     "output_tokens": 1384,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "É apenas uma tradução de documentação, sem alteração em código de segurança, autenticação ou autorização."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "A alteração se limita a um arquivo de documentação traduzido, sem modificar estruturas de dados persistentes ou modelos ORM."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Apenas adiciona uma página de documentação em coreano, sem remover ou modificar interfaces públicas existentes."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "Traduções de documentação não alteram o comportamento da aplicação em produção."
+      },
+      "change_type": {
+       "value": "docs",
+       "reason": "O pull request adiciona exclusivamente uma tradução de documentação para o coreano."
+      }
+     }
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 2252.5,
+     "cost": 0.0007397,
+     "input_tokens": 2009,
+     "output_tokens": 198,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração adiciona apenas uma tradução na documentação; não modifica lógica de autenticação, autorização ou segurança."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de dados persistidos é alterada; o arquivo é exclusivamente documentação."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A mudança não remove nem altera interfaces públicas, endpoints ou contratos existentes, apenas adiciona documentação traduzida."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "A alteração consiste somente em documentação traduzida e não pode modificar o comportamento em produção."
+      },
+      "change_type": {
+       "value": "docs",
+       "reason": "O diff adiciona exclusivamente um arquivo de documentação traduzido para coreano."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "served_by": "z-ai/glm-5.3-flash",
+     "latency_ms": 6894.4,
+     "cost": 0.00058455,
+     "input_tokens": 2237,
+     "output_tokens": 498,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff adiciona apenas um arquivo de tradução em coreano da documentação; nenhum código de autenticação, autorização ou sanitização é alterado."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há migrações, modelos ORM ou alterações em formatos de dados persistidos; é somente documentação traduzida."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A PR apenas adiciona um arquivo de tradução de docs, sem remover, renomear ou modificar qualquer interface pública."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "Trata-se de tradução de documentação, que não altera o comportamento em tempo de execução da produção."
+      },
+      "change_type": {
+       "value": "docs",
+       "reason": "O diff consiste unicamente na adição de um arquivo de documentação traduzido para o coreano."
+      }
+     }
+    }
+   }
+  },
+  {
+   "url": "https://github.com/fastapi/fastapi/pull/16289",
+   "hint": "bump de dependência (só lockfile)",
+   "title": "⬆ Bump starlette from 1.3.1 to 1.6.0",
+   "files": 1,
+   "tokens_est": 1504,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.07,
+     "confidence": 0.86
+    },
+    "touches_data_schema": {
+     "value": 0.03,
+     "confidence": 0.94
+    },
+    "breaking_api": {
+     "value": 0.09,
+     "confidence": 0.8200000000000001
+    },
+    "risk": {
+     "value": 1.52,
+     "confidence": 0.28
+    },
+    "change_type": {
+     "value": "deps",
+     "confidence": 1.0
+    }
+   },
+   "jev_ms": 411.1,
+   "jev_cost": 0.000115164,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 10266.6,
+     "cost": 0.0111435,
+     "input_tokens": 2310,
+     "output_tokens": 537,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração apenas atualiza a versão do Starlette no arquivo de lock, sem modificar diretamente lógica de autenticação, autorização, criptografia ou tratamento de segredos."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há migrações nem alterações em tabelas, modelos persistidos ou formatos de armazenamento."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "O diff não remove nem altera diretamente endpoints, funções exportadas, opções de CLI ou outros contratos públicos existentes."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "A atualização de uma dependência central do framework pode mudar o comportamento em tempo de execução, mas o impacto tende a ser detectável por testes e reversível pela restauração da versão anterior."
+      },
+      "change_type": {
+       "value": "deps",
+       "reason": "A única alteração é a atualização da versão de uma dependência no arquivo uv.lock."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "error": "JSON sem 'answers'",
+     "latency_ms": 36204
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "served_by": "deepseek/deepseek-v4-pro-0813",
+     "latency_ms": 14825.3,
+     "cost": 0.00247668,
+     "input_tokens": 2426,
+     "output_tokens": 263,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração é apenas no arquivo uv.lock, que registra versões de dependências; não há lógica de autenticação, autorização, criptografia ou manipulação de segredos."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "O diff modifica somente o lockfile de dependências, sem tocar em modelos, migrações ou formatos de dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A atualização de dependência não altera diretamente interfaces públicas do FastAPI; mudanças de API viriam da biblioteca starlette, mas não são introduzidas por este PR."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "A mudança é restrita ao uv.lock e não altera comportamento de produção diretamente; um erro seria detectado em testes ou instalação, sem danos duradouros."
+      },
+      "change_type": {
+       "value": "deps",
+       "reason": "O PR apenas atualiza a versão da dependência starlette no arquivo uv.lock, sem alterações de código."
+      }
+     }
+    },
+    "moonshotai/kimi-k2.6": {
+     "served_by": "moonshotai/kimi-k2.6",
+     "latency_ms": 129819.8,
+     "cost": 0.0101794,
+     "input_tokens": 2277,
+     "output_tokens": 2453,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff apenas atualiza versões no arquivo de lock (uv.lock), sem modificar código de autenticação, autorização ou qualquer lógica de segurança do projeto."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "A alteração é apenas no arquivo uv.lock, que não define esquemas de banco de dados, modelos ORM ou formatos de dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "O diff modifica apenas o arquivo de lock de dependências, sem remover, renomear ou alterar interfaces públicas, endpoints ou funções exportadas do FastAPI."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "Embora altere a versão de uma dependência de runtime, o impacto de um erro é limitado e reversível, pois trata-se apenas de um bump no arquivo de lock."
+      },
+      "change_type": {
+       "value": "deps",
+       "reason": "O pull request consiste exclusivamente em atualizar a versão da dependência starlette no arquivo uv.lock."
+      }
+     }
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 2946.2,
+     "cost": 0.00094335,
+     "input_tokens": 2310,
+     "output_tokens": 305,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração está limitada ao arquivo uv.lock e não modifica diretamente lógica de autenticação, autorização, criptografia ou tratamento de segredos."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há alterações em migrações, modelos, tabelas, índices ou formatos de dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "O diff apenas atualiza versões resolvidas de dependências; não remove nem altera diretamente interfaces públicas do projeto."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "A atualização de dependência pode alterar o comportamento em runtime em áreas limitadas, mas um problema tende a ser detectado e revertido sem dano persistente."
+      },
+      "change_type": {
+       "value": "deps",
+       "reason": "O pull request altera somente versões de dependências no arquivo de lock."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "served_by": "z-ai/glm-5.3-flash",
+     "latency_ms": 8574.1,
+     "cost": 0.0011378,
+     "input_tokens": 2342,
+     "output_tokens": 1573,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff altera apenas o lockfile uv.lock; nenhuma lógica de autenticação, autorização, criptografia ou sanitização é adicionada ou modificada no código."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "A mudança é só no lockfile de dependências; nenhuma migração, modelo ORM ou formato de dados persistidos é alterado."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "O diff apenas atualiza versões no uv.lock; nenhuma interface pública do repositório é removida, renomeada ou tem entradas/saídas alteradas."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "O bump muda a versão do starlette usada em runtime, mas é uma rotina de dependência cujo erro seria detectado pelos testes e revertido sem dano duradouro."
+      },
+      "change_type": {
+       "value": "deps",
+       "reason": "O único arquivo alterado é o uv.lock (+3/-3), caracterizando puro bump de versão de dependência."
+      }
+     }
+    }
+   }
+  },
+  {
+   "url": "https://github.com/pallets/werkzeug/pull/3252",
+   "hint": "docs + refactor de secure_filename — verificado no diff",
+   "title": "add docs to address common invalid security reports",
+   "files": 8,
+   "tokens_est": 5928,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.72,
+     "confidence": 0.43999999999999995
+    },
+    "touches_data_schema": {
+     "value": 0.03,
+     "confidence": 0.94
+    },
+    "breaking_api": {
+     "value": 0.07,
+     "confidence": 0.86
+    },
+    "risk": {
+     "value": 1.02,
+     "confidence": 0.63
+    },
+    "change_type": {
+     "value": "docs",
+     "confidence": 0.83
+    }
+   },
+   "jev_ms": 709.6,
+   "jev_cost": 0.000242802,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 10313.3,
+     "cost": 0.0194135,
+     "input_tokens": 5414,
+     "output_tokens": 588,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "A implementação de `secure_filename`, responsável por sanitização de nomes de arquivo, foi modificada, e o parser de chunks recebeu limites de entrada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há migrações nem alterações em tabelas, modelos ORM ou formatos de dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública foi removida ou teve entradas e saídas obrigatórias alteradas; a refatoração de `secure_filename` busca preservar o comportamento existente."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "Um erro na sanitização de nomes de arquivo poderia permitir uso inseguro de caminhos ou arquivos em produção, com potencial impacto de segurança."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "Além da documentação e da refatoração, o PR limita leituras no tratamento de requisições chunked para evitar entradas excessivas ou terminadores inválidos."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "error": "resposta sem JSON",
+     "latency_ms": 19178
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "error": "resposta sem JSON",
+     "latency_ms": 51632
+    },
+    "moonshotai/kimi-k2.6": {
+     "error": "resposta sem JSON",
+     "latency_ms": 84361
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 5844.9,
+     "cost": 0.00209615,
+     "input_tokens": 5414,
+     "output_tokens": 619,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "A alteração modifica lógica de sanitização de entradas em `secure_filename` e impõe limites na leitura de chunks no servidor de desenvolvimento, ambas áreas sensíveis à segurança."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há alterações em banco de dados, modelos, migrações, índices ou formatos persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "As interfaces públicas permanecem disponíveis e não há mudança necessária nos argumentos ou retornos esperados; as alterações de comportamento são restritas à validação e ao tratamento de entradas inválidas."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "As mudanças de execução ficam limitadas à sanitização de nomes de arquivo e ao parser usado pelo servidor de desenvolvimento, sem impacto esperado em dados persistidos ou contratos amplos."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "Embora o PR contenha principalmente documentação e comentários, também corrige o tratamento de entradas potencialmente problemáticas ao limitar leituras e esclarecer a sanitização de nomes."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "served_by": "z-ai/glm-5.3-flash",
+     "latency_ms": 21393.4,
+     "cost": 0.00050065,
+     "input_tokens": 5432,
+     "output_tokens": 373,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "O PR refatora secure_filename (sanitização de entrada) e adiciona limites em readline do DechunkedInput, alterando lógica de sanitização, não apenas comentários."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma migração, modelo de dados ou formato persistido é alterado; são apenas docs e ajustes pontuais em código."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "As mudanças são aditivas (documentação, limites de leitura) e a refatoração de secure_filename preserva a assinatura e o comportamento público."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "Muda comportamento de runtime em áreas limitadas (limites de readline no dev server e refatoração de secure_filename), mas erros seriam perceptíveis e reversíveis sem dano duradouro."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "O foco é documentação, mas há refatoração de secure_filename mantendo comportamento e pequenos ajustes de robustez; não é apenas docs nem correção de bug."
+      }
+     }
+    }
+   }
+  },
+  {
+   "url": "https://github.com/pallets/flask/pull/5945",
+   "hint": "workflow de CI (scanner de segurança)",
+   "title": "add zizmor to scan workflows",
+   "files": 5,
+   "tokens_est": 2003,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.62,
+     "confidence": 0.24
+    },
+    "touches_data_schema": {
+     "value": 0.04,
+     "confidence": 0.92
+    },
+    "breaking_api": {
+     "value": 0.03,
+     "confidence": 0.94
+    },
+    "risk": {
+     "value": 0.45,
+     "confidence": 0.32
+    },
+    "change_type": {
+     "value": "config_infra",
+     "confidence": 1.0
+    }
+   },
+   "jev_ms": 528.4,
+   "jev_cost": 0.000134106,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 4979.9,
+     "cost": 0.009671,
+     "input_tokens": 2709,
+     "output_tokens": 290,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "O diff altera permissões do GitHub Actions, o uso do token e a persistência de credenciais do checkout, todos controles sensíveis de autorização e segredos."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há alterações em bancos de dados, modelos persistidos, migrações ou formatos de armazenamento."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública, endpoint, função exportada, opção de CLI ou formato de mensagem é removido ou alterado."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "Erros nas permissões ou no workflow de publicação podem impedir releases, conceder acesso inadequado ou afetar a infraestrutura compartilhada de entrega."
+      },
+      "change_type": {
+       "value": "config_infra",
+       "reason": "As mudanças estão restritas a workflows do GitHub Actions, incluindo análise de segurança, permissões, concorrência, testes e publicação."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "error": "resposta sem JSON",
+     "latency_ms": 37348
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "served_by": "deepseek/deepseek-v4-pro-0813",
+     "latency_ms": 7784.0,
+     "cost": 0.004818,
+     "input_tokens": 2828,
+     "output_tokens": 274,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "As mudanças são apenas em arquivos de workflow de CI/GitHub Actions, alterando permissões e concurrency, sem lógica de autenticação, autorização ou criptografia no código da aplicação."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de dados persistida, modelo ORM, migração ou formato de arquivo/mensagem é modificado; apenas arquivos de workflow."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Não há alteração de endpoints, funções exportadas, flags de CLI, chaves de configuração ou formatos de mensagem; apenas CI/workflows."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "Mudanças limitadas a workflows de CI/CD; um erro pode causar falhas na automação ou no pipeline, mas não perda de dados, falha de segurança ou outage na aplicação em produção."
+      },
+      "change_type": {
+       "value": "config_infra",
+       "reason": "O PR modifica exclusivamente arquivos de workflow do GitHub Actions e adiciona um novo workflow de análise; não altera código da aplicação."
+      }
+     }
+    },
+    "moonshotai/kimi-k2.6": {
+     "error": "resposta sem JSON",
+     "latency_ms": 13800
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 3329.6,
+     "cost": 0.0010851,
+     "input_tokens": 2709,
+     "output_tokens": 340,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "O diff altera permissões do GitHub Actions, o uso de credenciais persistentes no checkout e o escopo de tokens, afetando controles de autorização e tratamento de credenciais."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "As mudanças são exclusivamente em workflows de CI e não alteram banco de dados, modelos ou formatos de dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma API pública, função exportada, comando ou contrato de mensagem é removido ou alterado."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "As alterações afetam infraestrutura compartilhada de CI, permissões de workflows e o processo de publicação, portanto um erro poderia causar falha de releases ou abrir uma brecha de segurança."
+      },
+      "change_type": {
+       "value": "config_infra",
+       "reason": "O pull request modifica e adiciona configurações de workflows do GitHub Actions e ferramentas de análise de segurança."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "error": "resposta sem JSON",
+     "latency_ms": 17098
+    }
+   }
+  },
+  {
+   "url": "https://github.com/pydantic/pydantic/pull/720",
+   "hint": "remove código deprecated",
+   "title": "Remove old, deprecated code",
+   "files": 6,
+   "tokens_est": 2910,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.05,
+     "confidence": 0.9
+    },
+    "touches_data_schema": {
+     "value": 0.03,
+     "confidence": 0.94
+    },
+    "breaking_api": {
+     "value": 0.91,
+     "confidence": 0.8200000000000001
+    },
+    "risk": {
+     "value": 1.8,
+     "confidence": 0.7
+    },
+    "change_type": {
+     "value": "refactor",
+     "confidence": 0.91
+    }
+   },
+   "jev_ms": 386.6,
+   "jev_cost": 0.000141918,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 7360.8,
+     "cost": 0.0120635,
+     "input_tokens": 3070,
+     "output_tokens": 439,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração não modifica autenticação, autorização, criptografia, sessões, segredos ou sanitização de entradas."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há mudanças em bancos, migrações, modelos ORM ou formatos persistidos; apenas no comportamento de validação e configuração em memória."
+      },
+      "breaking_api": {
+       "value": 1.0,
+       "reason": "Remove suporte a interfaces públicas depreciadas: `get_validators`, `Config.ignore_extra` e `Config.allow_extra`. Chamadores que ainda dependem delas terão comportamento alterado ou deixarão de funcionar."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "Como a mudança quebra contratos públicos de uma biblioteca amplamente usada, um erro ou adoção sem migração pode causar falhas em aplicações clientes e indisponibilidade."
+      },
+      "change_type": {
+       "value": "feature",
+       "reason": "A mudança altera de forma observável o comportamento público ao deixar de reconhecer APIs e opções de configuração antigas; não é uma refatoração que preserve comportamento."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "served_by": "z-ai/glm-5.3",
+     "latency_ms": 39037.2,
+     "cost": 0.0158168,
+     "input_tokens": 3054,
+     "output_tokens": 2623,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff apenas remove caminhos deprecados de configuração e descoberta de validadores no pydantic; não há lógica de autenticação, autorização, criptografia ou manipulação de segredos sendo alterada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma migração, tabela, coluna, índice ou formato de arquivo/mensagem persistido é alterado; as mudanças afetam somente tipos e configuração em memória da biblioteca."
+      },
+      "breaking_api": {
+       "value": 1.0,
+       "reason": "As chaves de configuração públicas Config.ignore_extra e Config.allow_extra e o método get_validators deixam de ser reconhecidos, quebrando chamadores existentes que ainda os usam; o próprio arquivo de changes marca isso como Breaking Change."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "O comportamento em runtime muda em uma área limitada (interpretação de config deprecada e fallback de validadores), acompanhada pela remoção dos testes correspondentes; um erro seria detectado pela suíte de testes e revertido sem dano duradouro."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "O diff remove código deprecado e simplifica a lógica equivalente, preservando o comportamento para as opções não deprecadas; é uma limpeza/remoção de legado, não uma nova funcionalidade."
+      }
+     }
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "served_by": "deepseek/deepseek-v4-pro-0813",
+     "latency_ms": 14461.9,
+     "cost": 0.0085272,
+     "input_tokens": 3217,
+     "output_tokens": 1081,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff não altera lógica de autenticação, autorização, criptografia, segredos, sessões ou sanitização; apenas remove código depreciado de validação de modelos."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há migração, definição de tabela/coluna/índice, campo de ORM ou formato persistido alterado; as mudanças são em lógica de validação em memória e documentação."
+      },
+      "breaking_api": {
+       "value": 1.0,
+       "reason": "Remove o reconhecimento de `get_validators`, `Config.ignore_extra` e `Config.allow_extra`, que eram interfaces públicas depreciadas; chamadores existentes que ainda as usam quebrarão."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "A remoção de partes de uma API pública pode quebrar clientes existentes em produção, causando indisponibilidade ou falhas em integrações, o que se enquadra em dano severo."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "O PR remove código depreciado e limpa a implementação, embora altere o comportamento para quem ainda usava as APIs removidas; entre as opções, é a que mais se aproxima de uma limpeza de código."
+      }
+     }
+    },
+    "moonshotai/kimi-k2.6": {
+     "error": "resposta sem JSON",
+     "latency_ms": 54748
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 4186.7,
+     "cost": 0.00120175,
+     "input_tokens": 3070,
+     "output_tokens": 362,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração não modifica autenticação, autorização, criptografia, segredos, sessões ou sanitização de entradas."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de dados persistidos, migração, campo de banco ou formato armazenado é alterado."
+      },
+      "breaking_api": {
+       "value": 1.0,
+       "reason": "Funções e chaves de configuração públicas anteriormente aceitas são removidas, quebrando consumidores que ainda as utilizam."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "A remoção pode quebrar clientes existentes que dependem das interfaces deprecated, caracterizando risco severo conforme os critérios."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "O pull request remove código legado e deprecated para simplificar a implementação, sem introduzir uma nova funcionalidade."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "error": "resposta sem JSON",
+     "latency_ms": 41681
+    }
+   }
+  },
+  {
+   "url": "https://github.com/django/django/pull/18000",
+   "hint": "remove função interna",
+   "title": "Fixed #35320 -- Removed unnecessary django.core.files.move._samefile() hook.",
+   "files": 1,
+   "tokens_est": 680,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.07,
+     "confidence": 0.86
+    },
+    "touches_data_schema": {
+     "value": 0.02,
+     "confidence": 0.96
+    },
+    "breaking_api": {
+     "value": 0.05,
+     "confidence": 0.9
+    },
+    "risk": {
+     "value": 1.13,
+     "confidence": 0.68
+    },
+    "change_type": {
+     "value": "refactor",
+     "confidence": 0.94
+    }
+   },
+   "jev_ms": 432.7,
+   "jev_cost": 6.8628e-05,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 13375.1,
+     "cost": 0.0100685,
+     "input_tokens": 1340,
+     "output_tokens": 672,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração trata apenas da detecção de arquivos idênticos durante movimentação, sem modificar autenticação, autorização, criptografia ou sanitização."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de banco de dados ou formato persistido de arquivo/mensagem é alterado."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A função removida era interna e não constava em __all__; a interface pública file_move_safe() permanece inalterada."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "A mudança afeta uma salvaguarda de movimentação de arquivos; uma falha ao reconhecer origem e destino como o mesmo arquivo pode, em certos caminhos de fallback, truncar ou remover dados."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "O código substitui um helper interno por uma chamada direta equivalente a os.path.samefile(), sem intenção de alterar o comportamento observável."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "served_by": "z-ai/glm-5.3",
+     "latency_ms": 32883.4,
+     "cost": 0.0128936,
+     "input_tokens": 1340,
+     "output_tokens": 2504,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff apenas substitui um auxiliar privado de verificação de mesmo arquivo por uma chamada direta a os.path.samefile; nenhuma lógica de autenticação, autorização, criptografia ou sanitização é alterada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há migrações, campos de modelo, tabelas ou mudanças em formatos de dados persistidos; apenas a lógica de movimentação de arquivos em tempo de execução é afetada."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A função removida _samefile é privada (prefixo de underscore) e não está em __all__; a assinatura e o comportamento público de file_move_safe permanecem compatíveis."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "A mudança altera o comportamento de execução apenas na área limitada de movimentação segura de arquivos; um eventual erro seria notado e revertido sem danos duradouros, sem tocar em autenticação, migrações ou contratos de API pública."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "O PR remove uma função auxiliar privada considerada desnecessária e inlinha a chamada a os.path.samefile, preservando o comportamento existente."
+      }
+     }
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "served_by": "deepseek/deepseek-v4-pro-0813",
+     "latency_ms": 2996.1,
+     "cost": 0.0017218,
+     "input_tokens": 1390,
+     "output_tokens": 260,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração apenas remove uma função auxiliar de comparação de arquivos e usa os.path.samefile diretamente; não há lógica de autenticação, autorização, criptografia ou sanitização."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "O diff modifica apenas a lógica de movimentação de arquivos, sem alterar modelos, migrações, tabelas ou formatos de dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A função pública file_move_safe mantém a mesma assinatura e comportamento; apenas a implementação interna foi simplificada."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "A mudança afeta o comportamento em tempo de execução da movimentação de arquivos, mas de forma limitada; um erro seria detectado e revertido sem danos duradouros."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "O código remove uma função auxiliar e usa diretamente os.path.samefile, mantendo o comportamento externo inalterado."
+      }
+     }
+    },
+    "moonshotai/kimi-k2.6": {
+     "served_by": "moonshotai/kimi-k2.6",
+     "latency_ms": 11631.4,
+     "cost": 0.00995147,
+     "input_tokens": 1333,
+     "output_tokens": 2590,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração remove uma função auxiliar interna de comparação de caminhos de arquivos e não modifica lógica de autenticação, autorização, permissões ou sanitização de entrada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "A mudança afeta apenas uma função utilitária de movimentação de arquivos em memória, sem alterar migrações, modelos ORM, colunas ou formatos de dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A função removida era privada (prefixada com underscore) e não constava em __all__, enquanto a interface pública file_move_safe mantém sua assinatura e comportamento."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "A mudança altera o comportamento de tempo de execução em uma área limitada (movimentação de arquivos), mas um erro seria facilmente percebido e revertido sem causar danos duradouros."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "O PR remove uma função interna desnecessária e a substitui pela chamada direta à biblioteca padrão, reestruturando o código sem alterar o comportamento observável."
+      }
+     }
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 4181.9,
+     "cost": 0.00074165,
+     "input_tokens": 1340,
+     "output_tokens": 339,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração trata apenas da verificação de caminhos de arquivos durante uma movimentação. Não há lógica de autenticação, autorização, criptografia, segredos ou sessões."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de dados persistida, migração, modelo ou formato de arquivo armazenado é alterado."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A função removida é privada e não está exportada em __all__. A interface pública de file_move_safe permanece inalterada."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "A mudança altera o comportamento de uma área limitada de manipulação de arquivos. Um eventual erro seria detectável e reversível, sem indicar por si só perda persistente de dados ou impacto amplo."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "O diff remove uma função auxiliar redundante e incorpora diretamente a mesma verificação, preservando o comportamento pretendido."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "served_by": "z-ai/glm-5.3-flash",
+     "latency_ms": 15034.9,
+     "cost": 0.0010885,
+     "input_tokens": 1340,
+     "output_tokens": 1775,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff altera apenas a lógica interna de movimentação de arquivos, sem tocar em autenticação, autorização, criptografia, segredos ou sanitização de entrada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há migrações, modelos, colunas ou mudanças em formatos de arquivos/mensagens persistidos; apenas a implementação de uma função de utilidade é reescrita."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A função removida (_samefile) é privada, não exportada em __all__, e a API pública file_move_safe mantém a mesma assinatura e comportamento."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "Muda comportamento de runtime em uma área limitada (movimentação de arquivos), mas a mudança preserva a semântica anterior e um erro seria facilmente notado e revertido sem dano duradouro."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "O diff remove um helper interno desnecessário e inlinha os.path.samefile com try/except, mantendo o comportamento existente sem adicionar funcionalidade observável."
+      }
+     }
+    }
+   }
+  },
+  {
+   "url": "https://github.com/wagtail/wagtail/pull/12409",
+   "hint": "fix em migração de streamfield",
+   "title": "Handle undefined fields on revisions in streamfield migrations",
+   "files": 4,
+   "tokens_est": 1487,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.04,
+     "confidence": 0.92
+    },
+    "touches_data_schema": {
+     "value": 0.06,
+     "confidence": 0.88
+    },
+    "breaking_api": {
+     "value": 0.04,
+     "confidence": 0.92
+    },
+    "risk": {
+     "value": 1.82,
+     "confidence": 0.72
+    },
+    "change_type": {
+     "value": "bugfix",
+     "confidence": 1.0
+    }
+   },
+   "jev_ms": 481.6,
+   "jev_cost": 9.5382e-05,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 5062.5,
+     "cost": 0.007641,
+     "input_tokens": 1913,
+     "output_tokens": 286,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração não modifica autenticação, autorização, permissões, criptografia, sessões ou sanitização de entradas."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "O código altera o tratamento de revisões durante uma migração de dados, mas não adiciona nem modifica tabelas, colunas, índices, campos de modelo ou formatos persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública é removida ou tem seu contrato alterado; a mudança apenas evita uma exceção ao encontrar revisões sem o campo esperado."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "A alteração atua em migrações de dados persistidos; um erro nessa lógica poderia deixar revisões sem migrar ou causar inconsistências difíceis de reverter."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "A mudança corrige uma falha existente em migrações de StreamField ao ignorar revisões antigas que não contêm o campo especificado."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "served_by": "z-ai/glm-5.3",
+     "latency_ms": 24589.8,
+     "cost": 0.011059408,
+     "input_tokens": 1905,
+     "output_tokens": 2263,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração apenas adiciona tratamento de KeyError ao ler o conteúdo de revisões durante migrações do StreamField; nenhuma lógica de autenticação, autorização, criptografia ou sanitização é modificada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "O diff muda apenas a lógica de leitura/processamento dos dados existentes durante a migração (pulando revisões sem o campo); nenhuma migração de banco, modelo ORM, coluna ou formato de dado persistido é alterado."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A mudança apenas torna o acesso ao campo mais tolerante com um try/except; nenhuma função pública, endpoint ou formato de mensagem é removido, renomeado ou tem seus contratos de entrada/saída alterados."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "O código alterado executa durante migrações de dados que reescrevem o conteúdo de revisões em produção; um erro aqui poderia corromper ou deixar de migrar dados de revisões de forma irreversível, o que se encaixa na categoria severa (migrações)."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "Corrige comportamento errado de código existente (KeyError ao processar revisões criadas antes da existência do campo), acompanhado de teste e entradas de changelog."
+      }
+     }
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "error": "JSON inválido",
+     "latency_ms": 57571
+    },
+    "moonshotai/kimi-k2.6": {
+     "served_by": "moonshotai/kimi-k2.6",
+     "latency_ms": 80528.1,
+     "cost": 0.0085279635,
+     "input_tokens": 1891,
+     "output_tokens": 2935,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração adiciona apenas um tratamento de exceção em uma operação de migração de StreamField, sem envolver autenticação, autorização, criptografia ou sanitização de entradas."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "O diff modifica a lógica de processamento de dados existentes durante a migração, mas não altera definições de tabelas, colunas, campos de modelo ou o formato dos dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A mudança é interna ao método de migração e não remove, renomeia ou altera interfaces públicas, endpoints ou contratos de API."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "A mudança é defensiva e limitada ao processamento de revisões em migrações de StreamField; um erro provavelmente seria contido e notado durante a execução da migração."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "O código corrige um comportamento incorreto (lançamento de KeyError ao processar revisões antigas que não possuem o campo) em uma operação de migração existente."
+      }
+     }
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 4379.3,
+     "cost": 0.0009161,
+     "input_tokens": 1913,
+     "output_tokens": 365,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração não envolve autenticação, autorização, criptografia, segredos, sessões ou sanitização de entrada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "O diff não altera modelos, colunas, índices nem migrações de estrutura; apenas modifica o processamento de dados JSON já persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública, endpoint, configuração ou formato de entrada obrigatório é removido ou alterado de forma incompatível."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "A mudança afeta migrações de dados em produção, e um erro pode causar perda ou corrupção persistente de dados de revisões."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "Corrige um comportamento incorreto existente que gerava KeyError ao processar revisões sem o campo especificado."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "error": "JSON inválido",
+     "latency_ms": 35735
+    }
+   }
+  },
+  {
+   "url": "https://github.com/django/django/pull/21441",
+   "hint": "CVE: troca checagem por substring em Cache-Control",
+   "title": "Refs #36560, CVE-2026-35193 -- Replaced substring check on Cache-control directives in UpdateCacheMiddleware.",
+   "files": 2,
+   "tokens_est": 1845,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.73,
+     "confidence": 0.45999999999999996
+    },
+    "touches_data_schema": {
+     "value": 0.02,
+     "confidence": 0.96
+    },
+    "breaking_api": {
+     "value": 0.05,
+     "confidence": 0.9
+    },
+    "risk": {
+     "value": 1.63,
+     "confidence": 0.44
+    },
+    "change_type": {
+     "value": "bugfix",
+     "confidence": 0.99
+    }
+   },
+   "jev_ms": 521.7,
+   "jev_cost": 0.000102816,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 5362.3,
+     "cost": 0.008341,
+     "input_tokens": 2153,
+     "output_tokens": 296,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "A alteração modifica a lógica de cache para respostas com cabeçalho Authorization e diretivas Cache-Control, podendo afetar a proteção contra armazenamento indevido de conteúdo privado."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há mudanças em modelos, migrações, tabelas, índices ou formatos de dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A interface pública e suas entradas e saídas permanecem inalteradas; apenas a interpretação interna de diretivas Cache-Control foi corrigida."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "Um erro nessa lógica pode armazenar e servir respostas privadas ou autorizadas de forma incorreta, criando potencial vazamento de dados e vulnerabilidade de segurança."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "A mudança corrige falsos positivos causados pela busca por substrings em diretivas Cache-Control já processadas pelo middleware."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "error": "resposta sem JSON",
+     "latency_ms": 34196
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "served_by": "deepseek/deepseek-v4-pro-0813",
+     "latency_ms": 18392.6,
+     "cost": 0.0077286,
+     "input_tokens": 2339,
+     "output_tokens": 1172,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "Modifica a lógica de checagem do header Cache-Control para evitar cache de respostas private/no-cache/no-store, o que é sensível à segurança."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há migração, modelo ou formato persistente alterado; apenas middleware e testes."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A mudança é interna ao middleware e não altera uma interface pública, apenas torna a checagem mais estrita."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "Um erro nessa lógica poderia permitir cache de respostas sensíveis ou quebrar o comportamento de cache em produção, configurando risco severo."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "Corrige o falso positivo existente na checagem por substring das diretivas de Cache-Control."
+      }
+     }
+    },
+    "moonshotai/kimi-k2.6": {
+     "served_by": "moonshotai/kimi-k2.6",
+     "latency_ms": 140490.3,
+     "cost": 0.016117605,
+     "input_tokens": 2130,
+     "output_tokens": 5890,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "A mudança modifica a lógica de controle de cache do middleware que lida com cabeçalhos Authorization e Cache-Control, afetando o comportamento de segurança de sessões e cache."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de dados persistente foi alterada; a mudança é apenas na lógica de processamento de cabeçalhos HTTP em memória."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A mudança corrige falsos positivos sem remover ou renomear interfaces públicas; mantém compatibilidade com comportamento existente."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "Embora toque em segurança, a mudança é contida em uma área específica de cache HTTP e pode ser facilmente revertida sem dano duradouro."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "Corrige comportamento incorreto onde diretivas de extensão hipotéticas podiam ser confundidas com diretivas reais do Cache-Control."
+      }
+     }
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 4642.6,
+     "cost": 0.0008609,
+     "input_tokens": 2153,
+     "output_tokens": 269,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "A alteração modifica a lógica de tratamento do cabeçalho Authorization e das diretivas Cache-Control, que controla quando respostas potencialmente privadas podem ser armazenadas ou compartilhadas."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de dados persistidos, migração, modelo ou formato de armazenamento é alterada."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A mudança é interna ao middleware e não remove nem altera os requisitos ou resultados de uma interface pública existente."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "Um erro nessa lógica poderia permitir o armazenamento ou compartilhamento indevido de respostas privadas, causando uma falha de segurança em produção."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "O patch corrige falsos positivos existentes na detecção de diretivas Cache-Control que eram superstrings de diretivas válidas."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "error": "resposta sem JSON",
+     "latency_ms": 21536
+    }
+   }
+  },
+  {
+   "url": "https://github.com/django/django/pull/21438",
+   "hint": "CVE: helper pra dividir valores de header",
+   "title": "Refs CVE-2026-48587 -- Added helper to properly split header values.",
+   "files": 6,
+   "tokens_est": 5667,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.45,
+     "confidence": 0.09999999999999998
+    },
+    "touches_data_schema": {
+     "value": 0.04,
+     "confidence": 0.92
+    },
+    "breaking_api": {
+     "value": 0.72,
+     "confidence": 0.43999999999999995
+    },
+    "risk": {
+     "value": 1.5,
+     "confidence": 0.25
+    },
+    "change_type": {
+     "value": "bugfix",
+     "confidence": 1.0
+    }
+   },
+   "jev_ms": 561.7,
+   "jev_cost": 0.000226044,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 7563.2,
+     "cost": 0.0173435,
+     "input_tokens": 5286,
+     "output_tokens": 413,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "O diff modifica a sanitização e a interpretação de valores de cabeçalhos HTTP, inclusive Cache-Control, Vary e ETag. Erros nessa lógica podem afetar controles de cache e o tratamento seguro de entradas."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há alterações em migrações, modelos, tabelas, índices ou formatos persistidos; apenas lógica de processamento em memória e testes foram modificados."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A mudança adiciona um helper e altera detalhes internos de parsing sem remover ou mudar contratos de interfaces públicas documentadas. O regex removido era um detalhe de implementação do módulo de cache."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "Uma falha no parsing de Cache-Control ou Vary pode gerar chaves de cache incorretas, servir conteúdo entre usuários ou causar comportamento incompatível em produção, caracterizando impacto potencialmente severo."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "A alteração corrige o tratamento incorreto de espaços ao dividir valores de cabeçalhos HTTP, preservando a intenção das APIs existentes."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "error": "resposta sem JSON",
+     "latency_ms": 16712
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "served_by": "deepseek/deepseek-v4-pro-0813",
+     "latency_ms": 35003.8,
+     "cost": 0.014235936,
+     "input_tokens": 5617,
+     "output_tokens": 2357,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff modifica parsing de cabeçalhos HTTP de cache (Cache-Control/Vary/ETag) e não altera autenticação, autorização, criptografia, sessão ou sanitização."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há migrações, modelos, campos ou formatos persistidos; apenas manipulação em memória de valores de cabeçalhos e testes."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A remoção de cc_delim_re é de um utilitário interno não documentado; as funções públicas existentes mantêm assinaturas e apenas têm comportamento corrigido, com nova função adicionada."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "A alteração afeta comportamento de cache em produção, mas de forma limitada e testada; um erro provavelmente seria notado e revertido sem danos duradouros."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "O PR corrige o tratamento de espaços ao dividir valores de cabeçalhos como Vary e Cache-Control, além de extrair um helper."
+      }
+     }
+    },
+    "moonshotai/kimi-k2.6": {
+     "error": "resposta sem JSON",
+     "latency_ms": 49212
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 4211.1,
+     "cost": 0.00184095,
+     "input_tokens": 5286,
+     "output_tokens": 433,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "A alteração modifica o tratamento e a normalização de valores de cabeçalhos vindos de entrada externa, incluindo lógica de sanitização usada em cache e middleware."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há alterações em modelos, migrações, tabelas, índices ou formatos de dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A mudança adiciona um helper e substitui uma implementação interna de parsing; não remove nem altera de forma incompatível uma interface pública documentada."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "A alteração afeta comportamento de cache, Vary, Cache-Control e geração de ETag, mas o impacto potencial é limitado a essa área e pode ser revertido sem dano persistente."
+      },
+      "change_type": {
+       "value": "bugfix",
+       "reason": "O PR corrige o tratamento incorreto de espaços em valores de cabeçalhos já existentes, preservando a finalidade das APIs e melhorando seus resultados."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "error": "resposta sem JSON",
+     "latency_ms": 19026
+    }
+   }
+  },
+  {
+   "url": "https://github.com/encode/django-rest-framework/pull/9880",
+   "hint": "typo num .md chamado authentication — armadilha de palavra-chave?",
+   "title": "Fix typo in `authentication.md`",
+   "files": 1,
+   "tokens_est": 646,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.01,
+     "confidence": 0.98
+    },
+    "touches_data_schema": {
+     "value": 0.01,
+     "confidence": 0.98
+    },
+    "breaking_api": {
+     "value": 0.01,
+     "confidence": 0.98
+    },
+    "risk": {
+     "value": 0.0,
+     "confidence": 1.0
+    },
+    "change_type": {
+     "value": "docs",
+     "confidence": 1.0
+    }
+   },
+   "jev_ms": 350.3,
+   "jev_cost": 6.4344e-05,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 3533.2,
+     "cost": 0.004576,
+     "input_tokens": 1187,
+     "output_tokens": 161,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração corrige apenas um erro de digitação na documentação; nenhuma lógica de autenticação ou autorização foi modificada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de dados persistidos, modelo ou migração foi alterada."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A mudança não afeta endpoints, funções exportadas, configurações ou qualquer outra interface pública."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "É uma correção textual na documentação e não pode alterar o comportamento em produção."
+      },
+      "change_type": {
+       "value": "docs",
+       "reason": "O diff modifica exclusivamente a documentação para corrigir a expressão “based authentication” para “based on authentication”."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "served_by": "z-ai/glm-5.3",
+     "latency_ms": 3605.9,
+     "cost": 0.003368268,
+     "input_tokens": 1189,
+     "output_tokens": 522,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração é apenas uma correção de digitação na documentação (authentication.md); nenhuma lógica de autenticação ou segurança foi modificada, apenas o texto menciona o tema."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "O diff modifica somente um arquivo de documentação, sem qualquer mudança em migrações, modelos ORM ou estruturas de dados persistidas."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública é afetada; a mudança corrige apenas a redação de um parágrafo no guia de documentação."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "A alteração é puramente documental e não pode alterar o comportamento do sistema em produção."
+      },
+      "change_type": {
+       "value": "docs",
+       "reason": "O pull request apenas corrige um erro de digitação ('is based authentication' para 'is based on authentication') em um arquivo de documentação."
+      }
+     }
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "served_by": "deepseek/deepseek-v4-pro-0813",
+     "latency_ms": 8641.7,
+     "cost": 0.00152228076,
+     "input_tokens": 1430,
+     "output_tokens": 403,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração é apenas em documentação, corrigindo um erro de digitação, sem modificar lógica de autenticação ou segurança."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de dados persistida, migration, modelo ou formato de armazenamento é alterado."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Apenas um arquivo de documentação foi modificado, sem tocar em interfaces públicas ou contratos existentes."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "A mudança é exclusivamente documental e não pode alterar o comportamento de produção em runtime."
+      },
+      "change_type": {
+       "value": "docs",
+       "reason": "O diff apenas corrige um erro de digitação em um arquivo de documentação."
+      }
+     }
+    },
+    "moonshotai/kimi-k2.6": {
+     "served_by": "moonshotai/kimi-k2.6",
+     "latency_ms": 24604.4,
+     "cost": 0.00735894,
+     "input_tokens": 1206,
+     "output_tokens": 1314,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração corrige apenas um erro de digitação em um arquivo de documentação, sem modificar qualquer lógica de segurança ou autenticação."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "O diff modifica apenas a documentação, sem alterar a estrutura de dados persistida."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Trata-se apenas de uma correção ortográfica na documentação, que não afeta interfaces públicas."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "Como se trata apenas de uma correção de erro de digitação em documentação, não há impacto no comportamento de runtime em produção."
+      },
+      "change_type": {
+       "value": "docs",
+       "reason": "O diff realiza apenas uma alteração em arquivo de documentação, corrigindo um erro gramatical."
+      }
+     }
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 2543.2,
+     "cost": 0.0005258,
+     "input_tokens": 1187,
+     "output_tokens": 191,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração corrige apenas um erro de digitação na documentação; nenhuma lógica de autenticação ou segurança foi modificada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "O diff afeta somente um arquivo de documentação e não altera estruturas de dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública, endpoint ou contrato de API foi alterado."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "A mudança é exclusivamente documental e não pode alterar o comportamento em produção."
+      },
+      "change_type": {
+       "value": "docs",
+       "reason": "O pull request modifica apenas o texto de um documento."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "served_by": "z-ai/glm-5.3-flash",
+     "latency_ms": 2622.1,
+     "cost": 0.00038685,
+     "input_tokens": 1189,
+     "output_tokens": 417,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração é apenas uma correção de typo em texto de documentação sobre autenticação; nenhuma lógica de segurança é adicionada, removida ou modificada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "O diff modifica apenas prosa em um arquivo de documentação, sem tocar em migrações, modelos, colunas ou formatos persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública, endpoint ou configuração é alterada; é apenas uma correção de texto em documentação."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "Mudança exclusivamente em documentação, sem qualquer efeito no comportamento de runtime em produção."
+      },
+      "change_type": {
+       "value": "docs",
+       "reason": "O diff altera apenas um arquivo de documentação, corrigindo um typo no texto."
+      }
+     }
+    }
+   }
+  },
+  {
+   "url": "https://github.com/wagtail/wagtail/pull/13323",
+   "hint": "feature: reordenação na IndexView",
+   "title": "Add reordering support to generic IndexView",
+   "files": 29,
+   "tokens_est": 19192,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.87,
+     "confidence": 0.74
+    },
+    "touches_data_schema": {
+     "value": 0.76,
+     "confidence": 0.52
+    },
+    "breaking_api": {
+     "value": 0.53,
+     "confidence": 0.06000000000000005
+    },
+    "risk": {
+     "value": 1.78,
+     "confidence": 0.68
+    },
+    "change_type": {
+     "value": "feature",
+     "confidence": 1.0
+    }
+   },
+   "jev_ms": 464.6,
+   "jev_cost": 0.000684012,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 7625.9,
+     "cost": 0.043781,
+     "input_tokens": 15841,
+     "output_tokens": 418,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "Adiciona verificações de permissão para reordenação e altera o envio do token CSRF no controlador, usando cabeçalho configurado globalmente."
+      },
+      "touches_data_schema": {
+       "value": 1.0,
+       "reason": "Adiciona campos persistidos de ordenação a modelos e inclui uma migração de banco de dados correspondente."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "As interfaces públicas recebem recursos e atributos opcionais de forma retrocompatível; não há remoção nem alteração obrigatória de entradas ou saídas existentes."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "A funcionalidade cria endpoints que alteram dados em massa e dependem de autorização e CSRF; uma falha pode corromper a ordenação persistida ou permitir alterações não autorizadas."
+      },
+      "change_type": {
+       "value": "feature",
+       "reason": "Adiciona reordenação observável por drag-and-drop às listagens genéricas de modelos e snippets."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "error": "resposta sem JSON",
+     "latency_ms": 28864
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "served_by": "deepseek/deepseek-v4-pro-0813",
+     "latency_ms": 9830.9,
+     "cost": 0.01745738,
+     "input_tokens": 16701,
+     "output_tokens": 376,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "O diff modifica a lógica de permissões: adiciona ReorderView com PermissionCheckedMixin, altera permission_required em snippets para exigir 'publish' em modelos DraftStateMixin e inclui checagens de user_has_permission para o botão de reordenação."
+      },
+      "touches_data_schema": {
+       "value": 1.0,
+       "reason": "Foram adicionadas migrações de banco de dados e campos sort_order em modelos de teste (FeatureCompleteToy, FullFeaturedSnippet), além de alterações no modelo Orderable e na função set_max_order."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "A mudança adiciona novos recursos (reordering) e altera internamente templates e controladores, mas não remove ou renomeia endpoints públicos, flags de CLI ou formatos de mensagem existentes."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "A migração de esquema e a nova lógica de ordenação em produção podem corromper a ordem dos itens ou causar erros de permissão; o impacto potencial inclui perda de dados ou quebra de fluxo. Além disso, altera a lógica de autenticação/permissão."
+      },
+      "change_type": {
+       "value": "feature",
+       "reason": "O pull request adiciona suporte a reordenação (drag-and-drop) para views genéricas e snippets, o que é um novo comportamento observável pelo usuário."
+      }
+     }
+    },
+    "moonshotai/kimi-k2.6": {
+     "served_by": "moonshotai/kimi-k2.6",
+     "latency_ms": 92105.7,
+     "cost": 0.017019513,
+     "input_tokens": 15498,
+     "output_tokens": 3073,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "O diff adiciona verificações de permissão nas novas views de reordenação (ReorderView) e modifica mixins para restringir o acesso com base em permissões de publicação (DraftStateMixin)."
+      },
+      "touches_data_schema": {
+       "value": 1.0,
+       "reason": "Inclui uma migração de banco de dados que adiciona o campo sort_order a modelos de teste e altera definições de campos nos modelos, afetando a estrutura dos dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "As alterações são adições retrocompatíveis (novos atributos opcionais em viewsets, novas views e URLs), sem remover ou renomear interfaces públicas existentes."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "Mudanças em views genéricas centrais, lógica de permissões e atualizações em lote de campos de ordenação no banco podem corromper dados ou afetar a segurança se houver erros."
+      },
+      "change_type": {
+       "value": "feature",
+       "reason": "Adiciona suporte a reordenação via drag-and-drop nas listagens genéricas do admin, incluindo novas views, componentes de UI, URLs e documentação."
+      }
+     }
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 5719.1,
+     "cost": 0.0045781,
+     "input_tokens": 15841,
+     "output_tokens": 515,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "A alteração modifica verificações de permissão para reordenação e o tratamento do token CSRF nas requisições do cliente."
+      },
+      "touches_data_schema": {
+       "value": 1.0,
+       "reason": "O pull request adiciona campos persistidos de ordenação aos modelos e inclui uma migração de banco de dados."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "As alterações de reordenação introduzem endpoints e configurações novas, sem remover ou alterar obrigatoriamente interfaces públicas existentes."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "A mudança afeta permissões, endpoints administrativos e atualização persistida de dados de ordenação, portanto um erro pode causar uma brecha de autorização ou corrupção de ordem dos registros."
+      },
+      "change_type": {
+       "value": "feature",
+       "reason": "O pull request adiciona suporte observável para reordenar itens em listagens genéricas, snippets e modelos orderable."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "error": "resposta sem JSON",
+     "latency_ms": 17276
+    }
+   }
+  },
+  {
+   "url": "https://github.com/pallets/click/pull/1779",
+   "hint": "adiciona um teste",
+   "title": "add test for not showing default when no default is given",
+   "files": 1,
+   "tokens_est": 527,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.01,
+     "confidence": 0.98
+    },
+    "touches_data_schema": {
+     "value": 0.01,
+     "confidence": 0.98
+    },
+    "breaking_api": {
+     "value": 0.03,
+     "confidence": 0.94
+    },
+    "risk": {
+     "value": 0.0,
+     "confidence": 0.99
+    },
+    "change_type": {
+     "value": "tests_only",
+     "confidence": 0.99
+    }
+   },
+   "jev_ms": 632.0,
+   "jev_cost": 6.2916e-05,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 3240.8,
+     "cost": 0.004686,
+     "input_tokens": 1211,
+     "output_tokens": 166,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff apenas adiciona um teste de exibição de valor padrão em uma opção CLI; nenhuma lógica de segurança é alterada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há alterações em migrações, modelos, tabelas ou formatos de dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública é modificada; o diff somente acrescenta um teste."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "A alteração está restrita aos testes e não pode modificar o comportamento do código em produção."
+      },
+      "change_type": {
+       "value": "tests_only",
+       "reason": "O único arquivo alterado é um arquivo de testes, com a adição de um novo caso de teste."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "served_by": "z-ai/glm-5.3",
+     "latency_ms": 5224.8,
+     "cost": 0.004648608,
+     "input_tokens": 1212,
+     "output_tokens": 838,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff apenas adiciona uma função de teste em tests/test_options.py; nenhuma lógica de autenticação, autorização, criptografia ou tratamento de segredos é alterada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma migração, tabela, campo de modelo ORM ou formato de dados persistido é modificado; o diff contém apenas um teste com objetos em memória."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública é removida, renomeada ou tem seus contratos alterados; o diff apenas acrescenta um teste, sem tocar em funções exportadas."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "A mudança adiciona somente um teste automatizado e não pode alterar o comportamento do código em produção."
+      },
+      "change_type": {
+       "value": "tests_only",
+       "reason": "O diff apenas acrescenta a função de teste test_do_not_show_no_default em tests/test_options.py, sem nenhuma alteração no código do produto, apesar do que a descrição afirma."
+      }
+     }
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "served_by": "deepseek/deepseek-v4-pro-0813",
+     "latency_ms": 10427.4,
+     "cost": 0.0038082,
+     "input_tokens": 1442,
+     "output_tokens": 481,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração adiciona apenas um teste em tests/test_options.py e não modifica lógica de autenticação, autorização, criptografia, segredos ou sanitização."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de dados persistida, migração, modelo ORM ou formato de arquivo é alterado; apenas um teste é adicionado."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Não há remoção, renomeação ou mudança de interface pública; somente um caso de teste novo foi incluído."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "A mudança é exclusivamente em testes e não altera comportamento de produção em tempo de execução."
+      },
+      "change_type": {
+       "value": "tests_only",
+       "reason": "O diff adiciona somente um novo teste automatizado em tests/test_options.py."
+      }
+     }
+    },
+    "moonshotai/kimi-k2.6": {
+     "served_by": "moonshotai/kimi-k2.6",
+     "latency_ms": 35120.2,
+     "cost": 0.00361370102,
+     "input_tokens": 1227,
+     "output_tokens": 2171,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff apenas adiciona um teste para mensagens de ajuda de opções de CLI, sem modificar lógica de autenticação, autorização ou segurança."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "A mudança se limita a adicionar um teste unitário, não alterando estruturas de dados persistentes, migrações ou modelos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "O diff apenas adiciona um novo teste, sem remover, renomear ou modificar interfaces públicas, endpoints ou comportamentos observáveis."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "O pull request adiciona apenas um teste automatizado, o que não pode afetar o comportamento de execução em produção."
+      },
+      "change_type": {
+       "value": "tests_only",
+       "reason": "A alteração ocorre exclusivamente no arquivo de testes, adicionando um novo caso de teste sem modificar código de produção."
+      }
+     }
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 3323.9,
+     "cost": 0.0005438,
+     "input_tokens": 1211,
+     "output_tokens": 201,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração adiciona apenas um teste em `tests/test_options.py` e não modifica lógica de autenticação, autorização ou segurança."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de dados persistidos, migração, modelo ou formato de armazenamento é alterado."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "O pull request somente adiciona um teste e não altera interfaces públicas nem o comportamento de callers existentes."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "Como a mudança é exclusivamente em testes, ela não altera o comportamento de produção."
+      },
+      "change_type": {
+       "value": "tests_only",
+       "reason": "O diff adiciona apenas um teste automatizado para verificar que um default inexistente não seja exibido."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "served_by": "z-ai/glm-5.3-flash",
+     "latency_ms": 2721.4,
+     "cost": 0.0004233,
+     "input_tokens": 1212,
+     "output_tokens": 483,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff apenas adiciona um teste que verifica a exibição do texto de ajuda de uma opção; nenhuma lógica de autenticação, autorização ou sanitização é alterada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma migração, modelo de dados ou formato persistido é modificado; apenas um teste de unidade é adicionado."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública é removida, renomeada ou alterada; o diff é puramente aditivo em arquivos de teste."
+      },
+      "risk": {
+       "value": 0.0,
+       "reason": "A mudança é apenas em testes automatizados e não altera o comportamento de runtime em produção."
+      },
+      "change_type": {
+       "value": "tests_only",
+       "reason": "O diff adiciona somente uma nova função de teste em tests/test_options.py, sem alterar código de produção."
+      }
+     }
+    }
+   }
+  },
+  {
+   "url": "https://github.com/fastapi/full-stack-fastapi-template/pull/2102",
+   "hint": "bump do uv no Dockerfile",
+   "title": "⬆️ Bump uv to 0.9.26 in Dockerfile",
+   "files": 1,
+   "tokens_est": 283,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.02,
+     "confidence": 0.96
+    },
+    "touches_data_schema": {
+     "value": 0.01,
+     "confidence": 0.98
+    },
+    "breaking_api": {
+     "value": 0.02,
+     "confidence": 0.96
+    },
+    "risk": {
+     "value": 1.18,
+     "confidence": 0.41
+    },
+    "change_type": {
+     "value": "deps",
+     "confidence": 0.8
+    }
+   },
+   "jev_ms": 349.0,
+   "jev_cost": 5.7288e-05,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 4939.6,
+     "cost": 0.005796,
+     "input_tokens": 1039,
+     "output_tokens": 320,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração apenas atualiza a versão da ferramenta uv usada na imagem Docker; nenhuma lógica de autenticação, autorização ou segurança foi modificada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há alterações em migrações, modelos, tabelas, colunas, índices ou formatos de dados persistidos."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhum endpoint, função pública, opção de CLI ou contrato de configuração da aplicação foi alterado."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "Uma incompatibilidade na nova versão do uv pode quebrar a construção da imagem ou a instalação de dependências, mas o impacto tende a ser rapidamente detectável e reversível."
+      },
+      "change_type": {
+       "value": "deps",
+       "reason": "O diff apenas atualiza a versão da dependência/ferramenta uv de 0.5.11 para 0.9.26."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "error": "resposta sem JSON",
+     "latency_ms": 11820
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "served_by": "deepseek/deepseek-v4-pro-0813",
+     "latency_ms": 5650.1,
+     "cost": 0.00215028,
+     "input_tokens": 1074,
+     "output_tokens": 185,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração apenas atualiza a versão da imagem uv no Dockerfile, sem tocar em lógica de autenticação ou segurança."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há mudanças em modelos de dados, migrações ou formatos persistidos; apenas a versão da ferramenta uv é alterada."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública é modificada, apenas a versão da imagem base usada no build."
+      },
+      "change_type": {
+       "value": "deps",
+       "reason": "A única alteração é o bump da versão da dependência uv no Dockerfile."
+      }
+     }
+    },
+    "moonshotai/kimi-k2.6": {
+     "error": "JSON inválido",
+     "latency_ms": 49509
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 3240.6,
+     "cost": 0.0006616,
+     "input_tokens": 1039,
+     "output_tokens": 335,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "A alteração apenas atualiza a versão do executável uv no Dockerfile e não modifica lógica de autenticação, autorização ou tratamento de segredos."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Nenhuma estrutura de dados persistidos, migração, modelo ou formato de mensagem é alterado."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Não há alteração em endpoints, funções públicas, flags, configurações públicas ou contratos de entrada e saída."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "A atualização pode causar falha no build ou comportamento inesperado limitado no processo de instalação, mas o problema tende a ser detectado e revertido sem dano persistente."
+      },
+      "change_type": {
+       "value": "deps",
+       "reason": "O diff apenas atualiza a versão da dependência uv usada na imagem Docker."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "served_by": "z-ai/glm-5.3-flash",
+     "latency_ms": 9581.5,
+     "cost": 0.00078355,
+     "input_tokens": 1037,
+     "output_tokens": 1256,
+     "answers": {
+      "touches_auth_security": {
+       "value": 0.0,
+       "reason": "O diff apenas atualiza a versão do uv no Dockerfile; nenhuma lógica de autenticação, autorização, criptografia ou sanitização é alterada."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há migração, modelo ORM nem alteração em formato de dados persistidos; é apenas a versão de uma ferramenta de build."
+      },
+      "breaking_api": {
+       "value": 0.0,
+       "reason": "Nenhuma interface pública, endpoint, flag ou chave de configuração é removida ou alterada; é um bump interno de ferramenta."
+      },
+      "risk": {
+       "value": 1.0,
+       "reason": "O Dockerfile afeta a imagem de produção, mas um erro no bump do uv apareceria no build/instalação de dependências e seria revertido sem dano duradouro."
+      },
+      "change_type": {
+       "value": "deps",
+       "reason": "O diff se limita a atualizar a versão de uma dependência (uv), conforme indicado no próprio título do PR."
+      }
+     }
+    }
+   }
+  },
+  {
+   "url": "https://github.com/encode/httpx/pull/3335",
+   "hint": "remove uso sobrecarregado de verify/cert — quebra API?",
+   "title": "Drop overloaded usage of 'verify' and 'cert'.",
+   "files": 8,
+   "tokens_est": 5890,
+   "jev": {
+    "touches_auth_security": {
+     "value": 0.95,
+     "confidence": 0.8999999999999999
+    },
+    "touches_data_schema": {
+     "value": 0.02,
+     "confidence": 0.96
+    },
+    "breaking_api": {
+     "value": 0.96,
+     "confidence": 0.9199999999999999
+    },
+    "risk": {
+     "value": 1.99,
+     "confidence": 0.98
+    },
+    "change_type": {
+     "value": "refactor",
+     "confidence": 0.76
+    }
+   },
+   "jev_ms": 389.0,
+   "jev_cost": 0.000251664,
+   "models": {
+    "~openai/gpt-sol-latest": {
+     "served_by": "openai/gpt-5.6-sol",
+     "latency_ms": 7098.2,
+     "cost": 0.018546,
+     "input_tokens": 5779,
+     "output_tokens": 410,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "A configuração TLS é alterada diretamente, incluindo verificação de certificados, versões mínimas do protocolo e conjuntos de cifras. Erros aqui podem enfraquecer a segurança das conexões."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há alterações em banco de dados, modelos persistidos, migrações ou formatos de armazenamento."
+      },
+      "breaking_api": {
+       "value": 1.0,
+       "reason": "A API pública de SSLContext deixa de aceitar verify como caminho e remove o parâmetro cert, quebrando chamadas existentes que usam essas formas."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "A mudança afeta contratos públicos e configuração criptográfica de TLS; uma falha pode interromper clientes existentes ou reduzir a segurança das conexões em produção."
+      },
+      "change_type": {
+       "value": "feature",
+       "reason": "A alteração introduz um novo contrato observável para configuração de TLS, removendo formas antigas em favor das APIs explícitas load_verify_locations e load_cert_chain."
+      }
+     }
+    },
+    "z-ai/glm-5.3": {
+     "served_by": "z-ai/glm-5.3",
+     "latency_ms": 2070.1,
+     "cost": 0.0094444,
+     "input_tokens": 5756,
+     "output_tokens": 315,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "O diff modifica diretamente a configuração de TLS/certificados (SSLContext, verificação de CA, cadeia de certificados do cliente), que é lógica sensível de segurança."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há mudanças em formatos de dados persistidos, migrações ou modelos; apenas tipos em memória e API pública."
+      },
+      "breaking_api": {
+       "value": 1.0,
+       "reason": "Remove os parâmetros públicos 'verify=str' e 'cert' de httpx.SSLContext, além de 'trust_env' no transporte, quebrando chamadores existentes."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "A mudança altera a configuração de TLS padrão e remove parâmetros públicos; um erro pode abrir falha de segurança ou quebrar clientes existentes."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "Reestrutura a configuração SSL para se alinhar à stdlib, substituindo APIs sobrecarregadas por load_verify_locations/load_cert_chain, mantendo o comportamento essencial de verificação."
+      }
+     }
+    },
+    "~deepseek/deepseek-pro-latest": {
+     "served_by": "deepseek/deepseek-v4-pro-0813",
+     "latency_ms": 2344.9,
+     "cost": 0.009174,
+     "input_tokens": 6239,
+     "output_tokens": 237,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "O diff modifica a configuração de SSL/TLS, incluindo verificação de certificados e carregamento de cadeias de certificados, que é lógica sensível de segurança."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há alterações em banco de dados, modelos ORM ou formatos persistidos; apenas tipos em memória e APIs de configuração."
+      },
+      "breaking_api": {
+       "value": 1.0,
+       "reason": "Remove os parâmetros 'cert' e o uso de 'verify' como string na classe pública SSLContext, quebrando chamadas existentes."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "Mudanças em SSL/TLS podem abrir brechas de segurança ou quebrar clientes existentes, com potencial de causar falhas em produção."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "Apesar de alterar a API, o objetivo é simplificar e alinhar com a stdlib, mantendo a funcionalidade equivalente por meio de métodos existentes."
+      }
+     }
+    },
+    "moonshotai/kimi-k2.6": {
+     "error": "resposta sem JSON",
+     "latency_ms": 21572
+    },
+    "~openai/gpt-luna-latest": {
+     "served_by": "openai/gpt-5.6-luna",
+     "latency_ms": 4154.3,
+     "cost": 0.0019726,
+     "input_tokens": 5779,
+     "output_tokens": 440,
+     "answers": {
+      "touches_auth_security": {
+       "value": 1.0,
+       "reason": "O diff altera diretamente a configuração de TLS, incluindo verificação de certificados, carregamento de autoridades certificadoras e certificados de cliente."
+      },
+      "touches_data_schema": {
+       "value": 0.0,
+       "reason": "Não há alterações em banco de dados, modelos persistidos, migrações ou formatos de arquivos e mensagens armazenados."
+      },
+      "breaking_api": {
+       "value": 1.0,
+       "reason": "A API pública deixa de aceitar `verify` como caminho e remove o parâmetro `cert` de `SSLContext`, quebrando chamadas existentes."
+      },
+      "risk": {
+       "value": 2.0,
+       "reason": "Uma falha pode afetar a verificação TLS, abrir uma vulnerabilidade de segurança ou causar indisponibilidade para clientes que dependem da API removida."
+      },
+      "change_type": {
+       "value": "refactor",
+       "reason": "A mudança reorganiza e simplifica a configuração de SSL, transferindo o carregamento de certificados para as APIs padrão do `ssl`, embora com uma quebra intencional de compatibilidade."
+      }
+     }
+    },
+    "z-ai/glm-5.3-flash": {
+     "error": "resposta sem JSON",
+     "latency_ms": 37083
+    }
+   }
+  }
+ ]
+}
