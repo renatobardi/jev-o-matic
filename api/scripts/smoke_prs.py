@@ -59,6 +59,18 @@ async def main() -> None:
         print(
             f"  lane={r.verdict.lane} reasons={r.verdict.reasons} uncertain={r.verdict.uncertain}"
         )
+        llm = next(s for s in r.trace if s.stage == "llm")
+        if not llm.skipped:
+            print(
+                f"  cascata: jev sozinho={r.verdict.jev_lane} → LLM respondeu {r.verdict.escalated} "
+                f"em {llm.latency_ms:.0f}ms (${llm.cost or 0:.6f})"
+            )
+            for k in r.verdict.escalated:
+                dk = r.decisions[k]
+                was = dk.original.value if dk.original else "?"
+                print(f"    {k}: jev {was} → LLM {dk.value} — {dk.rationale}")
+        elif llm.note != "nenhuma decisão incerta":
+            print(f"  cascata: {llm.note}")
         print(
             f"  change_type={d['change_type'].value} ({d['change_type'].confidence:.2f}) · "
             f"risk={d['risk'].value:.2f} ({d['risk'].confidence:.2f})"

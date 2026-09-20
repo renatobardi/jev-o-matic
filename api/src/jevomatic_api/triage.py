@@ -25,7 +25,7 @@ from .schemas import (
     VersionsOut,
 )
 from .state import build_state, est_tokens
-from .verdict import clamp_t, verdict
+from .verdict import LANE_KEYS, clamp_t, verdict
 
 QUESTIONS_TOKENS = est_tokens(repr(QUESTIONS))
 
@@ -106,7 +106,10 @@ async def triage(
             llm_stage.note = "teto diário do LLM atingido — mantido o veredito do jev"
         else:
             try:
-                op = await second_opinion(built.state, {k: QUESTIONS[k] for k in first.uncertain})
+                # Uma chamada só: além do que está incerto AGORA, vai tudo que define a via e está
+                # abaixo de t — responder um flag pode tornar relevante um risk que não era.
+                ask = [k for k in LANE_KEYS if res.answers[k].confidence < threshold]
+                op = await second_opinion(built.state, {k: QUESTIONS[k] for k in ask})
             except LlmUnavailable:
                 llm_stage.note = "LLM indisponível — mantido o veredito do jev"
             else:

@@ -17,6 +17,7 @@ from typing import Any, Protocol
 DEFAULT_T = 0.7  # lab 05: cascata em 0,7 igualou o LLM puro
 T_MIN, T_MAX = 0.5, 0.95
 FLAGS = ["touches_auth_security", "touches_data_schema", "breaking_api"]
+LANE_KEYS = [*FLAGS, "risk", "change_type"]  # tudo que pode definir a via
 FAST_TYPES = {"docs", "tests_only", "deps"}
 FAST_MAX_FILES = 25
 FAST_RUNNER_UP = 0.3  # tipo "quase fast": vale perguntar ao LLM

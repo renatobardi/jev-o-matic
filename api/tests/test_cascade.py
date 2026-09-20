@@ -52,15 +52,17 @@ class Calls:
     def __init__(self) -> None:
         self.github = self.jev = self.llm = 0
         self.llm_questions: list[str] = []
+        self.jev_answers: dict[str, Answer] = _jev(
+            {"touches_auth_security": Answer("noul", 0.75, 0.5)}
+        )
+        self.llm_reply: dict[str, LlmAnswer] | None = {
+            "touches_auth_security": LlmAnswer(Answer("noul", 0.0, 1.0), "só docstrings")
+        }
 
 
 @pytest.fixture
 def wired(monkeypatch: pytest.MonkeyPatch) -> Calls:
     calls = Calls()
-    answers = {"v": _jev({"touches_auth_security": Answer("noul", 0.75, 0.5)})}
-    llm_reply: dict[str, Any] = {
-        "v": {"touches_auth_security": LlmAnswer(Answer("noul", 0.0, 1.0), "só docstrings")}
-    }
 
     async def fake_fetch(ref: Any, client: Any = None) -> Any:
         calls.github += 1
@@ -72,20 +74,18 @@ def wired(monkeypatch: pytest.MonkeyPatch) -> Calls:
 
     async def fake_decide(state: Any, questions: Any) -> JevResult:
         calls.jev += 1
-        return JevResult(answers["v"], 400.0, 3000, 50, 0.0001, "jev-test")
+        return JevResult(calls.jev_answers, 400.0, 3000, 50, 0.0001, "jev-test")
 
     async def fake_llm(state: Any, questions: dict[str, Any]) -> LlmResult:
         calls.llm += 1
         calls.llm_questions = sorted(questions)
-        if llm_reply["v"] is None:
+        if calls.llm_reply is None:
             raise LlmUnavailable("fora")
-        return LlmResult(llm_reply["v"], 1500.0, 3200, 40, 0.002, "llm-test")
+        return LlmResult(calls.llm_reply, 1500.0, 3200, 40, 0.002, "llm-test")
 
     monkeypatch.setattr(triage_mod, "fetch_pr", fake_fetch)
     monkeypatch.setattr(triage_mod, "decide", fake_decide)
     monkeypatch.setattr(triage_mod, "second_opinion", fake_llm)
-    calls.set_jev = lambda a: answers.__setitem__("v", a)  # type: ignore[attr-defined]
-    calls.set_llm = lambda a: llm_reply.__setitem__("v", a)  # type: ignore[attr-defined]
     return calls
 
 
@@ -109,13 +109,13 @@ async def test_uncertain_flag_goes_to_llm_and_verdict_is_recomputed(wired: Calls
 
 
 async def test_llm_can_also_raise_the_lane(wired: Calls) -> None:
-    wired.set_llm({"touches_auth_security": LlmAnswer(Answer("noul", 1.0, 1.0), "muda o hash")})  # type: ignore[attr-defined]
+    wired.llm_reply = {"touches_auth_security": LlmAnswer(Answer("noul", 1.0, 1.0), "muda o hash")}
     r = await triage(URL, guards=Guards())
     assert (r.verdict.jev_lane, r.verdict.lane) == ("normal", "senior")
 
 
 async def test_nothing_uncertain_never_touches_llm(wired: Calls) -> None:
-    wired.set_jev(_jev({}))  # type: ignore[attr-defined]
+    wired.jev_answers = _jev({})
     r = await triage(URL, guards=Guards())
     assert wired.llm == 0 and r.verdict.lane == "fast" and r.verdict.escalated == []
     assert (
@@ -126,7 +126,7 @@ async def test_nothing_uncertain_never_touches_llm(wired: Calls) -> None:
 
 
 async def test_llm_down_keeps_jev_verdict_and_says_so(wired: Calls) -> None:
-    wired.set_llm(None)  # type: ignore[attr-defined]
+    wired.llm_reply = None
     r = await triage(URL, guards=Guards())
     assert r.verdict.lane == "normal" and r.verdict.uncertain == ["touches_auth_security"]
     assert r.trace[3].skipped and "indisponível" in (r.trace[3].note or "")
@@ -134,7 +134,7 @@ async def test_llm_down_keeps_jev_verdict_and_says_so(wired: Calls) -> None:
 
 
 async def test_llm_invalid_answer_is_ignored(wired: Calls) -> None:
-    wired.set_llm({})  # type: ignore[attr-defined]
+    wired.llm_reply = {}
     r = await triage(URL, guards=Guards())
     assert r.verdict.lane == "normal" and r.verdict.escalated == []
     assert not r.trace[3].skipped and "válida" in (r.trace[3].note or "")
@@ -174,3 +174,22 @@ async def test_rate_limit_counts_misses_not_hits(wired: Calls) -> None:
         await triage("https://github.com/o/r/pull/3", guards=g, client_ip="1.1.1.1")
     assert e.value.status == 429 and wired.github == 2  # a 3ª nem foi ao GitHub
     await triage("https://github.com/o/r/pull/3", guards=g, client_ip="2.2.2.2")
+
+
+async def test_one_round_covers_decisions_that_become_relevant(wired: Calls) -> None:
+    # security incerto esconde um risk também incerto: com o flag frio, fast fica alcançável e o
+    # risk passa a importar. A chamada única já leva os dois.
+    wired.jev_answers = _jev(
+        {
+            "touches_auth_security": Answer("noul", 0.75, 0.5),
+            "risk": Answer("score", 1.08, 0.66, {"0": 0.07, "1": 0.77, "2": 0.16}),
+        }
+    )
+    wired.llm_reply = {
+        "touches_auth_security": LlmAnswer(Answer("noul", 0.0, 1.0), "só docstrings"),
+        "risk": LlmAnswer(Answer("score", 0.0, 1.0, {"0": 1.0}), "não altera runtime"),
+    }
+    r = await triage(URL, guards=Guards())
+    assert wired.llm == 1 and wired.llm_questions == ["risk", "touches_auth_security"]
+    assert r.verdict.lane == "fast" and r.verdict.uncertain == []
+    assert r.verdict.escalated == ["risk", "touches_auth_security"]
