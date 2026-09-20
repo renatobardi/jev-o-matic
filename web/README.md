@@ -5,6 +5,7 @@ Página única do jev-o-matic v2 (PR Triage). React 19 + Vite + TypeScript, bun,
 ```bash
 bun install
 bun run dev        # http://localhost:5173 — /api é repassado pro uvicorn em :8000
+API_PORT=8010 bun run dev   # se a 8000 estiver ocupada
 bun run build && bun run lint && bun test src
 ```
 
