@@ -63,6 +63,8 @@ Nunca use `push-env.sh` num ambiente que já tem key: ele reescreve o `.env` int
 
 Em memória, por processo: rate limit por IP, teto diário de LLM e de gasto, cache de 10 min por PR. Variáveis e defaults no `.env.example`. Reiniciar zera contadores — o teto duro é o **limite de crédito da key** no OpenRouter.
 
+Aberto ao público (2026-09): 10 triagens ao vivo por IP por dia, US$ 2 por dia no total, e o limite da key (US$ 15) como teto final — a decisão foi deixar gastar. Quando a key esgota, a API responde `credits_exhausted` e a página agradece em vez de parecer quebrada. Os **exemplos da página mostram respostas gravadas** (`web/src/lib/fixtures.json`, regravadas por `scripts/ops/capture-fixtures.sh`): custo zero e continuam funcionando com o saldo zerado. O LLM é uma versão fixa (`openai/gpt-5.6-luna`), não o alias `-latest`.
+
 O rate limit usa o IP que o uvicorn resolve do `X-Forwarded-For`. No vhost público, o Nginx deve **sobrescrever** o header (`proxy_set_header X-Forwarded-For $remote_addr;`), não anexar (`$proxy_add_x_forwarded_for`) — senão o visitante forja o próprio IP. No `-test` (proxy TCP da Tailscale, sem header) todos os visitantes contam como um IP só.
 
 ## Atualizar

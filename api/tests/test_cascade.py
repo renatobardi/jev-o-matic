@@ -120,7 +120,7 @@ async def test_nothing_uncertain_never_touches_llm(wired: Calls) -> None:
     assert wired.llm == 0 and r.verdict.lane == "fast" and r.verdict.escalated == []
     assert (
         r.trace[3].skipped
-        and r.trace[3].note == "nenhuma decisão incerta"
+        and r.trace[3].note == "no uncertain decision"
         and r.versions.llm_model is None
     )
 
@@ -129,7 +129,7 @@ async def test_llm_down_keeps_jev_verdict_and_says_so(wired: Calls) -> None:
     wired.llm_reply = None
     r = await triage(URL, guards=Guards())
     assert r.verdict.lane == "normal" and r.verdict.uncertain == ["touches_auth_security"]
-    assert r.trace[3].skipped and "indisponível" in (r.trace[3].note or "")
+    assert r.trace[3].skipped and "unavailable" in (r.trace[3].note or "")
     assert r.decisions["touches_auth_security"].source == "jev"
 
 
@@ -137,13 +137,13 @@ async def test_llm_invalid_answer_is_ignored(wired: Calls) -> None:
     wired.llm_reply = {}
     r = await triage(URL, guards=Guards())
     assert r.verdict.lane == "normal" and r.verdict.escalated == []
-    assert not r.trace[3].skipped and "válida" in (r.trace[3].note or "")
+    assert not r.trace[3].skipped and "no valid answer" in (r.trace[3].note or "")
 
 
 async def test_llm_budget_exhausted_disables_cascade_only(wired: Calls) -> None:
     g = Guards(budget=DailyBudget(max_llm_calls=0))
     r = await triage(URL, guards=g)
-    assert wired.llm == 0 and wired.jev == 1 and "teto diário" in (r.trace[3].note or "")
+    assert wired.llm == 0 and wired.jev == 1 and "daily LLM cap" in (r.trace[3].note or "")
 
 
 async def test_spend_cap_blocks_new_triages(wired: Calls) -> None:

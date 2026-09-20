@@ -3,7 +3,13 @@ import { EXAMPLES } from "../lib/examples";
 
 const LOOKS_LIKE_PR = /^https:\/\/(www\.)?github\.com\/[^/]+\/[^/]+\/pull\/\d+/;
 
-export function UrlForm({ busy, onSubmit }: { busy: boolean; onSubmit: (url: string) => void }) {
+interface Props {
+  busy: boolean;
+  onSubmit: (url: string) => void;
+  onExample: (example: (typeof EXAMPLES)[number]) => void;
+}
+
+export function UrlForm({ busy, onSubmit, onExample }: Props) {
   const [url, setUrl] = useState("");
   const [hint, setHint] = useState<string | null>(null);
 
@@ -12,24 +18,24 @@ export function UrlForm({ busy, onSubmit }: { busy: boolean; onSubmit: (url: str
     const value = url.trim();
     // Validação leve: a API é a autoridade (api/github.py).
     if (!LOOKS_LIKE_PR.test(value)) {
-      setHint("Precisa ser a URL de um PR: https://github.com/owner/repo/pull/123");
+      setHint("It has to be a pull request URL: https://github.com/owner/repo/pull/123");
       return;
     }
     setHint(null);
     onSubmit(value);
   }
 
-  function pick(example: string) {
-    setUrl(example);
+  function pick(example: (typeof EXAMPLES)[number]) {
+    setUrl(example.url);
     setHint(null);
-    onSubmit(example);
+    onExample(example);
   }
 
   return (
     <section className="form-block">
       <form className="url-form" onSubmit={submit} noValidate>
         <label htmlFor="pr-url" className="sr-only">
-          URL do pull request
+          Pull request URL
         </label>
         <input
           id="pr-url"
@@ -44,7 +50,7 @@ export function UrlForm({ busy, onSubmit }: { busy: boolean; onSubmit: (url: str
           aria-describedby={hint ? "pr-url-hint" : undefined}
         />
         <button type="submit" disabled={busy}>
-          {busy ? "Triando…" : "Triar"}
+          {busy ? "Triaging…" : "Triage"}
         </button>
       </form>
       {hint && (
@@ -53,9 +59,9 @@ export function UrlForm({ busy, onSubmit }: { busy: boolean; onSubmit: (url: str
         </p>
       )}
       <div className="examples">
-        <span className="meta">ou tente:</span>
+        <span className="meta">or try:</span>
         {EXAMPLES.map((ex) => (
-          <button key={ex.url} type="button" className="chip" disabled={busy} onClick={() => pick(ex.url)}>
+          <button key={ex.url} type="button" className="chip" disabled={busy} onClick={() => pick(ex)}>
             {ex.label}
           </button>
         ))}

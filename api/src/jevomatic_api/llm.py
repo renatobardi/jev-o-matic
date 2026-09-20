@@ -26,7 +26,7 @@ MAX_RATIONALE = 300
 # Escolhido no bake-off de 2026-09-20 (results/v2_llm_bakeoff): 70/70 respostas válidas, mesma via
 # que o gpt-sol em 13/14 PRs (e na que difere o sol era o ponto fora da curva), p50 4,2 s vs 6,2 s,
 # 9,6× mais barato. Modelos de raciocínio (glm, kimi, deepseek) ficaram em 10–49 s de p50.
-DEFAULT_MODEL = "~openai/gpt-luna-latest"
+DEFAULT_MODEL = "openai/gpt-5.6-luna"  # versão fixa: alias -latest pode mudar de preço sem aviso
 # Folga pra modelo de raciocínio: os tokens de raciocínio contam no limite, e com pouco o JSON nem sai.
 MAX_TOKENS = 1500
 
@@ -41,7 +41,7 @@ Reply with a single JSON object: {"answers": {"<question_key>": {"value": <v>, "
 - for type "noul": value is true or false
 - for type "choice": value is exactly one of the option keys
 - for type "score": value is the integer index (starting at 0) of the level that fits best
-Write each "reason" in Brazilian Portuguese. Use only the question keys you were given. No text outside the JSON."""
+Use only the question keys you were given. No text outside the JSON."""
 
 
 class LlmUnavailable(Exception):

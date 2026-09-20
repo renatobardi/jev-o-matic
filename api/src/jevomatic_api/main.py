@@ -33,7 +33,7 @@ async def _triage_error(_: Request, e: TriageError) -> JSONResponse:
 
 @app.exception_handler(RequestValidationError)
 async def _validation_error(_: Request, e: RequestValidationError) -> JSONResponse:
-    return _error("invalid_request", 'Corpo inválido: envie {"url": "…", "t"?: 0.5–0.95}.', 422)
+    return _error("invalid_request", 'Invalid body: send {"url": "…", "t"?: 0.5–0.95}.', 422)
 
 
 @app.get("/api/health")

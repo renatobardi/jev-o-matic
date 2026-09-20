@@ -81,7 +81,9 @@ async def triage(
     g.rate.check(client_ip)  # só o que custa conta pro limite
     if not g.budget.jev_allowed():
         raise TriageError(
-            "budget_exhausted", "O teto de gasto de hoje foi atingido. Volte amanhã.", 503
+            "budget_exhausted",
+            "Today's demo budget is spent. Live triage is back tomorrow; the examples still work.",
+            503,
         )
 
     t0 = time.perf_counter()
@@ -100,11 +102,11 @@ async def triage(
 
     final, answers = first, dict(res.answers)
     llm_answers: dict[str, LlmAnswer] = {}
-    llm_stage = StageOut(stage="llm", latency_ms=0, skipped=True, note="nenhuma decisão incerta")
+    llm_stage = StageOut(stage="llm", latency_ms=0, skipped=True, note="no uncertain decision")
     llm_model: str | None = None
     if first.uncertain:
         if not g.budget.llm_allowed():
-            llm_stage.note = "teto diário do LLM atingido — mantido o veredito do jev"
+            llm_stage.note = "daily LLM cap reached — kept the jev verdict"
         else:
             try:
                 # Uma chamada só: além do que está incerto AGORA, vai tudo que define a via e está
@@ -112,7 +114,7 @@ async def triage(
                 ask = [k for k in LANE_KEYS if res.answers[k].confidence < threshold]
                 op = await second_opinion(built.state, {k: QUESTIONS[k] for k in ask})
             except LlmUnavailable:
-                llm_stage.note = "LLM indisponível — mantido o veredito do jev"
+                llm_stage.note = "LLM unavailable — kept the jev verdict"
             else:
                 g.budget.record(op.cost, llm=True)
                 llm_answers, llm_model = op.answers, op.model
@@ -124,7 +126,7 @@ async def triage(
                     cost=op.cost,
                     input_tokens=op.input_tokens,
                     output_tokens=op.output_tokens,
-                    note=None if llm_answers else "o LLM não devolveu resposta válida",
+                    note=None if llm_answers else "the LLM returned no valid answer",
                 )
 
     out = TriageResponse(

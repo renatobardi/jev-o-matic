@@ -7,20 +7,20 @@ export function SentPanel({ sent }: { sent: TriageResult["sent"] }) {
   return (
     <details className="card sent">
       <summary>
-        <span className="eyebrow">o que foi enviado ao jev</span>
+        <span className="eyebrow">what was sent to jev</span>
         <span className="meta">
-          ~{int(sent.tokens_est)} tokens · {sent.files_included.length} de {int(sent.files_total)}{" "}
-          {sent.files_total === 1 ? "arquivo" : "arquivos"}
-          {partial && " · visão parcial"}
+          ~{int(sent.tokens_est)} tokens · {sent.files_included.length} of {int(sent.files_total)}{" "}
+          {sent.files_total === 1 ? "file" : "files"}
+          {partial && " · partial view"}
         </span>
       </summary>
       <p className="meta">
-        Orçamento de {int(sent.budget_tokens)} tokens pro diff. Os patches entram por ordem de risco do caminho; o veredito
-        vale só pro que o modelo viu.
+        Budget of {int(sent.budget_tokens)} tokens for the diff. Patches go in by path risk order; the verdict only covers
+        what the model saw.
       </p>
-      {sent.body_truncated && <p className="meta">A descrição do PR foi truncada.</p>}
-      <FileList title="Incluídos" files={sent.files_included.map((p) => ({ path: p, note: sent.files_truncated.includes(p) ? "truncado" : "" }))} />
-      <FileList title="Omitidos" files={sent.files_omitted.map((o) => ({ path: o.path, note: OMIT_REASON[o.reason] ?? o.reason }))} />
+      {sent.body_truncated && <p className="meta">The PR description was truncated.</p>}
+      <FileList title="Included" files={sent.files_included.map((p) => ({ path: p, note: sent.files_truncated.includes(p) ? "truncated" : "" }))} />
+      <FileList title="Omitted" files={sent.files_omitted.map((o) => ({ path: o.path, note: OMIT_REASON[o.reason] ?? o.reason }))} />
     </details>
   );
 }

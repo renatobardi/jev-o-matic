@@ -68,3 +68,17 @@ def test_questions_shape() -> None:
             assert 2 <= len(q["criteria"]) <= 10
         if q["type"] == "choice":
             assert 2 <= len(q["criteria"]) <= 255
+
+
+@pytest.mark.parametrize(
+    ("exc", "expected"),
+    [
+        (type("E", (Exception,), {"status_code": 402})("Payment Required"), True),
+        (Exception("403: Key limit exceeded"), True),
+        (Exception("Insufficient credits"), True),
+        (Exception("502 bad gateway"), False),
+        (None, False),
+    ],
+)
+def test_out_of_credits(exc: Exception | None, expected: bool) -> None:
+    assert jev._out_of_credits(exc) is expected

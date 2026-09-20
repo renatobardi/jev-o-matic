@@ -4,68 +4,84 @@ import { Footer } from "./components/Footer";
 import { Result } from "./components/Result";
 import { UrlForm } from "./components/UrlForm";
 import { ApiError, postTriage, type TriageResult } from "./lib/api";
+import type { EXAMPLES } from "./lib/examples";
 import fixtures from "./lib/fixtures.json";
 
 type View =
   | { kind: "idle" }
   | { kind: "loading"; url: string }
   | { kind: "error"; error: ApiError }
-  | { kind: "done"; result: TriageResult };
+  | { kind: "done"; result: TriageResult; recorded: boolean };
 
-/** `?fixture=fast|senior|uncertain|cascade` renderiza um resultado gravado, sem API. */
+const RECORDED = fixtures as unknown as Record<string, TriageResult>;
+
+/** `?fixture=fast|senior|uncertain|cascade|deps|ci` renderiza um resultado gravado, sem API. */
 function fixtureFromQuery(): TriageResult | null {
   const name = new URLSearchParams(window.location.search).get("fixture");
-  const all = fixtures as unknown as Record<string, TriageResult>;
-  return name && name in all ? all[name] : null;
+  return name && name in RECORDED ? RECORDED[name] : null;
 }
+
+// Erros em que a demo está funcionando como previsto: o título não pode soar como defeito.
+const OUT_OF_BUDGET = new Set(["credits_exhausted", "budget_exhausted", "rate_limited"]);
 
 export function App() {
   const [view, setView] = useState<View>(() => {
     const fx = fixtureFromQuery();
-    return fx ? { kind: "done", result: fx } : { kind: "idle" };
+    return fx ? { kind: "done", result: fx, recorded: true } : { kind: "idle" };
   });
 
   const run = useCallback(async (url: string) => {
     setView({ kind: "loading", url });
     try {
-      setView({ kind: "done", result: await postTriage(url) });
+      setView({ kind: "done", result: await postTriage(url), recorded: false });
     } catch (e) {
-      const error = e instanceof ApiError ? e : new ApiError("unexpected", "Algo deu errado.", 0);
+      const error = e instanceof ApiError ? e : new ApiError("unexpected", "Something went wrong.", 0);
       setView({ kind: "error", error });
     }
   }, []);
+
+  // Exemplos mostram a resposta GRAVADA de um run real: custo zero e seguem funcionando com o
+  // orçamento da demo esgotado. Sem gravação (ainda) → roda ao vivo.
+  const runExample = useCallback(
+    (example: (typeof EXAMPLES)[number]) => {
+      const result = RECORDED[example.fixture];
+      if (result) setView({ kind: "done", result, recorded: true });
+      else void run(example.url);
+    },
+    [run],
+  );
 
   return (
     <div className="page">
       <header className="masthead">
         <p className="eyebrow">jev-o-matic · lab v2</p>
-        <h1>Triagem de pull request com o jev</h1>
+        <h1>Pull request triage with jev</h1>
         <p className="lede">
-          Cole um PR público. O <strong>jev</strong> responde perguntas tipadas sobre o diff em cerca de meio segundo, o{" "}
-          <strong>código</strong> decide a via de revisão, e só a dúvida vai pro <strong>LLM</strong>.
+          Paste a public PR. <strong>jev</strong> answers typed questions about the diff in about half a second,{" "}
+          <strong>code</strong> picks the review lane, and only the doubt goes to an <strong>LLM</strong>.
         </p>
       </header>
 
       <DemoNotice />
-      <UrlForm busy={view.kind === "loading"} onSubmit={run} />
+      <UrlForm busy={view.kind === "loading"} onSubmit={run} onExample={runExample} />
 
       <main aria-live="polite">
         {view.kind === "idle" && (
-          <p className="empty">O resultado aparece aqui: via de revisão, decisões com confiança, e o que cada etapa custou.</p>
+          <p className="empty">The result shows up here: review lane, decisions with confidence, and what each stage cost.</p>
         )}
         {view.kind === "loading" && (
           <div className="card loading" role="status">
             <span className="spinner" aria-hidden="true" />
-            Buscando o PR no GitHub e perguntando ao jev…
+            Fetching the PR from GitHub and asking jev…
           </div>
         )}
         {view.kind === "error" && (
           <div className="card error" role="alert">
-            <strong>Não deu.</strong> {view.error.message}
+            <strong>{OUT_OF_BUDGET.has(view.error.code) ? "That is the limit." : "That did not work."}</strong> {view.error.message}
             <span className="meta"> ({view.error.code})</span>
           </div>
         )}
-        {view.kind === "done" && <Result result={view.result} />}
+        {view.kind === "done" && <Result result={view.result} recorded={view.recorded} />}
       </main>
 
       <Footer versions={view.kind === "done" ? view.result.versions : null} />

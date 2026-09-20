@@ -9,8 +9,8 @@ interface Props {
 
 export function DecisionList({ decisions, verdict }: Props) {
   return (
-    <section className="card" aria-label="Decisões">
-      <p className="eyebrow">decisões do jev · uma chamada, {Object.keys(decisions).length} perguntas</p>
+    <section className="card" aria-label="Decisions">
+      <p className="eyebrow">jev decisions · one call, {Object.keys(decisions).length} questions</p>
       <ul className="decisions" data-list>
         {Object.entries(decisions).map(([key, d]) => {
           const label = DECISION[key] ?? key;
@@ -27,7 +27,7 @@ export function DecisionList({ decisions, verdict }: Props) {
                 {d.rationale && <p className="rationale">{d.rationale}</p>}
                 <div className="decision-meta meta">
                   <span>
-                    o jev tinha dito “{decisionValue(key, was)}” com confiança {pct(was.confidence)}
+                    jev had said “{decisionValue(key, was)}” with confidence {pct(was.confidence)}
                   </span>
                   <span>{decisionDetail(was)}</span>
                 </div>
@@ -45,7 +45,7 @@ export function DecisionList({ decisions, verdict }: Props) {
               <div
                 className={low ? "bar is-low" : "bar"}
                 role="meter"
-                aria-label={`Confiança em ${label}`}
+                aria-label={`Confidence in ${label}`}
                 aria-valuemin={0}
                 aria-valuemax={100}
                 aria-valuenow={Math.round(d.confidence * 100)}
@@ -55,8 +55,8 @@ export function DecisionList({ decisions, verdict }: Props) {
               </div>
               <div className="decision-meta meta">
                 <span>
-                  confiança {pct(d.confidence)}
-                  {uncertain && " · incerta"}
+                  confidence {pct(d.confidence)}
+                  {uncertain && " · uncertain"}
                 </span>
                 <span>{decisionDetail(d)}</span>
               </div>
@@ -65,8 +65,8 @@ export function DecisionList({ decisions, verdict }: Props) {
         })}
       </ul>
       <p className="meta legend">
-        A marca na barra é o threshold ({pct(verdict.t)}). Barra laranja: abaixo dele, a decisão não define a via. “Incerta”: além
-        disso, ela ainda poderia mudar a via — é o que a cascata manda pro LLM.
+        The mark on the bar is the threshold ({pct(verdict.t)}). Orange bar: below it, the decision does not set the lane.
+        “Uncertain”: on top of that, it could still change the lane — that is what the cascade sends to the LLM.
       </p>
     </section>
   );
