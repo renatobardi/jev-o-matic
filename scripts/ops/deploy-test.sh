@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Atualiza o jev-o-matic-test pro commit da main no GitHub. Roda no Mac (Tailscale SSH).
+# Enquanto o CD não está ativo, é o deploy; depois, é o plano B.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+NAME="${CONTAINER_NAME:-jev-o-matic-test}"
+HOST="${INSTALL_APP_HOST:-oute-server}"
+URL="${APP_URL:-http://100.66.254.24:3770}"
+
+cd "${ROOT}"
+git fetch --quiet origin main
+if [[ "$(git rev-parse main)" != "$(git rev-parse origin/main)" ]]; then
+    echo "==> main local ≠ origin/main — dando push"
+    git push origin main
+fi
+SHA="$(git rev-parse origin/main)"
+
+echo "==> ${NAME}: checkout de ${SHA:0:7} e rebuild"
+ssh -n "${HOST}" "lxc exec ${NAME} -- bash -lc 'set -eu; cd /opt/app; git fetch --quiet origin main; git checkout --force --detach ${SHA}; docker compose up -d --build 2>&1 | tail -15; docker compose restart caddy'"
+
+echo "==> health"
+for attempt in $(seq 1 30); do
+    if curl -fsS --max-time 3 "${URL}/api/health"; then
+        echo; echo "ok: ${URL} em ${SHA:0:7}"
+        exit 0
+    fi
+    sleep 2
+done
+echo "erro: ${URL}/api/health não respondeu" >&2
+exit 1

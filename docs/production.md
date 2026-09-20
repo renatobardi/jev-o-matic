@@ -43,10 +43,16 @@ scripts/ops/push-env.sh
 
 Cada variável vem do `.env` da raiz; se lá estiver vazia, do ambiente do shell (key exportada no `~/.zshrc`, por exemplo). O script grava o arquivo no container, recria a `api` e confere que a key está presente — sem imprimir valor.
 
+## Guardas (app pública com a key do dono)
+
+Em memória, por processo: rate limit por IP, teto diário de LLM e de gasto, cache de 10 min por PR. Variáveis e defaults no `.env.example`. Reiniciar zera contadores — o teto duro é o **limite de crédito da key** no OpenRouter.
+
+O rate limit usa o IP que o uvicorn resolve do `X-Forwarded-For`. No vhost público, o Nginx deve **sobrescrever** o header (`proxy_set_header X-Forwarded-For $remote_addr;`), não anexar (`$proxy_add_x_forwarded_for`) — senão o visitante forja o próprio IP. No `-test` (proxy TCP da Tailscale, sem header) todos os visitantes contam como um IP só.
+
 ## Atualizar
 
 ```bash
-ssh oute-server "lxc exec jev-o-matic-test -- bash -lc 'cd /opt/app && git pull --ff-only && docker compose up -d --build'"
+scripts/ops/deploy-test.sh    # git pull + compose up --build + health, por SSH (enquanto o CD não está ativo)
 ```
 
 ## Verificar
