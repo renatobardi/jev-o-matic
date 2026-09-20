@@ -1,5 +1,10 @@
 # Rubrica de rotulagem — `prs_v1` (lab 09, #40)
 
+> **O que aconteceu de fato (2026-09-20):** o plano de dois rotuladores às cegas foi abandonado — o
+> Bardi decidiu não rotular (é um lab simples, não um benchmark). O rótulo final
+> (`datasets/prs_v1_labels.jsonl`) é o do Claude, sozinho, feito às cegas antes de abrir o run.
+> `prs_v1_bardi.xlsx` e `compare_labels.py` ficam como estão, sem uso.
+
 Dois rotuladores às cegas (Bardi e Claude), mesma rubrica, sem ver o rótulo um do outro nem a
 resposta do jev. Depois: concordância por pergunta → discussão só das discordâncias → rótulo final.
 A taxa de discordância é achado do lab: onde dois humanos não concordam, não dá pra cobrar o jev.

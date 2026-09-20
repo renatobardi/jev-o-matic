@@ -228,3 +228,6 @@ Claude outputs/
 
 # ensaios parciais do lab 09 (LAB09_LIMIT)
 results/09_pr_triage/ensaio/
+
+# lock do Excel
+~$*

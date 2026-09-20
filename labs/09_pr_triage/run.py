@@ -1,4 +1,9 @@
-"""Lab 09 — triagem de PR contra rótulo humano (épico #38).
+"""Lab 09 — triagem de PR contra rótulo (épico #38).
+
+RÓTULO: datasets/prs_v1_labels.jsonl foi feito por UM rotulador, o Claude, lendo os diffs às cegas
+(sem ver as respostas do jev/LLM). Não é rótulo humano: o Bardi decidiu não rotular (lab simples).
+Lição do lab 05 vale aqui: rótulo de LLM tende a favorecer LLM. Atenua: o rotulador é de outra
+família que os avaliados (jev, gpt-luna). Ler os números como "concorda com um revisor-IA cuidadoso".
 
 Duas metades, como o lab 00:
   ONLINE  (chama jev e LLM, ~US$ 0,20): roda DENTRO do container da api no test, em cima do state
@@ -244,7 +249,7 @@ def _llm_acc(items: list[dict[str, Any]], key: str) -> str:
 
 def report_lanes(items: list[dict[str, Any]], v: Any, t: float) -> None:
     print(
-        f"\n== via × a via do revisor humano (t={t}) · 'abaixo' = sistema pediu MENOS revisão que o humano (o erro caro)"
+        f"\n== via × a via do rotulador (t={t}) · 'abaixo' = sistema pediu MENOS revisão que o rotulador (o erro caro)"
     )
     rows = [(lanes_for(it, t, v), it["label"]["via"]) for it in items]
     for name in ("jev", "cascade", "llm", "rule_on_labels"):
