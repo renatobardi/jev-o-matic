@@ -15,6 +15,10 @@ pr-v2 (#12, decisões no doc 14 do Project):
 - `change_type` ganhou `mixed`: PR misto não cabia em opções "Only …" e a confidence caía por
   artefato do enum. `mixed` nunca é via rápida (não está em FAST_TYPES)
 - `breaking_api` só vale com marca de público VISÍVEL no diff; sem marca → false (subestima, não chuta)
+- 1ª rodada do aceite: nível 1 do `risk` definido por NEGAÇÃO ("runtime, e nada da lista crítica")
+  morreu — p(1)≈0 e 8 de 9 PRs com código deram nível 2. Virou afirmação (o que É código comum).
+  CI cabia no nível 0 (tooling) E no 2 ("shared infrastructure") e rachava 0,65/0,35: CI foi pro 0,
+  o 2 ficou com "manifests de deploy / IaC que a produção roda"
 """
 
 from __future__ import annotations
@@ -59,15 +63,19 @@ QUESTIONS: dict[str, Question] = {
         "criteria": [
             (
                 "Nothing that runs in production: only documentation, comments, tests, formatting, "
-                "translations, dependency version bumps or developer-only tooling"
+                "translations, dependency version bumps, CI checks, linters or developer tooling"
             ),
-            ("Production runtime code, and none of it is in the critical list of the next level"),
+            (
+                "Ordinary production code: business logic, user interface, rendering, parsing, "
+                "formatting of output, helpers, logging, error messages or command-line behavior"
+            ),
             (
                 "Critical production code: authentication, authorization or secret handling; "
                 "database migrations or persisted data structure; removal or signature change of a "
-                "public interface; shared infrastructure or deployment; calculation or movement of "
-                "money; locks, transactions, retries, idempotency or cache invalidation; or code "
-                "that deletes, truncates or overwrites persisted data"
+                "public interface; deployment manifests or infrastructure-as-code that production "
+                "runs on; calculation or movement of money; locks, transactions, retries, "
+                "idempotency or cache invalidation; or code that deletes, truncates or overwrites "
+                "persisted data"
             ),
         ],
     },

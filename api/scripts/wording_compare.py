@@ -1,6 +1,6 @@
 """Compara uma versão nova das perguntas (QUESTIONS_VERSION) com a anterior nos mesmos PRs (#12).
 
-Só jev, sem LLM: ~14 chamadas, < US$ 0,01. A base é o bake-off (results/v2_llm_bakeoff/*.json), que
+Só jev, sem LLM: ~19 chamadas, < US$ 0,01. A base é o bake-off (results/v2_llm_bakeoff/*.json), que
 guardou as respostas do jev com o wording antigo pros mesmos 14 PRs. Sem ground truth: mede
 incerteza e mudança de via, não acerto — acerto é o lab 09.
 
@@ -35,6 +35,16 @@ PRS = [  # os mesmos do llm_bakeoff.py (os 7 primeiros = smoke do M1)
     "https://github.com/fastapi/full-stack-fastapi-template/pull/2102",
     "https://github.com/encode/httpx/pull/3335",
 ]
+# Bugfixes banais (arquivos conferidos na API do GitHub: 1–2 arquivos de lógica comum + teste +
+# changelog, nada da lista crítica). Sem base antiga: servem pra ver se o nível 1 do risk existe.
+BANAL = [
+    "https://github.com/pallets/click/pull/3865",  # abreviação do short help
+    "https://github.com/Textualize/rich/pull/3180",  # wrap de caractere de largura dupla
+    "https://github.com/Textualize/rich/pull/2820",  # pretty de dataclass vazia
+    "https://github.com/pallets/jinja/pull/1852",  # f-string na geração de código
+    "https://github.com/pallets/jinja/pull/2061",  # default de Environment.overlay
+]
+BANAL_MIN = 3  # aceite: pelo menos 3 de 5 no nível 1 com confidence ≥ t
 
 
 async def run() -> None:
@@ -45,7 +55,7 @@ async def run() -> None:
     from jevomatic_api.verdict import verdict
 
     rows = []
-    for url in PRS:
+    for url in [*PRS, *BANAL]:
         try:
             pr = await fetch_pr(parse_pr_url(url))
             built = build_state(pr)
@@ -143,7 +153,25 @@ def analyze(new_path: str, base_path: str) -> int:
         for slug, a, b_, reasons, title in changed:
             worse = "sobe" if order.get(b_, 1) > order.get(a, 1) else "desce"
             print(f"  {slug}: {a} → {b_} ({worse}) {reasons}\n    {title[:90]}")
-    ok = smoke7["new"] <= 3
+    print(
+        f"\nbanais (sem base antiga) — o nível 1 do risk existe? meta ≥ {BANAL_MIN}/{len(BANAL)}:"
+    )
+    level1 = 0
+    for r in new["rows"]:
+        if r["url"] not in BANAL:
+            continue
+        n = r["jev"]
+        hit = n["risk"]["confidence"] >= T and round(n["risk"]["value"]) == 1
+        level1 += hit
+        probs = {k: round(v, 2) for k, v in (n["risk"].get("probabilities") or {}).items()}
+        slug = r["url"].removeprefix("https://github.com/").replace("/pull/", "#")
+        print(
+            f"  {slug:<28} risk {n['risk']['value']:.2f} ({n['risk']['confidence']:.2f}) {probs} · "
+            f"{n['change_type']['value']} ({n['change_type']['confidence']:.2f}) → {r['lane']} "
+            f"{r['uncertain']}{'  ✓' if hit else ''}"
+        )
+    print(f"  nível 1 confiante: {level1}/{len(BANAL)}")
+    ok = smoke7["new"] <= 3 and level1 >= BANAL_MIN
     print(
         "\n"
         + (

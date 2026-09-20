@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Critério de aceite de um wording novo (#12): sobe uma branch no jev-o-matic-test, roda o jev nos
-# 14 PRs do bake-off DENTRO do container (é lá que estão a key e a rede) e compara com as respostas
+# 14 PRs do bake-off (+5 banais) DENTRO do container (é lá que estão a key e a rede) e compara com as respostas
 # do wording antigo guardadas em results/v2_llm_bakeoff/. Só jev, sem LLM: < US$ 0,01.
 #   REF=feat/questions-pr-v2 scripts/ops/compare-wording.sh
 # O test fica na branch até o próximo deploy-test.sh (que volta pra main).
