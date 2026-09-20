@@ -8,6 +8,10 @@ export interface Decision {
   confidence: number;
   probabilities: Record<string, number> | null;
   source: "jev" | "llm";
+  /** Só quando source === "llm": justificativa em texto puro. */
+  rationale?: string | null;
+  /** O que o jev tinha dito, quando o LLM respondeu no lugar. */
+  original?: { value: number | string; confidence: number; probabilities: Record<string, number> | null } | null;
 }
 
 export interface Stage {
@@ -36,7 +40,7 @@ export interface TriageResult {
     html_url: string;
   };
   decisions: Record<string, Decision>;
-  verdict: { lane: Lane; reasons: string[]; uncertain: string[]; t: number };
+  verdict: { lane: Lane; reasons: string[]; uncertain: string[]; t: number; escalated?: string[]; jev_lane?: Lane | null };
   sent: {
     tokens_est: number;
     budget_tokens: number;
@@ -48,7 +52,7 @@ export interface TriageResult {
     file_list_truncated: boolean;
   };
   trace: Stage[];
-  versions: { questions: string; jev_model: string; api: string };
+  versions: { questions: string; jev_model: string; llm_model?: string | null; api: string };
   categories: Record<string, number>;
   cached: boolean;
 }

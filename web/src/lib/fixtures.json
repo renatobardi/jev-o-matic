@@ -32,7 +32,9 @@
      "tests_only": 0.0,
      "deps": 0.0
     },
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "risk": {
     "type": "score",
@@ -43,49 +45,63 @@
      "1": 0.0,
      "2": 0.0
     },
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "touches_auth_security": {
     "type": "noul",
     "value": 0.02,
     "confidence": 0.96,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "touches_data_schema": {
     "type": "noul",
     "value": 0.02,
     "confidence": 0.96,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "breaking_api": {
     "type": "noul",
     "value": 0.01,
     "confidence": 0.98,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "touches_infra_ci": {
     "type": "noul",
     "value": 0.02,
     "confidence": 0.96,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "has_tests": {
     "type": "noul",
     "value": 0.02,
     "confidence": 0.96,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "description_explains_why": {
     "type": "noul",
     "value": 0.07,
     "confidence": 0.86,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    }
   },
   "verdict": {
@@ -97,7 +113,9 @@
     "small"
    ],
    "uncertain": [],
-   "t": 0.7
+   "t": 0.7,
+   "escalated": [],
+   "jev_lane": "fast"
   },
   "sent": {
    "tokens_est": 2119,
@@ -146,13 +164,14 @@
     "input_tokens": null,
     "output_tokens": null,
     "skipped": true,
-    "note": null
+    "note": "nenhuma decisão incerta"
    }
   ],
   "versions": {
    "questions": "pr-v1",
    "jev_model": "typesafe/jev-1.13-20260917",
-   "api": "0.1.0"
+   "api": "0.1.0",
+   "llm_model": null
   },
   "categories": {
    "security": 0,
@@ -194,7 +213,9 @@
      "bugfix": 0.03,
      "tests_only": 0.0
     },
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "risk": {
     "type": "score",
@@ -205,49 +226,63 @@
      "1": 0.2,
      "2": 0.8
     },
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "touches_auth_security": {
     "type": "noul",
     "value": 0.04,
     "confidence": 0.92,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "touches_data_schema": {
     "type": "noul",
     "value": 0.03,
     "confidence": 0.94,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "breaking_api": {
     "type": "noul",
     "value": 0.92,
     "confidence": 0.84,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "touches_infra_ci": {
     "type": "noul",
     "value": 0.04,
     "confidence": 0.92,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "has_tests": {
     "type": "noul",
     "value": 0.24,
     "confidence": 0.52,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "description_explains_why": {
     "type": "noul",
     "value": 0.58,
     "confidence": 0.16,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    }
   },
   "verdict": {
@@ -256,7 +291,9 @@
     "breaking_api"
    ],
    "uncertain": [],
-   "t": 0.7
+   "t": 0.7,
+   "escalated": [],
+   "jev_lane": "senior"
   },
   "sent": {
    "tokens_est": 4094,
@@ -310,13 +347,14 @@
     "input_tokens": null,
     "output_tokens": null,
     "skipped": true,
-    "note": null
+    "note": "nenhuma decisão incerta"
    }
   ],
   "versions": {
    "questions": "pr-v1",
    "jev_model": "typesafe/jev-1.13-20260917",
-   "api": "0.1.0"
+   "api": "0.1.0",
+   "llm_model": null
   },
   "categories": {
    "security": 0,
@@ -358,7 +396,9 @@
      "docs": 0.85,
      "deps": 0.0
     },
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "risk": {
     "type": "score",
@@ -369,49 +409,63 @@
      "1": 0.77,
      "2": 0.16
     },
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "touches_auth_security": {
     "type": "noul",
     "value": 0.75,
     "confidence": 0.5,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "touches_data_schema": {
     "type": "noul",
     "value": 0.03,
     "confidence": 0.94,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "breaking_api": {
     "type": "noul",
     "value": 0.08,
     "confidence": 0.84,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "touches_infra_ci": {
     "type": "noul",
     "value": 0.02,
     "confidence": 0.96,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "has_tests": {
     "type": "noul",
     "value": 0.03,
     "confidence": 0.94,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    },
    "description_explains_why": {
     "type": "noul",
     "value": 0.96,
     "confidence": 0.92,
     "probabilities": null,
-    "source": "jev"
+    "source": "jev",
+    "rationale": null,
+    "original": null
    }
   },
   "verdict": {
@@ -422,7 +476,9 @@
    "uncertain": [
     "touches_auth_security"
    ],
-   "t": 0.7
+   "t": 0.7,
+   "escalated": [],
+   "jev_lane": "normal"
   },
   "sent": {
    "tokens_est": 7112,
@@ -478,13 +534,213 @@
     "input_tokens": null,
     "output_tokens": null,
     "skipped": true,
+    "note": "LLM indisponível — mantido o veredito do jev"
+   }
+  ],
+  "versions": {
+   "questions": "pr-v1",
+   "jev_model": "typesafe/jev-1.13-20260917",
+   "api": "0.1.0",
+   "llm_model": null
+  },
+  "categories": {
+   "security": 1,
+   "schema": 0,
+   "api": 0,
+   "infra": 0,
+   "source": 6,
+   "tests": 0,
+   "docs": 1
+  },
+  "cached": false
+ },
+ "cascade": {
+  "pr": {
+   "slug": "pallets/werkzeug#3252",
+   "title": "add docs to address common invalid security reports",
+   "author": "davidism",
+   "author_association": "MEMBER",
+   "state": "closed",
+   "draft": false,
+   "labels": [],
+   "additions": 119,
+   "deletions": 39,
+   "changed_files": 8,
+   "head_sha": "5d39fd55ac5cefb996edce53d2b2e8b3677d8a8d",
+   "html_url": "https://github.com/pallets/werkzeug/pull/3252"
+  },
+  "decisions": {
+   "change_type": {
+    "type": "choice",
+    "value": "docs",
+    "confidence": 0.83,
+    "probabilities": {
+     "feature": 0.03,
+     "refactor": 0.09,
+     "tests_only": 0.0,
+     "config_infra": 0.0,
+     "bugfix": 0.03,
+     "docs": 0.85,
+     "deps": 0.0
+    },
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "risk": {
+    "type": "score",
+    "value": 0.0,
+    "confidence": 1.0,
+    "probabilities": null,
+    "source": "llm",
+    "rationale": "Mudança restrita a documentação: não altera comportamento em produção.",
+    "original": {
+     "value": 1.08,
+     "confidence": 0.66,
+     "probabilities": {
+      "0": 0.07,
+      "1": 0.77,
+      "2": 0.16
+     }
+    }
+   },
+   "touches_auth_security": {
+    "type": "noul",
+    "value": 0.0,
+    "confidence": 1.0,
+    "probabilities": null,
+    "source": "llm",
+    "rationale": "O diff só acrescenta docstrings e notas de documentação nos módulos; nenhuma lógica de hash, comparação ou sessão muda.",
+    "original": {
+     "value": 0.75,
+     "confidence": 0.5,
+     "probabilities": null
+    }
+   },
+   "touches_data_schema": {
+    "type": "noul",
+    "value": 0.03,
+    "confidence": 0.94,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "breaking_api": {
+    "type": "noul",
+    "value": 0.08,
+    "confidence": 0.84,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "touches_infra_ci": {
+    "type": "noul",
+    "value": 0.02,
+    "confidence": 0.96,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "has_tests": {
+    "type": "noul",
+    "value": 0.03,
+    "confidence": 0.94,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   },
+   "description_explains_why": {
+    "type": "noul",
+    "value": 0.96,
+    "confidence": 0.92,
+    "probabilities": null,
+    "source": "jev",
+    "rationale": null,
+    "original": null
+   }
+  },
+  "verdict": {
+   "lane": "fast",
+   "reasons": [
+    "type_docs",
+    "no_risk_flags",
+    "risk_none",
+    "small"
+   ],
+   "uncertain": [],
+   "t": 0.7,
+   "escalated": [
+    "risk",
+    "touches_auth_security"
+   ],
+   "jev_lane": "normal"
+  },
+  "sent": {
+   "tokens_est": 7112,
+   "budget_tokens": 20000,
+   "files_total": 8,
+   "files_included": [
+    "src/werkzeug/security.py",
+    "src/werkzeug/utils.py",
+    "src/werkzeug/datastructures/headers.py",
+    "src/werkzeug/serving.py",
+    "src/werkzeug/sansio/multipart.py",
+    "src/werkzeug/http.py",
+    "src/werkzeug/test.py",
+    "docs/quickstart.rst"
+   ],
+   "files_truncated": [],
+   "files_omitted": [],
+   "body_truncated": false,
+   "file_list_truncated": false
+  },
+  "trace": [
+   {
+    "stage": "github",
+    "latency_ms": 617.0,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "jev",
+    "latency_ms": 473.5,
+    "cost": 0.000242802,
+    "input_tokens": 5781,
+    "output_tokens": 202,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "code",
+    "latency_ms": 0.022,
+    "cost": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "skipped": false,
+    "note": null
+   },
+   {
+    "stage": "llm",
+    "latency_ms": 1840.0,
+    "cost": 0.0131,
+    "input_tokens": 6100,
+    "output_tokens": 92,
+    "skipped": false,
     "note": null
    }
   ],
   "versions": {
    "questions": "pr-v1",
    "jev_model": "typesafe/jev-1.13-20260917",
-   "api": "0.1.0"
+   "api": "0.1.0",
+   "llm_model": "openai/gpt-5.6-sol"
   },
   "categories": {
    "security": 1,

@@ -14,7 +14,7 @@ export function Trace({ trace }: { trace: Stage[] }) {
           <li key={s.stage} className={s.skipped ? "stage is-skipped" : "stage"}>
             <span className="stage-name">{STAGE[s.stage] ?? s.stage}</span>
             {s.skipped ? (
-              <span className="meta">não acionado</span>
+              <span className="meta">{s.note ?? "não acionado"}</span>
             ) : (
               <>
                 <span className="stage-time">{ms(s.latency_ms)}</span>
@@ -22,6 +22,7 @@ export function Trace({ trace }: { trace: Stage[] }) {
                   {s.cost !== null && usd(s.cost)}
                   {s.input_tokens !== null && ` · ${int(s.input_tokens)} tokens`}
                 </span>
+                {s.note && <span className="meta">{s.note}</span>}
               </>
             )}
           </li>

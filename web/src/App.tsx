@@ -12,7 +12,7 @@ type View =
   | { kind: "error"; error: ApiError }
   | { kind: "done"; result: TriageResult };
 
-/** `?fixture=fast|senior|uncertain` renderiza um resultado real gravado, sem API. */
+/** `?fixture=fast|senior|uncertain|cascade` renderiza um resultado gravado, sem API. */
 function fixtureFromQuery(): TriageResult | null {
   const name = new URLSearchParams(window.location.search).get("fixture");
   const all = fixtures as unknown as Record<string, TriageResult>;

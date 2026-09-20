@@ -1,12 +1,28 @@
-import type { TriageResult } from "../lib/api";
+import { useMemo, useState } from "react";
+import type { Decision, TriageResult } from "../lib/api";
 import { int } from "../lib/format";
+import { verdict as localVerdict } from "../lib/verdict";
 import { DecisionList } from "./DecisionList";
 import { SentPanel } from "./SentPanel";
+import { ThresholdSlider } from "./ThresholdSlider";
 import { Trace } from "./Trace";
 import { VerdictBadge } from "./VerdictBadge";
 
+/** As respostas do jev, desfazendo o que o LLM substituiu. */
+function jevOnly(decisions: Record<string, Decision>): Record<string, Decision> {
+  return Object.fromEntries(
+    Object.entries(decisions).map(([k, d]) => [k, d.original ? { ...d, ...d.original, source: "jev" as const, rationale: null, original: null } : d]),
+  );
+}
+
 export function Result({ result }: { result: TriageResult }) {
   const { pr } = result;
+  const serverT = result.verdict.t;
+  const [t, setT] = useState(serverT);
+  const jev = useMemo(() => jevOnly(result.decisions), [result.decisions]);
+  const local = useMemo(() => localVerdict(jev, pr.changed_files, t), [jev, pr.changed_files, t]);
+  const simulated = t !== serverT;
+
   return (
     <article className="result">
       <header className="card pr-head">
@@ -25,8 +41,12 @@ export function Result({ result }: { result: TriageResult }) {
         </p>
       </header>
 
-      <VerdictBadge verdict={result.verdict} />
-      <DecisionList decisions={result.decisions} verdict={result.verdict} />
+      <VerdictBadge
+        verdict={simulated ? { ...local, escalated: [], jev_lane: null } : result.verdict}
+        simulated={simulated}
+      />
+      <ThresholdSlider t={t} serverT={serverT} wouldEscalate={local.uncertain.length} onChange={setT} />
+      <DecisionList decisions={simulated ? jev : result.decisions} verdict={simulated ? local : result.verdict} />
       <Trace trace={result.trace} />
       <SentPanel sent={result.sent} />
     </article>

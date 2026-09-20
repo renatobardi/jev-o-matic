@@ -374,6 +374,58 @@ button:disabled {
   padding-top: 0.25rem;
 }
 
+/* ---------- threshold ---------- */
+
+.slider-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.slider-value {
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-tight);
+  font-variant-numeric: tabular-nums;
+}
+
+.slider input[type="range"] {
+  width: 100%;
+  accent-color: var(--foreground);
+}
+
+.link {
+  font: inherit;
+  color: inherit;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* ---------- resposta do LLM ---------- */
+
+.badge {
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.0625rem 0.375rem;
+  border-radius: var(--radius-full);
+  color: var(--primary-foreground);
+  background: var(--lane-normal);
+  vertical-align: 0.1em;
+}
+
+.rationale {
+  font-size: var(--text-xs);
+  padding: 0.375rem 0.625rem;
+  border-left: 2px solid var(--lane-normal);
+  background: color-mix(in oklab, var(--lane-normal) 7%, transparent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  overflow-wrap: anywhere;
+}
+
 /* ---------- trilha ---------- */
 
 .trace {

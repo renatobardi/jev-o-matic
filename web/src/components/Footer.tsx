@@ -8,7 +8,8 @@ export function Footer({ versions }: { versions: TriageResult["versions"] | null
       </a>
       {versions && (
         <span className="meta">
-          perguntas {versions.questions} · {versions.jev_model} · api {versions.api}
+          perguntas {versions.questions} · {versions.jev_model}
+          {versions.llm_model && ` · ${versions.llm_model}`} · api {versions.api}
         </span>
       )}
     </footer>

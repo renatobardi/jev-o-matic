@@ -1,0 +1,75 @@
+// Port de api/src/jevomatic_api/verdict.py. As duas implementações rodam a MESMA tabela de casos
+// (api/tests/verdict_cases.json) — mudou a regra num lado, o teste do outro quebra.
+
+import type { Lane } from "./api";
+
+export interface AnswerLike {
+  value: number | string;
+  confidence: number;
+  probabilities: Record<string, number> | null;
+}
+
+export interface LocalVerdict {
+  lane: Lane;
+  reasons: string[];
+  uncertain: string[];
+  t: number;
+}
+
+export const DEFAULT_T = 0.7;
+export const T_MIN = 0.5;
+export const T_MAX = 0.95;
+const FLAGS = ["touches_auth_security", "touches_data_schema", "breaking_api"];
+const FAST_TYPES = ["docs", "tests_only", "deps"];
+const FAST_MAX_FILES = 25;
+const FAST_RUNNER_UP = 0.3;
+const SEVERE_MIN_PROB = 0.3;
+
+/** `round()` do Python arredonda metade pro par (0.5 → 0, 1.5 → 2); Math.round não. */
+function pyRound(v: number): number {
+  const floor = Math.floor(v);
+  const diff = v - floor;
+  if (diff < 0.5) return floor;
+  if (diff > 0.5) return floor + 1;
+  return floor % 2 === 0 ? floor : floor + 1;
+}
+
+export function verdict(decisions: Record<string, AnswerLike>, filesChanged: number, t: number = DEFAULT_T): LocalVerdict {
+  const v: LocalVerdict = { lane: "normal", reasons: [], uncertain: [], t };
+  const risk = decisions.risk;
+  const ctype = decisions.change_type;
+  const sure = (k: string) => decisions[k].confidence >= t;
+  const riskLevel = pyRound(risk.value as number);
+  const riskSevere = sure("risk") && riskLevel === 2;
+
+  const hot = FLAGS.filter((k) => sure(k) && (decisions[k].value as number) >= 0.5);
+  if (hot.length > 0 || riskSevere) {
+    v.lane = "senior";
+    v.reasons = [...hot, ...(riskSevere ? ["risk_severe"] : [])];
+    return v;
+  }
+
+  const allCold = FLAGS.every((k) => sure(k) && (decisions[k].value as number) < 0.5);
+  const small = filesChanged <= FAST_MAX_FILES;
+  const probs = ctype.probabilities ?? {};
+  const isFastType = FAST_TYPES.includes(ctype.value as string);
+  const nearFast = isFastType || FAST_TYPES.some((o) => (probs[o] ?? 0) >= FAST_RUNNER_UP);
+  const fastReachable = allCold && small && nearFast;
+
+  v.uncertain = FLAGS.filter((k) => !sure(k));
+  if (!sure("risk")) {
+    const couldBeSevere = ((risk.probabilities ?? {})["2"] ?? 0) >= SEVERE_MIN_PROB;
+    if (couldBeSevere || fastReachable) v.uncertain.push("risk");
+  }
+  if (!sure("change_type") && fastReachable) v.uncertain.push("change_type");
+
+  if (sure("change_type") && isFastType && allCold && small && sure("risk") && riskLevel === 0) {
+    v.lane = "fast";
+    v.reasons = [`type_${ctype.value as string}`, "no_risk_flags", "risk_none", "small"];
+    return v;
+  }
+
+  if (isFastType && !small) v.reasons.push("too_many_files_for_fast");
+  if (v.uncertain.length > 0) v.reasons.push("uncertain_decisions");
+  return v;
+}
