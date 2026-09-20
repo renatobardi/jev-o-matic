@@ -65,7 +65,7 @@ export const OMIT_REASON: Record<string, string> = {
 
 export const STAGE: Record<string, string> = {
   github: "GitHub",
-  jev: "jev",
+  jev: "Jev",
   code: "Code",
   llm: "LLM",
 };
